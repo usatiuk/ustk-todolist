@@ -1,35 +1,34 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 
-class Input extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
+function Input(props) {
+  let input;
+
+  const classes = [];
+
+  if (!props.inputBottomBorder) {
+    classes.push("no-border");
   }
 
-  render() {
-    const classes = [];
-
-    if (!this.props.inputBottomBorder) {
-      classes.push("no-border");
-    }
-
-    return (
-      <div id="inputs" className={classes.join(" ")}>
-        <input
-          id="input"
-          type="text"
-          value={this.props.value}
-          onChange={this.handleChange}
-        />
-        <button id="add" onClick={this.props.onClick}>
-          add
-        </button>
-      </div>
-    );
-  }
-  handleChange(event) {
-    this.props.onInputChange(event.target.value);
-  }
+  return (
+    <div id="inputs" className={classes.join(" ")}>
+      <input
+        ref={node => {
+          input = node;
+        }}
+        id="input"
+        type="text"
+      />
+      <button id="add" onClick={() => props.onClick(input.value)}>
+        add
+      </button>
+    </div>
+  );
 }
+
+Input.propTypes = {
+  inputBottomBorder: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
+};
 
 export default Input;

@@ -1,6 +1,7 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import PropTypes from "prop-types";
 
 class Item extends React.Component {
   constructor(props) {
@@ -10,43 +11,6 @@ class Item extends React.Component {
     };
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  render() {
-    const deleteClasses = ["delete"];
-    if (!this.state.hover) {
-      deleteClasses.push("disabled");
-    }
-
-    const itemClasses = ["item"];
-    if (this.props.item.crossed) {
-      itemClasses.push("done");
-    }
-
-    return (
-      <li
-        onMouseOver={this.onMouseOver}
-        onFocus={this.onMouseOver}
-        onMouseOut={this.onMouseOut}
-        onBlur={this.onMouseOut}
-      >
-        <div className={deleteClasses.join(" ")} onClick={this.handleDelete}>
-          <FontAwesomeIcon icon={faTrash} />
-        </div>
-        <div className={itemClasses.join(" ")} onClick={this.onClick}>
-          {this.props.item.text}
-        </div>
-      </li>
-    );
-  }
-
-  handleDelete(event) {
-    this.props.handleDelete(this.props.item.id);
-  }
-  onClick(event) {
-    this.props.onClick(this.props.item.id);
   }
   onMouseOver() {
     this.setState({
@@ -59,6 +23,46 @@ class Item extends React.Component {
       hover: false
     });
   }
+  render() {
+    const deleteClasses = ["delete"];
+    if (!this.state.hover) {
+      deleteClasses.push("disabled");
+    }
+
+    const itemClasses = ["item"];
+    if (this.props.item.completed) {
+      itemClasses.push("done");
+    }
+
+    return (
+      <li
+        onMouseOver={this.onMouseOver}
+        onFocus={this.onMouseOver}
+        onMouseOut={this.onMouseOut}
+        onBlur={this.onMouseOut}
+      >
+        <div
+          className={deleteClasses.join(" ")}
+          onClick={this.props.handleDelete}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </div>
+        <div className={itemClasses.join(" ")} onClick={this.props.onClick}>
+          {this.props.item.text}
+        </div>
+      </li>
+    );
+  }
 }
+
+Item.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired
+  }).isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
+};
 
 export default Item;
