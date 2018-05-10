@@ -1,21 +1,18 @@
-import * as React from "react";
+import { connect } from "react-redux";
+import TodoList from "../components/TodoList";
+import { toggleItem, reomveItem } from "../actions";
 
-import Item from "../components/Item";
-
-export default class ItemsContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const items = this.props.items.map(item => (
-      <Item
-        key={item.id}
-        item={item}
-        onClick={this.props.onItemClick}
-        handleDelete={this.props.handleDelete}
-      />
-    ));
-    return <ul id="list">{items}</ul>;
-  }
+function mapStateToProps(state) {
+  return state;
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onItemClick: id => dispatch(toggleItem(id)),
+    handleDelete: id => dispatch(reomveItem(id))
+  };
+}
+
+const ItemsContainer = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+
+export default ItemsContainer;
