@@ -16,7 +16,6 @@ function getVisibleItems(items, filter) {
 }
 
 function mapStateToProps(state) {
-  console.log(state.visibilityFilter);
   return {
     items: getVisibleItems(state.items, state.visibilityFilter)
   };
