@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Input from "../components/Input";
-import { addItem } from "../actions";
+import { addItem, VisibilityFilters } from "../actions";
 
 const InputContainer = props => (
   <Input
@@ -12,6 +12,19 @@ const InputContainer = props => (
   />
 );
 
+function getVisibleItems(items, filter) {
+  switch (filter) {
+    case VisibilityFilters.SHOW_ALL:
+      return items;
+    case VisibilityFilters.SHOW_ACTIVE:
+      return items.filter(item => !item.completed);
+    case VisibilityFilters.SHOW_COMPLETED:
+      return items.filter(item => item.completed);
+    default:
+      return items;
+  }
+}
+
 InputContainer.propTypes = {
   inputBottomBorder: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
@@ -19,7 +32,8 @@ InputContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    inputBottomBorder: state.items.length !== 0
+    inputBottomBorder:
+      getVisibleItems(state.items, state.visibilityFilter).length !== 0
   };
 }
 

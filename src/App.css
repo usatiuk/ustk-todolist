@@ -274,3 +274,27 @@ li:first-child .item {
     max-height: 0;
   }
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters {
+  align-self: center;
+  margin-right: 2rem;
+}
+
+.filter {
+  margin: 0.1rem;
+  padding: 0.5rem;
+  color: gray;
+  border: none;
+  background: none;
+  transition: 0.1s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.filter--active {
+  color: black;
+}
