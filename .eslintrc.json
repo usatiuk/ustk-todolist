@@ -8,6 +8,7 @@
         "allowTernary": true
       }
     ],
-    "no-console": "off"
+    "no-console": "off",
+    "no-underscore-dangle": ["on", { "allow": ["_id"] }]
   }
 }

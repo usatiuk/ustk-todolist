@@ -1,0 +1,32 @@
+const express = require("express");
+const mongoose = require("mongoose");
+
+const router = express.Router();
+
+const TodoList = mongoose.model("TodoList");
+
+const asyncHelper = require("../asyncHelper");
+
+// index
+router.get(
+  "/",
+  asyncHelper(async (req, res) => {
+    const lists = await TodoList.find({})
+      .populate("todos")
+      .exec();
+    res.json(lists);
+  })
+);
+
+// create
+router.post(
+  "/",
+  asyncHelper(async (req, res) => {
+    const { name } = req.body;
+    const newList = new TodoList({ name });
+    await newList.save();
+    res.json({ success: true });
+  })
+);
+
+module.exports = router;

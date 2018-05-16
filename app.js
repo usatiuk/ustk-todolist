@@ -20,6 +20,12 @@ mongoose.connect(process.env.MONGODB_URI);
 require('./models/Todo');
 require('./models/TodoList');
 
+const todos = require('./routes/todos');
+const lists = require('./routes/lists');
+
+app.use('/todos', todos);
+app.use('/lists', lists);
+
 // 404 route
 app.use((req, res) => {
   res.status(404);
@@ -35,6 +41,19 @@ app.use((req, res) => {
   }
 
   res.type('txt').send('not found');
+});
+
+// handle errors
+
+app.use((err, req, res, next) => {
+  if (err.name === 'ValidationError') {
+    res.status(400);
+    res.json({ success: false, error: err });
+  } else {
+    res.status(500);
+    res.json({ success: false, error: err });
+  }
+  next(err);
 });
 
 app.listen(process.env.PORT, () => {
