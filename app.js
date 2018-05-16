@@ -44,7 +44,6 @@ app.use((req, res) => {
 });
 
 // handle errors
-
 app.use((err, req, res, next) => {
   if (err.name === 'ValidationError') {
     res.status(400);
