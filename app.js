@@ -44,15 +44,21 @@ app.use((req, res) => {
 });
 
 // handle errors
-app.use((err, req, res, next) => {
-  if (err.name === 'ValidationError') {
-    res.status(400);
-    res.json({ success: false, error: err });
-  } else {
-    res.status(500);
-    res.json({ success: false, error: err });
+app.use((error, req, res, next) => {
+  switch (error.name) {
+    case 'ValidationError':
+      res.status(400);
+      res.json({ success: false, error });
+      break;
+    case 'NotFound':
+      res.status(404);
+      res.json({ success: false, error });
+      break;
+    default:
+      res.status(500);
+      res.json({ success: false, error });
   }
-  next(err);
+  next(error);
 });
 
 app.listen(process.env.PORT, () => {
