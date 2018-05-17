@@ -7,6 +7,10 @@ const todoListSchema = Schema({
     type: String,
     required: true,
   },
+  slug: {
+    type: String,
+    required: true,
+  },
   todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }],
 });
 
