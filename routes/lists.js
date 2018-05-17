@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const router = express.Router();
 
@@ -26,16 +27,17 @@ router.post(
   asyncHelper(async (req, res) => {
     const { name } = req.body;
     const newList = new TodoList({ name });
+    newList.slug = slugify(name);
     await newList.save();
     res.json({ success: true });
   }),
 );
 
 router.delete(
-  '/:id',
+  '/:slug',
   asyncHelper(async (req, res) => {
-    const { id } = req.params;
-    const list = await TodoList.findById(id)
+    const { slug } = req.params;
+    const list = await TodoList.findOne({ slug })
       .populate('todos')
       .exec();
     if (!list) {
