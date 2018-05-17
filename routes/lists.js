@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const slugify = require('slugify');
 
 const router = express.Router();
 
@@ -27,7 +26,6 @@ router.post(
   asyncHelper(async (req, res) => {
     const { name } = req.body;
     const newList = new TodoList({ name });
-    newList.slug = slugify(name);
     await newList.save();
     res.json({ success: true });
   }),

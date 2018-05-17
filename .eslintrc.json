@@ -9,6 +9,7 @@
       }
     ],
     "no-console": "off",
-    "no-underscore-dangle": ["warn", { "allow": ["_id"] }]
+    "no-underscore-dangle": ["warn", { "allow": ["_id"] }],
+    "func-names": "off"
   }
 }

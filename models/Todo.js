@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const todoSchema = Schema({
+const TodoSchema = Schema({
   text: {
     type: String,
     required: true,
@@ -11,4 +11,4 @@ const todoSchema = Schema({
   completed: { type: Boolean, default: false },
 });
 
-mongoose.model('Todo', todoSchema);
+mongoose.model('Todo', TodoSchema);
