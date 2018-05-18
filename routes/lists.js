@@ -31,6 +31,7 @@ router.post(
   }),
 );
 
+// delete
 router.delete(
   '/:slug',
   asyncHelper(async (req, res) => {
@@ -41,10 +42,7 @@ router.delete(
     if (!list) {
       throw new NotFoundError();
     }
-    list.todos.forEach((todo) => {
-      todo.remove();
-    });
-    list.remove();
+    await list.removeWithTodos();
     res.json({ success: true });
   }),
 );
