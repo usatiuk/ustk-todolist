@@ -1,30 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const methodOverride = require('method-override');
-const morgan = require('morgan');
-
 require('dotenv').config();
 
-const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.use(morgan('tiny'));
-
-app.use(methodOverride('_method'));
-
-mongoose.connect(process.env.MONGODB_URI);
+const config = require('./config');
+require('./config/db');
+const app = require('./config/app');
 
 require('./models/Todo');
 require('./models/TodoList');
 
-const todos = require('./routes/todos');
-const lists = require('./routes/lists');
-
-app.use('/todos', todos);
-app.use('/lists', lists);
+app.use('/todos', require('./routes/todos'));
+app.use('/lists', require('./routes/lists'));
 
 // 404 route
 app.use((req, res) => {
@@ -36,7 +20,7 @@ app.use((req, res) => {
   }
 
   if (req.accepts('json')) {
-    req.send({ error: 'Not found' });
+    res.send({ error: 'Not found' });
     return;
   }
 
@@ -61,6 +45,8 @@ app.use((error, req, res, next) => {
   next(error);
 });
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(config.app.port, () => {
   console.log('Started!');
 });
+
+module.exports = server;
