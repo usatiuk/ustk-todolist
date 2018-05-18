@@ -27,4 +27,11 @@ TodoListSchema.methods.slugify = function () {
   this.slug = slugify(this.name);
 };
 
+TodoListSchema.methods.removeWithTodos = function () {
+  this.todos.forEach((todo) => {
+    todo.remove();
+  });
+  this.remove();
+};
+
 mongoose.model('TodoList', TodoListSchema);
