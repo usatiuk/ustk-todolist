@@ -16,7 +16,7 @@ router.get(
     const lists = await TodoList.find({})
       .populate('todos')
       .exec();
-    res.json(lists);
+    res.json({ success: true, data: lists.map(list => list.toJson()) });
   }),
 );
 

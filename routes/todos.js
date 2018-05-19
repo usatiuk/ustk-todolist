@@ -7,13 +7,14 @@ const Todo = mongoose.model('Todo');
 
 const asyncHelper = require('../asyncHelper');
 
+const { NotFoundError } = require('../errors');
 // index
 router.get(
   '/',
   asyncHelper(async (req, res) => {
     const { listId } = res.locals;
     const todos = await Todo.find({ list: listId }).exec();
-    res.json(todos);
+    res.json({ success: true, data: todos.map(todo => todo.toJson()) });
   }),
 );
 
@@ -52,7 +53,11 @@ router.delete(
   '/:todoId',
   asyncHelper(async (req, res) => {
     const { todoId } = req.params;
-    await Todo.findByIdAndRemove(todoId).exec();
+    const todo = await Todo.findById(todoId).exec();
+    if (!todo) {
+      throw new NotFoundError('cant find todo');
+    }
+    await todo.remove();
     res.json({ success: true });
   }),
 );

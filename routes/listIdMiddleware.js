@@ -10,7 +10,7 @@ module.exports = asyncHelper(async (req, res, next) => {
   const { slug } = req.params;
   const list = await TodoList.findOne({ slug }).exec();
   if (!list) {
-    throw new NotFoundError();
+    throw new NotFoundError('cant find list');
   }
   res.locals.listId = list._id;
   next();
