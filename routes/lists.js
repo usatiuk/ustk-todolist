@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 
 const router = express.Router();
 
-const { NotFoundError } = require('../errors');
-
 const TodoList = mongoose.model('TodoList');
 
 const asyncHelper = require('../asyncHelper');
@@ -47,6 +45,27 @@ router.delete(
   }),
 );
 
+// update
+router.patch(
+  '/:slug',
+  listIdMiddleware,
+  asyncHelper(async (req, res) => {
+    const { listId } = res.locals;
+    const { name } = req.body;
+    const patch = {};
+    if (name) {
+      patch.name = name;
+    }
+    const list = await TodoList.findByIdAndUpdate(
+      { _id: listId },
+      { $set: patch },
+      { new: true },
+    ).exec();
+    await list.slugify();
+    await list.save();
+    res.json({ success: true });
+  }),
+);
 router.use('/:slug/todos', listIdMiddleware, require('./todos'));
 
 module.exports = router;

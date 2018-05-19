@@ -37,6 +37,10 @@ app.use((error, req, res, next) => {
       res.status(404);
       res.json({ success: false, error });
       break;
+    case 'BadRequestError':
+      res.status(400);
+      res.json({ success: false, error });
+      break;
     default:
       res.status(500);
       res.json({ success: false, error });
