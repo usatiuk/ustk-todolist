@@ -29,11 +29,29 @@ router.post(
   }),
 );
 
+// update
+router.patch(
+  '/:todoId',
+  asyncHelper(async (req, res) => {
+    const { todoId } = req.params;
+    const { text, completed } = req.body;
+    const patch = {};
+    if (text) {
+      patch.text = text;
+    }
+    if (completed) {
+      patch.completed = completed;
+    }
+    await Todo.update({ _id: todoId }, { $set: patch }).exec();
+    res.json({ success: true });
+  }),
+);
+
+// delete
 router.delete(
   '/:todoId',
   asyncHelper(async (req, res) => {
     const { todoId } = req.params;
-    console.log(todoId);
     await Todo.findByIdAndRemove(todoId).exec();
     res.json({ success: true });
   }),

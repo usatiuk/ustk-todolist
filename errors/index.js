@@ -6,4 +6,12 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = { NotFoundError };
+class BadRequestError extends Error {
+  constructor(...args) {
+    super(...args);
+    Error.captureStackTrace(this, NotFoundError);
+    this.name = 'BadRequest';
+  }
+}
+
+module.exports = { NotFoundError, BadRequestError };
