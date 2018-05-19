@@ -26,9 +26,9 @@ TodoSchema.pre('remove', async function () {
 
 TodoSchema.methods.toJson = function () {
   return {
-    id: this._id,
+    id: this._id.toString(),
     text: this.text,
-    list: this.list,
+    list: this.list.toString(),
   };
 };
 

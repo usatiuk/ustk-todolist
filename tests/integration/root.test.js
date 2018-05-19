@@ -3,6 +3,10 @@ const server = require('../../app.js');
 const request = require('supertest');
 const mongoose = require('mongoose');
 
+afterEach(async () => {
+  await mongoose.connection.dropDatabase();
+});
+
 afterAll(async () => {
   await mongoose.connection.dropDatabase();
   await mongoose.disconnect();
