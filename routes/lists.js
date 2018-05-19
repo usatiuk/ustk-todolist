@@ -9,6 +9,8 @@ const TodoList = mongoose.model('TodoList');
 
 const asyncHelper = require('../asyncHelper');
 
+const listIdMiddleware = require('./listIdMiddleware');
+
 // index
 router.get(
   '/',
@@ -34,16 +36,17 @@ router.post(
 // delete
 router.delete(
   '/:slug',
+  listIdMiddleware,
   asyncHelper(async (req, res) => {
-    const { slug } = req.params;
-    const list = await TodoList.findOne({ slug })
+    const { listId } = res.locals;
+    const list = await TodoList.findById(listId)
       .populate('todos')
       .exec();
-    if (!list) {
-      throw new NotFoundError();
-    }
-    await list.removeWithTodos();
+    await list.remove();
     res.json({ success: true });
   }),
 );
+
+router.use('/:slug/todos', listIdMiddleware, require('./todos'));
+
 module.exports = router;
