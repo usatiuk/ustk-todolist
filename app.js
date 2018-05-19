@@ -4,10 +4,9 @@ const config = require('./config');
 require('./config/db');
 const app = require('./config/app');
 
-require('./models/Todo');
 require('./models/TodoList');
+require('./models/Todo');
 
-app.use('/todos', require('./routes/todos'));
 app.use('/lists', require('./routes/lists'));
 
 // 404 route
