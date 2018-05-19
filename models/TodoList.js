@@ -36,7 +36,7 @@ TodoListSchema.pre('remove', async function () {
 TodoListSchema.methods.toJson = function () {
   const todos = this.populated('todos') ? this.todos.map(todo => todo.toJson()) : this.todos;
   return {
-    id: this._id,
+    id: this._id.toString(),
     name: this.name,
     slug: this.slug,
     todos,
