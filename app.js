@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const config = require('./config');
-require('./config/db');
+const db = require('./config/db');
 const app = require('./config/app');
 
 require('./models/TodoList');
@@ -48,11 +48,14 @@ app.use((error, req, res, next) => {
   next(error);
 });
 
-const server =
-  process.env.NODE_ENV !== 'TEST' || process.env.NODE_ENV !== 'test'
-    ? app.listen(config.app.port, () => {
-      console.log('Started!');
-    })
-    : app;
+let server;
+if (process.env.NODE_ENV !== 'test') {
+  db.connect();
+  server = app.listen(config.app.port, () => {
+    console.log('Started!');
+  });
+} else {
+  server = app;
+}
 
 module.exports = server;
