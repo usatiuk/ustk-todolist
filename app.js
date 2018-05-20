@@ -48,8 +48,11 @@ app.use((error, req, res, next) => {
   next(error);
 });
 
-const server = app.listen(config.app.port, () => {
-  console.log('Started!');
-});
+const server =
+  process.env.NODE_ENV !== 'TEST' || process.env.NODE_ENV !== 'test'
+    ? app.listen(config.app.port, () => {
+      console.log('Started!');
+    })
+    : app;
 
 module.exports = server;
