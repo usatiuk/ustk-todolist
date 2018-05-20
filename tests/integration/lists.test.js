@@ -3,6 +3,8 @@ const server = require('../../app.js');
 const request = require('supertest');
 const mongoose = require('mongoose');
 
+const db = require('../../config/db');
+
 const TodoList = mongoose.model('TodoList');
 const Todo = mongoose.model('Todo');
 
@@ -11,6 +13,8 @@ let listsPopulated;
 let todos;
 
 beforeEach(async () => {
+  await db.connect();
+
   // seed lists and todos
   const list1 = new TodoList({ name: 'List1' });
   const todo1 = new Todo({ text: 'Todo1', list: list1._id });
@@ -27,12 +31,12 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await mongoose.connection.dropDatabase();
+  await TodoList.remove({}).exec();
+  await Todo.remove({}).exec();
+  await db.disconnect();
 });
 
 afterAll(async () => {
-  await mongoose.connection.dropDatabase();
-  await mongoose.disconnect();
   await server.close();
 });
 

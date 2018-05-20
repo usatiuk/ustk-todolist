@@ -3,13 +3,22 @@ const server = require('../../app.js');
 const request = require('supertest');
 const mongoose = require('mongoose');
 
+const Todo = require('../../models/Todo');
+const TodoList = require('../../models/TodoList');
+
+const db = require('../../config/db');
+
+beforeEach(async () => {
+  await db.connect();
+});
+
 afterEach(async () => {
-  await mongoose.connection.dropDatabase();
+  await db.disconnect();
 });
 
 afterAll(async () => {
-  await mongoose.connection.dropDatabase();
-  await mongoose.disconnect();
+  await TodoList.remove({}).exec();
+  await Todo.remove({}).exec();
   await server.close();
 });
 
