@@ -8,8 +8,8 @@ export default function ItemsContainer(props) {
     <Item
       key={item.id}
       item={item}
-      onClick={() => props.onItemClick(item.id)}
-      handleDelete={() => props.handleDelete(item.id)}
+      onClick={() => props.onItemClick(item.list, item.id)}
+      handleDelete={() => props.handleDelete(item.list, item.id)}
     />
   ));
   return <ul id="list">{items}</ul>;
@@ -18,7 +18,7 @@ export default function ItemsContainer(props) {
 ItemsContainer.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired
     })
