@@ -8,7 +8,7 @@ import { addItem, VisibilityFilters } from "../actions";
 const InputContainer = props => (
   <Input
     inputBottomBorder={props.inputBottomBorder}
-    onClick={text => props.dispatch(addItem(text))}
+    onClick={text => props.dispatch(addItem(props.list, text))}
   />
 );
 
@@ -31,9 +31,20 @@ InputContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
+  const list = state.lists.list;
+  if (!list) {
+    return {
+      inputBottomBorder: false
+    };
+  }
+  const listItems = state.lists.lists[list].todos;
+  if (!listItems) {
+    return { list, inputBottomBorder: false };
+  }
   return {
+    list,
     inputBottomBorder:
-      getVisibleItems(state.items, state.visibilityFilter).length !== 0
+      getVisibleItems(listItems, state.visibilityFilter).length !== 0
   };
 }
 

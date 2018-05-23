@@ -1,13 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import "./index.css";
+import { createStore, applyMiddleware } from "redux";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import todoApp from "./reducers";
+import thunk from "redux-thunk";
+import { fetchLists } from "./actions";
 
-const store = createStore(todoApp);
+const store = createStore(todoApp, applyMiddleware(thunk));
+store.dispatch(fetchLists());
 
 ReactDOM.render(
   <Provider store={store}>
@@ -15,4 +17,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
 registerServiceWorker();
