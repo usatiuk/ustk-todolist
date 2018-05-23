@@ -12,7 +12,7 @@ const { NotFoundError } = require('../errors');
 router.get(
   '/',
   asyncHelper(async (req, res) => {
-    const { listId } = res.locals;
+    const { listId } = res.locals || req.body;
     const todos = await Todo.find({ list: listId }).exec();
     res.json({ success: true, data: todos.map(todo => todo.toJson()) });
   }),
@@ -22,11 +22,12 @@ router.get(
 router.post(
   '/',
   asyncHelper(async (req, res) => {
-    const { listId } = res.locals;
+    const { listId } = res.locals || req.body;
     const { text } = req.body;
+    console.log(req.body);
     const todo = new Todo({ text, list: listId });
     await todo.save();
-    res.json({ success: true });
+    res.json({ success: true, data: todo.toJson() });
   }),
 );
 
@@ -37,14 +38,21 @@ router.patch(
     const { todoId } = req.params;
     const { text, completed } = req.body;
     const patch = {};
-    if (text) {
+    if (text !== undefined) {
       patch.text = text;
     }
-    if (completed) {
+    if (completed !== undefined) {
       patch.completed = completed;
     }
-    await Todo.update({ _id: todoId }, { $set: patch }).exec();
-    res.json({ success: true });
+    const todo = await Todo.findByIdAndUpdate(
+      { _id: todoId },
+      { $set: patch },
+      { new: true },
+    ).exec();
+    if (!todo) {
+      throw new NotFoundError(`can't find todo with id ${todoId}`);
+    }
+    res.json({ success: true, data: todo.toJson() });
   }),
 );
 
@@ -55,7 +63,7 @@ router.delete(
     const { todoId } = req.params;
     const todo = await Todo.findById(todoId).exec();
     if (!todo) {
-      throw new NotFoundError('cant find todo');
+      throw new NotFoundError(`can't find todo with id ${todoId}`);
     }
     await todo.remove();
     res.json({ success: true });
