@@ -27,7 +27,7 @@ router.post(
     const { name } = req.body;
     const newList = new TodoList({ name });
     await newList.save();
-    res.json({ success: true });
+    res.json({ success: true, data: newList.toJson() });
   }),
 );
 
@@ -53,7 +53,7 @@ router.patch(
     const { listId } = res.locals;
     const { name } = req.body;
     const patch = {};
-    if (name) {
+    if (name !== undefined) {
       patch.name = name;
     }
     const list = await TodoList.findByIdAndUpdate(
@@ -63,7 +63,7 @@ router.patch(
     ).exec();
     await list.slugify();
     await list.save();
-    res.json({ success: true });
+    res.json({ success: true, data: list.toJson() });
   }),
 );
 router.use('/:slug/todos', listIdMiddleware, require('./todos'));

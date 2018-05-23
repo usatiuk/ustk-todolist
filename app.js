@@ -8,6 +8,7 @@ require('./models/TodoList');
 require('./models/Todo');
 
 app.use('/lists', require('./routes/lists'));
+app.use('/todos', require('./routes/todos'));
 
 // 404 route
 app.use((req, res) => {

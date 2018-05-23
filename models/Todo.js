@@ -29,6 +29,7 @@ TodoSchema.methods.toJson = function () {
     id: this._id.toString(),
     text: this.text,
     list: this.list.toString(),
+    completed: this.completed,
   };
 };
 
