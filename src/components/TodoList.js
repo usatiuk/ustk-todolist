@@ -1,7 +1,7 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import * as React from 'react';
+import PropTypes from 'prop-types';
 
-import Item from "./Item";
+import Item from './Item';
 
 export default function ItemsContainer(props) {
   const items = props.items.map(item => (
@@ -16,13 +16,11 @@ export default function ItemsContainer(props) {
 }
 
 ItemsContainer.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      completed: PropTypes.bool.isRequired
-    })
-  ).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+  })).isRequired,
   handleDelete: PropTypes.func.isRequired,
-  onItemClick: PropTypes.func.isRequired
+  onItemClick: PropTypes.func.isRequired,
 };

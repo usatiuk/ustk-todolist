@@ -1,9 +1,9 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import Input from "../components/Input";
-import { addItem, VisibilityFilters } from "../actions";
+import Input from '../components/Input';
+import { addItem, VisibilityFilters } from '../actions';
 
 const InputContainer = props => (
   <Input
@@ -26,15 +26,16 @@ function getVisibleItems(items, filter) {
 }
 
 InputContainer.propTypes = {
+  list: PropTypes.string.isRequired,
   inputBottomBorder: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  const list = state.lists.list;
+  const { list } = state.lists;
   if (!list) {
     return {
-      inputBottomBorder: false
+      inputBottomBorder: false,
     };
   }
   const listItems = state.lists.lists[list].todos;
@@ -43,8 +44,7 @@ function mapStateToProps(state) {
   }
   return {
     list,
-    inputBottomBorder:
-      getVisibleItems(listItems, state.visibilityFilter).length !== 0
+    inputBottomBorder: getVisibleItems(listItems, state.visibilityFilter).length !== 0,
   };
 }
 

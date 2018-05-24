@@ -1,5 +1,5 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import * as React from 'react';
+import PropTypes from 'prop-types';
 
 function Input(props) {
   let input;
@@ -7,13 +7,13 @@ function Input(props) {
   const classes = [];
 
   if (!props.inputBottomBorder) {
-    classes.push("no-border");
+    classes.push('no-border');
   }
 
   return (
-    <div id="inputs" className={classes.join(" ")}>
+    <div id="inputs" className={classes.join(' ')}>
       <input
-        ref={node => {
+        ref={(node) => {
           input = node;
         }}
         id="input"
@@ -28,7 +28,7 @@ function Input(props) {
 
 Input.propTypes = {
   inputBottomBorder: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Input;
