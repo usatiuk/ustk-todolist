@@ -138,21 +138,19 @@ export function changeList(list) {
 export function fetchLists() {
   return async (dispatch) => {
     dispatch(requestLists());
-    const listsJson = localStorage.getItem('lists');
-    let listsObj;
     try {
-      listsObj = JSON.parse(listsJson);
+      const listsJson = localStorage.getItem('lists');
+      const listsObj = JSON.parse(listsJson);
+      dispatch(recieveLists(listsObj));
+      dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
     } catch (e) {
       localStorage.setItem('lists', JSON.stringify({}));
     }
-    if (listsObj) {
-      dispatch(recieveLists(listsObj));
-      dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
-    }
+
     const response = await fetch(`${API_ROOT}/lists`);
     const json = await response.json();
     const lists = json.data;
-    listsObj = lists.reduce((obj, list) => {
+    const listsObj = lists.reduce((obj, list) => {
       const newObj = { ...obj };
       newObj[list.id] = list;
       return newObj;
