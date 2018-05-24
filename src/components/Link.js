@@ -1,17 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-
-import "../App.css";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Link({ active, onClick, children }) {
-  const classes = ["filter"];
+  const classes = ['filter'];
   if (active) {
-    classes.push("filter--active");
+    classes.push('filter--active');
   }
   return (
     <button
-      className={classes.join(" ")}
-      onClick={e => {
+      className={classes.join(' ')}
+      onClick={(e) => {
         e.preventDefault();
         onClick();
       }}
@@ -24,5 +22,5 @@ export default function Link({ active, onClick, children }) {
 Link.propTypes = {
   active: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

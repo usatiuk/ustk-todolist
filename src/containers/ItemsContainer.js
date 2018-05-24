@@ -1,6 +1,6 @@
-import { connect } from "react-redux";
-import TodoList from "../components/TodoList";
-import { toggleItem, removeItem, VisibilityFilters } from "../actions";
+import { connect } from 'react-redux';
+import TodoList from '../components/TodoList';
+import { toggleItem, removeItem, VisibilityFilters } from '../actions';
 
 function getVisibleItems(items, filter) {
   switch (filter) {
@@ -17,11 +17,11 @@ function getVisibleItems(items, filter) {
 
 function mapStateToProps(state) {
   const stub = {
-    list,
+    list: '',
     items: [],
-    dirty: true
+    dirty: true,
   };
-  const list = state.lists.list;
+  const { list } = state.lists;
   const listObj = state.lists.lists[list];
   if (!list) {
     return stub;
@@ -33,14 +33,14 @@ function mapStateToProps(state) {
   return {
     list,
     items: getVisibleItems(listItems, state.visibilityFilter),
-    dirty: listObj.dirty
+    dirty: listObj.dirty,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onItemClick: (list, id) => dispatch(toggleItem(list, id)),
-    handleDelete: (list, id) => dispatch(removeItem(list, id))
+    handleDelete: (list, id) => dispatch(removeItem(list, id)),
   };
 }
 
