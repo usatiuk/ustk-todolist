@@ -7,9 +7,9 @@ body {
   font-size: 1.75rem;
   font-weight: 500;
   margin: 1rem 1.5rem;
-  background-color: white;
-  appearance: none;
+  outline: none;
   border: none;
+  background: #fff;
 }
 
 #root {
