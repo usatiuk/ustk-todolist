@@ -24,7 +24,6 @@ router.post(
   asyncHelper(async (req, res) => {
     const { listId } = res.locals || req.body;
     const { text } = req.body;
-    console.log(req.body);
     const todo = new Todo({ text, list: listId });
     await todo.save();
     res.json({ success: true, data: todo.toJson() });
