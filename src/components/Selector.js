@@ -7,7 +7,6 @@ export default function Selector(props) {
       {list.name}
     </option>
   ));
-  console.log(props.list);
   return (
     <div>
       <select value={props.list} onChange={e => props.onChange(e.target.value)}>
