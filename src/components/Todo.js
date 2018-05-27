@@ -1,4 +1,4 @@
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -11,22 +11,46 @@ class Todo extends React.Component {
     };
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
+    this.startEdit = this.startEdit.bind(this);
+    this.stopEdit = this.stopEdit.bind(this);
   }
+
   onMouseOver() {
     this.setState({
+      ...this.state,
       hover: true,
     });
   }
-
   onMouseOut() {
     this.setState({
+      ...this.state,
       hover: false,
     });
   }
+
+  startEdit() {
+    this.setState({
+      ...this.state,
+      editing: true,
+    });
+  }
+  stopEdit(value) {
+    this.props.editTodo(value);
+    this.setState({
+      ...this.state,
+      editing: false,
+    });
+  }
+
   render() {
     const deleteClasses = ['delete'];
     if (!this.state.hover) {
       deleteClasses.push('disabled');
+    }
+
+    const editClasses = ['edit'];
+    if (!this.state.hover) {
+      editClasses.push('disabled');
     }
 
     const todoClasses = ['todo'];
@@ -34,6 +58,26 @@ class Todo extends React.Component {
       todoClasses.push('done');
     }
 
+    if (this.state.editing) {
+      let input;
+      return (
+        <li>
+          <div className="save" onClick={() => this.stopEdit(input.value)}>
+            <FontAwesomeIcon icon={faCheck} />
+          </div>
+          <div className={todoClasses.join(' ')}>
+            <input
+              className="todo--input"
+              type="text"
+              defaultValue={this.props.todo.text}
+              ref={(node) => {
+                input = node;
+              }}
+            />
+          </div>
+        </li>
+      );
+    }
     return (
       <li
         onMouseOver={this.onMouseOver}
@@ -41,10 +85,13 @@ class Todo extends React.Component {
         onMouseOut={this.onMouseOut}
         onBlur={this.onMouseOut}
       >
-        <div className={deleteClasses.join(' ')} onClick={this.props.handleDelete}>
+        <div className={deleteClasses.join(' ')} onClick={this.props.removeTodo}>
           <FontAwesomeIcon icon={faTrash} />
         </div>
-        <div className={todoClasses.join(' ')} onClick={this.props.onClick}>
+        <div className={editClasses.join(' ')} onClick={this.startEdit}>
+          <FontAwesomeIcon icon={faEdit} />
+        </div>
+        <div className={todoClasses.join(' ')} onClick={this.props.toggleTodo}>
           {this.props.todo.text}
         </div>
       </li>
@@ -58,8 +105,9 @@ Todo.propTypes = {
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
   }).isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
 };
 
 export default Todo;

@@ -8,8 +8,9 @@ export default function TodosContainer(props) {
     <Todo
       key={todo.id}
       todo={todo}
-      onClick={() => props.onTodoClick(todo.id)}
-      handleDelete={() => props.handleDelete(todo.id)}
+      toggleTodo={() => props.toggleTodo(todo.id)}
+      removeTodo={() => props.removeTodo(todo.id)}
+      editTodo={text => props.editTodo(todo.id, text)}
     />
   ));
   return <ul id="list">{todos}</ul>;
@@ -21,6 +22,7 @@ TodosContainer.propTypes = {
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
   })).isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  onTodoClick: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
 };

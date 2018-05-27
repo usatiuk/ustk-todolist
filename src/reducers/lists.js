@@ -14,13 +14,17 @@ import {
   ADD_LIST,
   REMOVE_LIST,
   EDIT_LIST,
+  EDIT_TODO,
 } from '../actions';
 
 import list from './list';
 
 export default function lists(
   state = {
-    dirty: true, fetching: false, lists: {}, list: '',
+    dirty: true,
+    fetching: false,
+    lists: {},
+    list: '',
   },
   action,
 ) {
@@ -70,6 +74,7 @@ export default function lists(
       };
     case RECIEVE_TODOS:
     case ADD_TODO:
+    case EDIT_TODO:
     case INVALIDATE_TODOS:
     case VALIDATE_TODOS:
     case REQUEST_TODOS:

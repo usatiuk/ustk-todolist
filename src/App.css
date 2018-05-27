@@ -102,7 +102,35 @@ li:first-child .item {
   font-size: 0.75rem;
   transition: 0.3s ease-in-out;
   overflow: hidden;
-  box-shadow: inset -3px 0 3px -3px rgba(0, 0, 0, 0.5);
+  box-shadow: inset -3px 0 6px -3px rgba(0, 0, 0, 0.5);
+}
+
+.edit {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: lightcyan;
+  border-top: 1px solid #dddddd;
+  max-width: 2rem;
+  font-size: 0.75rem;
+  transition: 0.3s ease-in-out;
+  overflow: hidden;
+  box-shadow: inset -3px 0 6px -3px rgba(0, 0, 0, 0.5);
+}
+
+.save {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: lightgreen;
+  border-top: 1px solid #dddddd;
+  max-width: 2rem;
+  font-size: 0.75rem;
+  transition: 0.3s ease-in-out;
+  overflow: hidden;
+  box-shadow: inset -3px 0 6px -3px rgba(0, 0, 0, 0.5);
 }
 
 .todo {
@@ -111,6 +139,18 @@ li:first-child .item {
   max-width: 100%;
   padding: 0.5rem;
   border-top: 1px solid #dddddd;
+  flex-grow: 2;
+  flex-shrink: 1;
+  transition: 0.1s ease-in-out;
+}
+
+.todo--input {
+  border: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  max-width: 100%;
   flex-grow: 2;
   flex-shrink: 1;
   transition: 0.1s ease-in-out;
