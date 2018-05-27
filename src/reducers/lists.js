@@ -4,22 +4,25 @@ import {
   VALIDATE_LISTS,
   REQUEST_LISTS,
   RECIEVE_TODOS,
-  ADD_ITEM,
+  ADD_TODO,
   INVALIDATE_TODOS,
   VALIDATE_TODOS,
   REQUEST_TODOS,
-  REMOVE_ITEM,
-  TOGGLE_ITEM,
+  REMOVE_TODO,
+  TOGGLE_TODO,
   RECIEVE_LISTS,
   ADD_LIST,
-  REMOVE_LIST
-} from "../actions";
+  REMOVE_LIST,
+  EDIT_LIST,
+} from '../actions';
 
-import list from "./list";
+import list from './list';
 
 export default function lists(
-  state = { dirty: true, fetching: false, lists: {} },
-  action
+  state = {
+    dirty: true, fetching: false, lists: {}, list: '',
+  },
+  action,
 ) {
   switch (action.type) {
     case CHANGE_LIST:
@@ -29,48 +32,55 @@ export default function lists(
         ...state,
         dirty: false,
         fetching: false,
-        lists: action.lists
+        lists: action.lists,
       };
     case ADD_LIST:
       return {
         ...state,
-        lists: { ...state.lists, [action.list.id]: action.list }
+        lists: { ...state.lists, [action.list.id]: action.list },
       };
-    case REMOVE_LIST:
+    case REMOVE_LIST: {
       const newLists = { ...state.lists };
-      delete newLists[action.list];
+      delete newLists[action.id];
       return {
         ...state,
-        lists: newLists
+        lists: newLists,
       };
+    }
+    case EDIT_LIST: {
+      return {
+        ...state,
+        lists: { ...state.lists, [action.id]: action.list },
+      };
+    }
     case INVALIDATE_LISTS:
       return {
         ...state,
-        dirty: true
+        dirty: true,
       };
     case VALIDATE_LISTS:
       return {
         ...state,
-        dirty: false
+        dirty: false,
       };
     case REQUEST_LISTS:
       return {
         ...state,
-        fetching: true
+        fetching: true,
       };
     case RECIEVE_TODOS:
-    case ADD_ITEM:
+    case ADD_TODO:
     case INVALIDATE_TODOS:
     case VALIDATE_TODOS:
     case REQUEST_TODOS:
-    case REMOVE_ITEM:
-    case TOGGLE_ITEM:
+    case REMOVE_TODO:
+    case TOGGLE_TODO:
       return {
         ...state,
         lists: {
           ...state.lists,
-          [action.list]: list(state.lists[action.list], action)
-        }
+          [state.list]: list(state.lists[state.list], action),
+        },
       };
     default:
       return state;

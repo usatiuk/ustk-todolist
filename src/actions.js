@@ -1,8 +1,9 @@
 const API_ROOT = 'http://localhost:4000';
 
-export const ADD_ITEM = 'ADD_ITEM';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
-export const TOGGLE_ITEM = 'TOGGLE_ITEM';
+export const ADD_TODO = 'ADD_TODO';
+export const REMOVE_TODO = 'REMOVE_TODO';
+export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const EDIT_TODO = 'EDIT_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 export const RECIEVE_TODOS = 'RECIEVE_TODOS';
 export const REQUEST_TODOS = 'REQUEST_TODOS';
@@ -15,8 +16,8 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE',
 };
 
-function toggleItemInList(list, id) {
-  return { type: TOGGLE_ITEM, list, id };
+function toggleTodoInList(id) {
+  return { type: TOGGLE_TODO, id };
 }
 
 export function setVisibilityFilter(filter) {
@@ -29,42 +30,45 @@ function requestTodos(list) {
 function recieveTodos(list, todos) {
   return { type: RECIEVE_TODOS, list, todos };
 }
-function invalidateTodos(list) {
-  return { type: INVALIDATE_TODOS, list };
+function invalidateTodos() {
+  return { type: INVALIDATE_TODOS };
 }
-function validateTodos(list) {
-  return { type: VALIDATE_TODOS, list };
-}
-
-function addTodoToList(list, todo) {
-  return { type: ADD_ITEM, list, todo };
+function validateTodos() {
+  return { type: VALIDATE_TODOS };
 }
 
-export function addItem(list, text) {
+function addTodoToList(todo) {
+  return { type: ADD_TODO, todo };
+}
+
+export function addTodo(text) {
   return async (dispatch, getState) => {
-    dispatch(invalidateTodos(list));
     const state = getState();
-    const response = await fetch(`${API_ROOT}/lists/${state.lists.lists[list].slug}/todos`, {
-      body: JSON.stringify({ text }),
-      headers: {
-        'content-type': 'application/json',
-      },
-      method: 'POST',
-    });
-    const json = await response.json();
-    const todo = json.data;
-    dispatch(addTodoToList(list, todo));
-    dispatch(validateTodos(list));
+    const { list } = state.lists;
+    if (list) {
+      dispatch(invalidateTodos());
+      const response = await fetch(`${API_ROOT}/lists/${list}/todos`, {
+        body: JSON.stringify({ text }),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      });
+      const json = await response.json();
+      const todo = json.data;
+      dispatch(addTodoToList(todo));
+      dispatch(validateTodos());
+    }
   };
 }
 
-function removeTodoFromList(list, id) {
-  return { type: REMOVE_ITEM, list, id };
+function removeTodoFromList(id) {
+  return { type: REMOVE_TODO, id };
 }
 
-export function removeItem(list, id) {
+export function removeTodo(id) {
   return async (dispatch) => {
-    dispatch(invalidateTodos(list));
+    dispatch(invalidateTodos());
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       headers: {
         'content-type': 'application/json',
@@ -73,17 +77,17 @@ export function removeItem(list, id) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(removeTodoFromList(list, id));
+      dispatch(removeTodoFromList(id));
     }
-    dispatch(validateTodos(list));
+    dispatch(validateTodos());
   };
 }
 
-export function toggleItem(list, id) {
+export function toggleTodo(id) {
   return async (dispatch, getState) => {
-    dispatch(invalidateTodos(list));
+    dispatch(invalidateTodos());
     const state = getState();
-    const listObj = state.lists.lists[list];
+    const listObj = state.lists.lists[state.lists.list];
     const todoObj = listObj.todos.find(todo => todo.id === id);
     const completed = !todoObj.completed;
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
@@ -95,16 +99,39 @@ export function toggleItem(list, id) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(toggleItemInList(list, id));
+      dispatch(toggleTodoInList(id));
     }
-    dispatch(validateTodos(list));
+    dispatch(validateTodos());
+  };
+}
+
+function editTodoInList(id, todo) {
+  return { type: EDIT_TODO, id, todo };
+}
+
+export function editTodo(id, text) {
+  return async (dispatch) => {
+    dispatch(invalidateTodos());
+    const response = await fetch(`${API_ROOT}/todos/${id}`, {
+      body: JSON.stringify({ text }),
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+    });
+    const json = await response.json();
+    if (json.success) {
+      const todo = json.data;
+      dispatch(editTodoInList(id, todo));
+    }
+    dispatch(validateTodos());
   };
 }
 
 export function fetchTodos(list) {
   return async (dispatch) => {
     dispatch(requestTodos(list));
-    const response = await fetch(`${API_ROOT}/todos`);
+    const response = await fetch(`${API_ROOT}/lists/${list.id}/todos`);
     const json = await response.json();
     const todos = json.data;
     dispatch(recieveTodos(list, todos));
@@ -113,6 +140,7 @@ export function fetchTodos(list) {
 
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
+export const EDIT_LIST = 'EDIT_LIST';
 export const RECIEVE_LISTS = 'RECIEVE_LISTS';
 export const REQUEST_LISTS = 'REQUEST_LISTS';
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS';
@@ -125,6 +153,7 @@ function requestLists() {
 function recieveLists(lists) {
   return { type: RECIEVE_LISTS, lists };
 }
+
 function invalidateLists() {
   return { type: INVALIDATE_LISTS };
 }
@@ -135,11 +164,83 @@ export function changeList(list) {
   return { type: CHANGE_LIST, list };
 }
 
+function addListToState(list) {
+  return { type: ADD_LIST, list };
+}
+
+export function addList(name) {
+  return async (dispatch) => {
+    dispatch(invalidateLists());
+    const response = await fetch(`${API_ROOT}/lists`, {
+      body: JSON.stringify({ name }),
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+    });
+    const json = await response.json();
+    const list = json.data;
+    dispatch(addListToState(list));
+    dispatch(changeList(list.id));
+    dispatch(validateLists());
+  };
+}
+
+function removeListFromState(id) {
+  return { type: REMOVE_LIST, id };
+}
+
+export function removeList(id) {
+  return async (dispatch, getState) => {
+    dispatch(invalidateLists());
+    const response = await fetch(`${API_ROOT}/lists/${id}`, {
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'DELETE',
+    });
+    const json = await response.json();
+    if (json.success) {
+      dispatch(removeListFromState(id));
+      const state = getState();
+      const list = state.lists.lists[Object.keys(state.lists.lists)[0]]
+        ? state.lists.lists[Object.keys(state.lists.lists)[0]].id
+        : '';
+      dispatch(changeList(list));
+    }
+    dispatch(validateLists());
+  };
+}
+
+function editListInState(id, list) {
+  return { type: EDIT_LIST, id, list };
+}
+
+export function editList(id, name) {
+  return async (dispatch) => {
+    dispatch(invalidateLists());
+    const response = await fetch(`${API_ROOT}/lists/${id}`, {
+      body: JSON.stringify({ name }),
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+    });
+    const json = await response.json();
+    if (json.success) {
+      const list = json.data;
+      dispatch(editListInState(id, list));
+    }
+    dispatch(validateLists());
+  };
+}
+
 export function fetchLists() {
   return async (dispatch) => {
     dispatch(requestLists());
+
     try {
-      const listsJson = localStorage.getItem('lists');
+      const listsJson = localStorage.getTodo('lists');
       const listsObj = JSON.parse(listsJson);
       dispatch(recieveLists(listsObj));
       dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
@@ -155,8 +256,11 @@ export function fetchLists() {
       newObj[list.id] = list;
       return newObj;
     }, {});
+
     dispatch(recieveLists(listsObj));
-    dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
+    if (lists.length !== 0) {
+      dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
+    }
     localStorage.setItem('lists', JSON.stringify(listsObj));
   };
 }

@@ -1,62 +1,58 @@
 import {
-  ADD_ITEM,
-  REMOVE_ITEM,
-  TOGGLE_ITEM,
+  ADD_TODO,
+  REMOVE_TODO,
+  TOGGLE_TODO,
   RECIEVE_TODOS,
   REQUEST_TODOS,
   INVALIDATE_TODOS,
-  VALIDATE_TODOS
-} from "../actions";
+  VALIDATE_TODOS,
+  EDIT_TODO,
+} from '../actions';
 
-export default function items(
-  state = { dirty: true, fetching: false, todos: [] },
-  action
-) {
+export default function todos(state = { dirty: true, fetching: false, todos: [] }, action) {
   switch (action.type) {
     case RECIEVE_TODOS:
       return {
         ...state,
         dirty: false,
         fetching: false,
-        todos: action.todos
+        todos: action.todos,
       };
-    case ADD_ITEM:
+    case ADD_TODO:
       return {
         ...state,
-        todos: [...state.todos, action.todo]
+        todos: [...state.todos, action.todo],
       };
     case INVALIDATE_TODOS:
       return {
         ...state,
-        dirty: true
+        dirty: true,
       };
     case VALIDATE_TODOS:
       return {
         ...state,
-        dirty: false
+        dirty: false,
+      };
+    case EDIT_TODO:
+      return {
+        ...state,
+        todos: state.todos.map(todo => (todo.id === action.id ? action.todo : todo)),
       };
     case REQUEST_TODOS:
       return {
         ...state,
-        fetching: true
+        fetching: true,
       };
-    case REMOVE_ITEM:
+    case REMOVE_TODO:
       return {
         ...state,
-        todos: state.todos.filter(item => item.id !== action.id)
+        todos: state.todos.filter(todo => todo.id !== action.id),
       };
-    case TOGGLE_ITEM: {
-      const itemsArray = [...state.todos];
-      itemsArray.some((item, i) => {
-        if (item.id === action.id) {
-          const newItem = { ...item };
-          newItem.completed = !item.completed;
-          itemsArray[i] = newItem;
-          return true;
-        }
-        return false;
-      });
-      return { ...state, todos: itemsArray };
+    case TOGGLE_TODO: {
+      return {
+        ...state,
+        todos: state.todos.map(todo => (todo.id === action.id ? { ...todo, completed: !todo.completed } : todo)),
+      };
     }
     default:
       return state;

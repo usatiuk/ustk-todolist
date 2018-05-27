@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-class Item extends React.Component {
+class Todo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,9 +29,9 @@ class Item extends React.Component {
       deleteClasses.push('disabled');
     }
 
-    const itemClasses = ['item'];
-    if (this.props.item.completed) {
-      itemClasses.push('done');
+    const todoClasses = ['todo'];
+    if (this.props.todo.completed) {
+      todoClasses.push('done');
     }
 
     return (
@@ -44,16 +44,16 @@ class Item extends React.Component {
         <div className={deleteClasses.join(' ')} onClick={this.props.handleDelete}>
           <FontAwesomeIcon icon={faTrash} />
         </div>
-        <div className={itemClasses.join(' ')} onClick={this.props.onClick}>
-          {this.props.item.text}
+        <div className={todoClasses.join(' ')} onClick={this.props.onClick}>
+          {this.props.todo.text}
         </div>
       </li>
     );
   }
 }
 
-Item.propTypes = {
-  item: PropTypes.shape({
+Todo.propTypes = {
+  todo: PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
@@ -62,4 +62,4 @@ Item.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default Item;
+export default Todo;
