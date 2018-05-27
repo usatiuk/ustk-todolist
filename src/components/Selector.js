@@ -7,20 +7,24 @@ export default function Selector(props) {
       {list.name}
     </option>
   ));
+  console.log(props.list);
   return (
     <div>
-      <select defaultValue={props.list} onChange={e => props.onChange(e.target.value)}>
+      <select value={props.list} onChange={e => props.onChange(e.target.value)}>
         {lists}
       </select>
     </div>
   );
 }
 
+Selector.defaultProps = {
+  list: '',
+};
+
 Selector.propTypes = {
   lists: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
   })).isRequired,
-  list: PropTypes.string.isRequired,
+  list: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import FilterLink from '../containers/FilterLink';
-import ListSelector from '../containers/ListSelector';
 import { VisibilityFilters } from '../actions';
+import ListsContainer from '../containers/ListsContainer';
 
 export default function Header() {
   return (
     <div className="header">
       <div id="listselector">
-        <ListSelector />
+        <ListsContainer />
       </div>
       <div className="filters">
         <FilterLink filter={VisibilityFilters.SHOW_ALL}>all</FilterLink>

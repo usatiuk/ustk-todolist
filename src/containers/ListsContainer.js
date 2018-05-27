@@ -1,16 +1,8 @@
 import { connect } from 'react-redux';
-import Selector from '../components/Selector';
-import { changeList } from '../actions';
+import Lists from '../components/Lists';
+import { changeList, removeList, addList } from '../actions';
 
 function mapStateToProps(state) {
-  const { list } = state.lists;
-  if (!list) {
-    return {
-      lists: [],
-      list: '',
-      dirty: state.lists.dirty,
-    };
-  }
   return {
     lists: Object.values(state.lists.lists),
     list: state.lists.list,
@@ -21,7 +13,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onChange: list => dispatch(changeList(list)),
+    addList: name => dispatch(addList(name)),
+    removeList: id => dispatch(removeList(id)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Selector);
+export default connect(mapStateToProps, mapDispatchToProps)(Lists);

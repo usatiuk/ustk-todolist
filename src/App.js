@@ -3,7 +3,7 @@ import 'normalize.css';
 import './App.css';
 
 import InputContainer from './containers/InputContainer';
-import ItemsContainer from './containers/ItemsContainer';
+import TodosContainer from './containers/TodosContainer';
 import Header from './components/Header';
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
     <div id="container">
       <Header />
       <InputContainer />
-      <ItemsContainer />
+      <TodosContainer />
     </div>
   );
 }
