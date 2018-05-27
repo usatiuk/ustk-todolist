@@ -45,12 +45,9 @@ class Todo extends React.Component {
 
   render() {
     const deleteClasses = ['delete'];
-    if (!this.state.hover) {
-      deleteClasses.push('disabled');
-    }
-
     const editClasses = ['edit'];
     if (!this.state.hover) {
+      deleteClasses.push('disabled');
       editClasses.push('disabled');
     }
 
@@ -59,25 +56,41 @@ class Todo extends React.Component {
       todoClasses.push('done');
     }
 
-    if (this.state.editing) {
-      let input;
-      return (
-        <animated.li style={this.props.style}>
-          <button className="save" onClick={() => this.stopEdit(input.value)}>
-            <FontAwesomeIcon icon={faCheck} />
-          </button>
-          <div className={todoClasses.join(' ')}>
-            <textarea
-              className="todo--input"
-              defaultValue={this.props.todo.text}
-              ref={(node) => {
-                input = node;
-              }}
-            />
-          </div>
-        </animated.li>
-      );
-    }
+    let input;
+
+    const text = this.state.editing ? (
+      <div className={todoClasses.join(' ')}>
+        <textarea
+          className="todo--input"
+          defaultValue={this.props.todo.text}
+          ref={(node) => {
+            input = node;
+          }}
+        />
+      </div>
+    ) : (
+      <button className={todoClasses.join(' ')} onClick={this.props.toggleTodo}>
+        {this.props.todo.text}
+      </button>
+    );
+    const buttons = this.state.editing
+      ? [
+        <animated.button key="save" className="save" onClick={() => this.stopEdit(input.value)}>
+          <FontAwesomeIcon icon={faCheck} />
+        </animated.button>,
+      ]
+      : [
+        <animated.button
+          key="remove"
+          className={deleteClasses.join(' ')}
+          onClick={this.props.removeTodo}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </animated.button>,
+        <animated.button key="edit" className={editClasses.join(' ')} onClick={this.startEdit}>
+          <FontAwesomeIcon icon={faEdit} />
+        </animated.button>,
+      ];
     return (
       <animated.li
         style={this.props.style}
@@ -86,15 +99,8 @@ class Todo extends React.Component {
         onMouseOut={this.onMouseOut}
         onBlur={this.onMouseOut}
       >
-        <button className={deleteClasses.join(' ')} onClick={this.props.removeTodo}>
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-        <button className={editClasses.join(' ')} onClick={this.startEdit}>
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
-        <button className={todoClasses.join(' ')} onClick={this.props.toggleTodo}>
-          {this.props.todo.text}
-        </button>
+        {buttons}
+        {text}
       </animated.li>
     );
   }
