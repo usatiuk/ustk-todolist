@@ -18,6 +18,7 @@ export default function TodosContainer(props) {
   return (
     <ul id="list">
       <Transition
+        native
         keys={props.todos.map(todo => todo.id)}
         from={{ maxHeight: 0 }}
         enter={{ maxHeight: 100 }}
