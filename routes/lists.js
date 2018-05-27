@@ -7,8 +7,6 @@ const TodoList = mongoose.model('TodoList');
 
 const asyncHelper = require('../asyncHelper');
 
-const listIdMiddleware = require('./listIdMiddleware');
-
 // index
 router.get(
   '/',
@@ -33,10 +31,9 @@ router.post(
 
 // delete
 router.delete(
-  '/:slug',
-  listIdMiddleware,
+  '/:listId',
   asyncHelper(async (req, res) => {
-    const { listId } = res.locals;
+    const { listId } = req.params;
     const list = await TodoList.findById(listId)
       .populate('todos')
       .exec();
@@ -47,10 +44,9 @@ router.delete(
 
 // update
 router.patch(
-  '/:slug',
-  listIdMiddleware,
+  '/:listId',
   asyncHelper(async (req, res) => {
-    const { listId } = res.locals;
+    const { listId } = req.params;
     const { name } = req.body;
     const patch = {};
     if (name !== undefined) {
@@ -61,11 +57,17 @@ router.patch(
       { $set: patch },
       { new: true },
     ).exec();
-    await list.slugify();
     await list.save();
     res.json({ success: true, data: list.toJson() });
   }),
 );
-router.use('/:slug/todos', listIdMiddleware, require('./todos'));
+router.use(
+  '/:listId/todos',
+  (req, res, next) => {
+    res.locals.listId = req.params.listId;
+    next();
+  },
+  require('./todos'),
+);
 
 module.exports = router;
