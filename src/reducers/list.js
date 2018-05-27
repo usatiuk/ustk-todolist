@@ -21,7 +21,7 @@ export default function todos(state = { dirty: true, fetching: false, todos: [] 
     case ADD_TODO:
       return {
         ...state,
-        todos: [...state.todos, action.todo],
+        todos: [action.todo, ...state.todos],
       };
     case INVALIDATE_TODOS:
       return {
