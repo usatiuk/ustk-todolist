@@ -10,6 +10,11 @@ function Input(props) {
     classes.push('no-border');
   }
 
+  function submit() {
+    props.onClick(input.value);
+    input.value = '';
+  }
+
   return (
     <div id="inputs" className={classes.join(' ')}>
       <input
@@ -19,7 +24,7 @@ function Input(props) {
         id="input"
         type="text"
       />
-      <button id="add" onClick={() => props.onClick(input.value)}>
+      <button id="add" onClick={() => submit()}>
         add
       </button>
     </div>
