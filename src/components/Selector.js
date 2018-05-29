@@ -8,7 +8,7 @@ export default function Selector(props) {
     </option>
   ));
   return (
-    <div>
+    <div id="listselector">
       <select value={props.list} onChange={e => props.onChange(e.target.value)}>
         {lists}
       </select>

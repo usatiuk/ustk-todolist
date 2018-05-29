@@ -13,8 +13,8 @@ import {
   RECIEVE_LISTS,
   ADD_LIST,
   REMOVE_LIST,
-  EDIT_LIST,
   EDIT_TODO,
+  EDIT_LIST_NAME,
 } from '../actions';
 
 import list from './list';
@@ -51,10 +51,10 @@ export default function lists(
         lists: newLists,
       };
     }
-    case EDIT_LIST: {
+    case EDIT_LIST_NAME: {
       return {
         ...state,
-        lists: { ...state.lists, [action.id]: action.list },
+        lists: { ...state.lists, [action.id]: { ...state.lists[action.id], name: action.name } },
       };
     }
     case INVALIDATE_LISTS:

@@ -140,7 +140,7 @@ export function fetchTodos(list) {
 
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
-export const EDIT_LIST = 'EDIT_LIST';
+export const EDIT_LIST_NAME = 'EDIT_LIST_NAME';
 export const RECIEVE_LISTS = 'RECIEVE_LISTS';
 export const REQUEST_LISTS = 'REQUEST_LISTS';
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS';
@@ -212,8 +212,8 @@ export function removeList(id) {
   };
 }
 
-function editListInState(id, list) {
-  return { type: EDIT_LIST, id, list };
+function editListNameInState(id, name) {
+  return { type: EDIT_LIST_NAME, id, name };
 }
 
 export function editList(id, name) {
@@ -228,8 +228,7 @@ export function editList(id, name) {
     });
     const json = await response.json();
     if (json.success) {
-      const list = json.data;
-      dispatch(editListInState(id, list));
+      dispatch(editListNameInState(id, name));
     }
     dispatch(validateLists());
   };
