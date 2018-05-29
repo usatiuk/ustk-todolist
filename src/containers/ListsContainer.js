@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Lists from '../components/Lists';
-import { changeList, removeList, addList } from '../actions';
+import { changeList, removeList, addList, editList } from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -15,6 +15,7 @@ function mapDispatchToProps(dispatch) {
     onChange: list => dispatch(changeList(list)),
     addList: name => dispatch(addList(name)),
     removeList: id => dispatch(removeList(id)),
+    editList: (id, name) => dispatch(editList(id, name)),
   };
 }
 
