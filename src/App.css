@@ -1,4 +1,6 @@
 body {
+  background: white;
+  color: black;
   font-family: "Trebuchet MS";
   user-select: none;
 }
@@ -44,6 +46,7 @@ body {
 }
 
 #listselector select {
+  color: black;
   font-size: 1.5rem;
   font-weight: 500;
   outline: none;
@@ -75,6 +78,8 @@ body {
 }
 
 #input {
+  color: black;
+  background: white;
   font-family: "Trebuchet MS";
   box-sizing: border-box;
   font-size: 1rem;
@@ -88,6 +93,7 @@ body {
 }
 
 #add {
+  color: black;
   font-size: 1rem;
   font-weight: 700;
   flex-grow: 1;
@@ -117,6 +123,7 @@ li:first-child .todo {
 }
 
 li button {
+  color: black;
   outline: none;
   text-align: left;
   flex-shrink: 0;
@@ -170,12 +177,15 @@ li {
   width: 100%;
   padding: 0.5rem;
   border-top: 1px solid #dddddd;
+  font-weight: 500;
   flex-grow: 2;
   flex-shrink: 1;
   transition: 0.3s ease-in-out;
 }
 
 .todo--input {
+  background: white;
+  color: black;
   resize: none;
   border: none;
   margin: 0;
@@ -200,10 +210,11 @@ li {
   border: none;
   background: none;
   transition: 0.3s ease-in-out;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .filter--active {
+  font-weight: 700;
   color: black;
-  font-size: 1rem;
 }
