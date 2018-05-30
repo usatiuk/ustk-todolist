@@ -6,12 +6,14 @@ const router = express.Router();
 const TodoList = mongoose.model('TodoList');
 
 const asyncHelper = require('../asyncHelper');
+const auth = require('./auth');
+const { NotFoundError } = require('../errors');
 
 // index
 router.get(
   '/',
   asyncHelper(async (req, res) => {
-    const lists = await TodoList.find({})
+    const lists = await TodoList.find({ user: req.user.id })
       .populate('todos')
       .exec();
     res.json({ success: true, data: lists.map(list => list.toJson()) });
@@ -23,7 +25,7 @@ router.post(
   '/',
   asyncHelper(async (req, res) => {
     const { name } = req.body;
-    const newList = new TodoList({ name });
+    const newList = new TodoList({ name, user: req.user.id });
     await newList.save();
     res.json({ success: true, data: newList.toJson() });
   }),
@@ -34,7 +36,7 @@ router.delete(
   '/:listId',
   asyncHelper(async (req, res) => {
     const { listId } = req.params;
-    const list = await TodoList.findById(listId)
+    const list = await TodoList.find({ _id: listId, user: req.user.id })
       .populate('todos')
       .exec();
     await list.remove();
@@ -48,15 +50,13 @@ router.patch(
   asyncHelper(async (req, res) => {
     const { listId } = req.params;
     const { name } = req.body;
-    const patch = {};
-    if (name !== undefined) {
-      patch.name = name;
+    const list = await TodoList.find({ _id: listId, user: req.user.id });
+    if (!list) {
+      throw new NotFoundError("can't find list");
     }
-    const list = await TodoList.findByIdAndUpdate(
-      { _id: listId },
-      { $set: patch },
-      { new: true },
-    ).exec();
+    if (name !== undefined) {
+      list.name = name;
+    }
     await list.save();
     res.json({ success: true, data: list.toJson() });
   }),

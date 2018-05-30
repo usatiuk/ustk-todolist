@@ -11,15 +11,8 @@ const dev = {
   },
   secret: process.env.DEV_SECRET || 'devsecret',
 };
+
 const test = {
-  app: {
-    port: process.env.TEST_APP_PORT || 4001,
-  },
-  db: {
-    host: process.env.TEST_DB_HOST || 'localhost',
-    port: process.env.TEST_DB_PORT || 27017,
-    name: process.env.TEST_DB_NAME || 'todolistTest',
-  },
   secret: process.env.TEST_SECRET || 'testsecret',
 };
 

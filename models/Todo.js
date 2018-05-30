@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-const TodoList = mongoose.model('TodoList');
 const { Schema } = mongoose;
 
 const TodoSchema = Schema({
@@ -9,17 +8,26 @@ const TodoSchema = Schema({
     required: true,
   },
   list: { type: Schema.Types.ObjectId, ref: 'TodoList', required: true },
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   completed: { type: Boolean, default: false },
 });
 
 TodoSchema.pre('save', async function () {
-  const list = await TodoList.findById(this.list);
+  const user = await this.model('User').findById(this.user);
+  user.todos.push(this._id);
+  await user.save();
+
+  const list = await this.model('TodoList').findById(this.list);
   list.todos.push(this._id);
   await list.save();
 });
 
 TodoSchema.pre('remove', async function () {
-  const list = await TodoList.findById(this.list);
+  const user = await this.model('User').findById(this.user);
+  user.todos.splice(user.todos.indexOf(this._id), 1);
+  await user.save();
+
+  const list = await this.model('TodoList').findById(this.list);
   list.todos.splice(list.todos.indexOf(this._id), 1);
   await list.save();
 });
@@ -29,6 +37,7 @@ TodoSchema.methods.toJson = function () {
     id: this._id.toString(),
     text: this.text,
     list: this.list.toString(),
+    user: this.user.toString(),
     completed: this.completed,
   };
 };

@@ -4,29 +4,40 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const db = require('../../config/db');
-const { secret } = require('../../config');
-
+const Todo = mongoose.model('Todo');
+const TodoList = mongoose.model('TodoList');
 const User = mongoose.model('User');
+
+jest.setTimeout(60000);
+const MongoDBMemoryServer = require('mongodb-memory-server').default;
+const { seed, clean } = require('./utils');
+const { secret } = require('../../config');
 
 let user;
 let token;
+let list;
+let todo;
+let mongoServer;
+
+beforeAll(async () => {
+  mongoServer = new MongoDBMemoryServer();
+  const mongoUri = await mongoServer.getConnectionString();
+  await mongoose.connect(mongoUri);
+});
 
 beforeEach(async () => {
-  await db.connect();
-
-  user = new User({ username: 'User' });
-  await user.setPassword('password');
-  await user.save();
-  token = user.generateJwt();
+  ({
+    user, token, list, todo,
+  } = await seed());
 });
 
 afterEach(async () => {
-  await User.remove({}).exec();
-  await db.disconnect();
+  await clean();
 });
 
 afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
   await server.close();
 });
 
@@ -35,8 +46,8 @@ describe('test users', () => {
     const response = await request(server)
       .post('/users')
       .send({
-        username: 'User 2',
-        password: 'password 2',
+        username: 'User2',
+        password: 'password2',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -44,8 +55,8 @@ describe('test users', () => {
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
     const tokenDecoded = jwt.verify(response.body.data.jwt, secret);
-    expect(tokenDecoded.username).toEqual('User 2');
-    const userAuth = await User.authenticate()('User 2', 'password 2');
+    expect(tokenDecoded.username).toEqual('User2');
+    const userAuth = await User.authenticate()('User2', 'password2');
     expect(userAuth.user).toBeTruthy();
   });
   test('should not create user with no username', async () => {
@@ -53,7 +64,7 @@ describe('test users', () => {
       .post('/users')
       .send({
         username: '',
-        password: 'password 2',
+        password: 'password2',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -78,8 +89,8 @@ describe('test users', () => {
     const response = await request(server)
       .post('/users/login')
       .send({
-        username: 'User',
-        password: 'password',
+        username: 'User1',
+        password: 'password1',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -87,7 +98,7 @@ describe('test users', () => {
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
     const tokenDecoded = jwt.verify(response.body.data.jwt, secret);
-    expect(tokenDecoded.username).toEqual('User');
+    expect(tokenDecoded.username).toEqual('User1');
   });
   test('should not login user with no name', async () => {
     await request(server)
@@ -115,7 +126,7 @@ describe('test users', () => {
     const response = await request(server)
       .patch('/users/user')
       .send({
-        username: 'User 2',
+        username: 'User2',
         password: 'password2',
       })
       .set('Authorization', `Bearer ${token}`)
@@ -125,15 +136,15 @@ describe('test users', () => {
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
     const tokenDecoded = jwt.verify(response.body.data.jwt, secret);
-    expect(tokenDecoded.username).toEqual('User 2');
-    const userAuth = await User.authenticate()('User 2', 'password2');
+    expect(tokenDecoded.username).toEqual('User2');
+    const userAuth = await User.authenticate()('User2', 'password2');
     expect(userAuth.user).toBeTruthy();
   });
   test('should not update user without authentication', async () => {
     const response = await request(server)
       .patch('/users/user')
       .send({
-        username: 'User 2',
+        username: 'User2',
         password: 'password2',
       })
       .set('Content-Type', 'application/json')
@@ -148,7 +159,7 @@ describe('test users', () => {
       .set('Accept', 'application/json')
       .expect(401);
     expect(response.body.success).toBeFalsy();
-    expect(await User.findOne({ username: 'User' }).exec()).toBeTruthy();
+    expect(await User.findOne({ username: 'User1' }).exec()).toBeTruthy();
   });
   test('should delete user', async () => {
     const response = await request(server)
@@ -159,6 +170,6 @@ describe('test users', () => {
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
-    expect(await User.findOne({ username: 'User' }).exec()).toBeFalsy();
+    expect(await User.findOne({ username: 'User1' }).exec()).toBeFalsy();
   });
 });
