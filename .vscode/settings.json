@@ -2,4 +2,5 @@
   "editor.tabSize": 2,
   "prettier.eslintIntegration": true,
   "editor.insertSpaces": true,
+  "jest.pathToJest": "npm test --"
 }

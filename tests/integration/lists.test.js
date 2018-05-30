@@ -3,65 +3,57 @@ const server = require('../../app.js');
 const request = require('supertest');
 const mongoose = require('mongoose');
 
-const db = require('../../config/db');
-
-const TodoList = mongoose.model('TodoList');
 const Todo = mongoose.model('Todo');
+const TodoList = mongoose.model('TodoList');
+const User = mongoose.model('User');
 
-let lists;
-let listsPopulated;
-let todos;
+jest.setTimeout(60000);
+const MongoDBMemoryServer = require('mongodb-memory-server').default;
+const { seed, clean } = require('./utils');
+
+let user;
+let token;
+let list;
+let todo;
+let mongoServer;
+
+beforeAll(async () => {
+  mongoServer = new MongoDBMemoryServer();
+  const mongoUri = await mongoServer.getConnectionString();
+  await mongoose.connect(mongoUri);
+});
 
 beforeEach(async () => {
-  await db.connect();
-
-  // seed lists and todos
-  const list1 = new TodoList({ name: 'List1' });
-  const todo1 = new Todo({ text: 'Todo1', list: list1._id });
-  const todo2 = new Todo({ text: 'Todo2', list: list1._id });
-
-  await list1.save();
-  await todo1.save();
-  await todo2.save();
-  lists = await TodoList.find({}).exec();
-  listsPopulated = await TodoList.find({})
-    .populate('todos')
-    .exec();
-  todos = await Todo.find({}).exec();
+  ({
+    user, token, list, todo,
+  } = await seed());
 });
 
 afterEach(async () => {
-  await TodoList.remove({}).exec();
-  await Todo.remove({}).exec();
-  await db.disconnect();
+  await clean();
 });
 
 afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
   await server.close();
 });
 
 describe('test lists', () => {
-  test('should index lists', async () => {
-    const response = await request(server)
+  test('should not index lists without authentication', async () => {
+    await request(server)
       .get('/lists')
       .set('Accept', 'application/json')
-      .expect(200)
-      .expect('Content-Type', 'application/json; charset=utf-8');
-    expect(response.body.success).toBe(true);
-    expect(response.body.data).toBeInstanceOf(Array);
-    expect(response.body.data).toEqual(listsPopulated.map(list => list.toJson()));
+      .expect(401);
   });
-  test('should create list', async () => {
-    const response = await request(server)
+  test('should not create list without authentication', async () => {
+    await request(server)
       .post('/lists')
       .send({
         name: 'List2',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .expect(200)
-      .expect('Content-Type', 'application/json; charset=utf-8');
-    expect(response.body.success).toBeTruthy();
-    expect(await TodoList.findOne({ name: 'List2' })).toBeTruthy();
+      .expect(401);
   });
 });

@@ -6,23 +6,26 @@ const cors = require('cors');
 const config = require('./config');
 const db = require('./config/db');
 
+require('./models/TodoList');
+require('./models/User');
+require('./models/Todo');
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-require('./models/User');
-require('./models/TodoList');
-require('./models/Todo');
-
 const passport = require('./config/passport');
 
 app.use(passport.initialize());
 
-app.use('/lists', require('./routes/lists'));
-app.use('/todos', require('./routes/todos'));
 app.use('/users', require('./routes/users'));
+
+const auth = require('./routes/auth');
+
+app.use('/lists', auth.required, require('./routes/lists'));
+app.use('/todos', auth.required, require('./routes/todos'));
 
 // 404 route
 app.use((req, res) => {

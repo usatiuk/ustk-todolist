@@ -31,7 +31,11 @@ router.patch(
     if (username !== undefined) {
       patch.username = username;
     }
-    const user = await User.findByIdAndUpdate(req.user.id, { $set: patch }, { new: true }).exec();
+    const user = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: patch },
+      { runValidators: true, context: 'query', new: true },
+    ).exec();
     if (!user) {
       throw new NotFoundError(`can't find user with username ${req.user.username}`);
     }

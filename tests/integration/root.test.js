@@ -3,26 +3,43 @@ const server = require('../../app.js');
 const request = require('supertest');
 const mongoose = require('mongoose');
 
-const Todo = require('../../models/Todo');
-const TodoList = require('../../models/TodoList');
+const Todo = mongoose.model('Todo');
+const TodoList = mongoose.model('TodoList');
+const User = mongoose.model('User');
 
-const db = require('../../config/db');
+jest.setTimeout(60000);
+const MongoDBMemoryServer = require('mongodb-memory-server').default;
+const { seed, clean } = require('./utils');
+
+let user;
+let token;
+let list;
+let todo;
+let mongoServer;
+
+beforeAll(async () => {
+  mongoServer = new MongoDBMemoryServer();
+  const mongoUri = await mongoServer.getConnectionString();
+  await mongoose.connect(mongoUri);
+});
 
 beforeEach(async () => {
-  await db.connect();
+  ({
+    user, token, list, todo,
+  } = await seed());
 });
 
 afterEach(async () => {
-  await db.disconnect();
+  await clean();
 });
 
 afterAll(async () => {
-  await TodoList.remove({}).exec();
-  await Todo.remove({}).exec();
+  await mongoose.disconnect();
+  await mongoServer.stop();
   await server.close();
 });
 
-describe('Test not found', () => {
+describe('test not found', () => {
   test('respond not found with json', async () => {
     const response = await request(server)
       .get('/')
