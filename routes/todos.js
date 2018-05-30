@@ -43,11 +43,7 @@ router.patch(
     if (completed !== undefined) {
       patch.completed = completed;
     }
-    const todo = await Todo.findByIdAndUpdate(
-      { _id: todoId },
-      { $set: patch },
-      { new: true },
-    ).exec();
+    const todo = await Todo.findByIdAndUpdate(todoId, { $set: patch }, { new: true }).exec();
     if (!todo) {
       throw new NotFoundError(`can't find todo with id ${todoId}`);
     }

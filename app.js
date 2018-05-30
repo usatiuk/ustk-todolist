@@ -1,14 +1,28 @@
 require('dotenv').config();
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
 const config = require('./config');
 const db = require('./config/db');
-const app = require('./config/app');
 
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use(morgan('dev'));
+
+require('./models/User');
 require('./models/TodoList');
 require('./models/Todo');
 
+const passport = require('./config/passport');
+
+app.use(passport.initialize());
+
 app.use('/lists', require('./routes/lists'));
 app.use('/todos', require('./routes/todos'));
+app.use('/users', require('./routes/users'));
 
 // 404 route
 app.use((req, res) => {
@@ -31,15 +45,17 @@ app.use((req, res) => {
 app.use((error, req, res, next) => {
   switch (error.name) {
     case 'ValidationError':
+    case 'MissingPasswordError':
+    case 'BadRequestError':
       res.status(400);
+      res.json({ success: false, error });
+      break;
+    case 'UnauthorizedError':
+      res.status(401);
       res.json({ success: false, error });
       break;
     case 'NotFound':
       res.status(404);
-      res.json({ success: false, error });
-      break;
-    case 'BadRequestError':
-      res.status(400);
       res.json({ success: false, error });
       break;
     default:

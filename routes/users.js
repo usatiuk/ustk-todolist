@@ -1,0 +1,63 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
+
+const User = mongoose.model('User');
+
+const router = express.Router();
+
+const asyncHelper = require('../asyncHelper');
+const auth = require('./auth');
+
+const { NotFoundError } = require('../errors');
+
+router.post(
+  '/',
+  asyncHelper(async (req, res) => {
+    const { username, password } = req.body;
+    const user = new User({ username });
+    await user.setPassword(password);
+    await user.save();
+    res.json({ success: true, data: user.toAuthJson() });
+  }),
+);
+
+router.patch(
+  '/user',
+  auth.required,
+  asyncHelper(async (req, res) => {
+    const { username, password } = req.body;
+    const patch = {};
+    if (username !== undefined) {
+      patch.username = username;
+    }
+    const user = await User.findByIdAndUpdate(req.user.id, { $set: patch }, { new: true }).exec();
+    if (!user) {
+      throw new NotFoundError(`can't find user with username ${req.user.username}`);
+    }
+    if (password !== undefined) {
+      await user.setPassword(password);
+      await user.save();
+    }
+    res.json({ success: true, data: user.toAuthJson() });
+  }),
+);
+
+router.delete(
+  '/user',
+  auth.required,
+  asyncHelper(async (req, res) => {
+    await User.findByIdAndRemove(req.user.id).exec();
+    res.json({ success: true });
+  }),
+);
+
+router.post(
+  '/login',
+  passport.authenticate('local', { session: false }),
+  asyncHelper(async (req, res) => {
+    res.json({ success: true, data: req.user.toAuthJson() });
+  }),
+);
+
+module.exports = router;
