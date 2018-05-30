@@ -9,6 +9,7 @@ const dev = {
     port: process.env.DEV_DB_PORT || 27017,
     name: process.env.DEV_DB_NAME || 'todolist',
   },
+  secret: process.env.DEV_SECRET || 'devsecret',
 };
 const test = {
   app: {
@@ -19,6 +20,7 @@ const test = {
     port: process.env.TEST_DB_PORT || 27017,
     name: process.env.TEST_DB_NAME || 'todolistTest',
   },
+  secret: process.env.TEST_SECRET || 'testsecret',
 };
 
 const config = {
