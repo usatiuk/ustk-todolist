@@ -13,10 +13,7 @@ const MongoDBMemoryServer = require('mongodb-memory-server').default;
 const { seed, clean } = require('./utils');
 const { secret } = require('../../config');
 
-let user;
 let token;
-let list;
-let todo;
 let mongoServer;
 
 beforeAll(async () => {
@@ -26,9 +23,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  ({
-    user, token, list, todo,
-  } = await seed());
+  ({ token } = await seed());
 });
 
 afterEach(async () => {
@@ -160,6 +155,8 @@ describe('test users', () => {
       .expect(401);
     expect(response.body.success).toBeFalsy();
     expect(await User.findOne({ username: 'User1' }).exec()).toBeTruthy();
+    expect(await TodoList.findOne({ name: 'List1' }).exec()).toBeTruthy();
+    expect(await Todo.findOne({ text: 'Todo1' })).toBeTruthy();
   });
   test('should delete user', async () => {
     const response = await request(server)
@@ -171,5 +168,7 @@ describe('test users', () => {
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
     expect(await User.findOne({ username: 'User1' }).exec()).toBeFalsy();
+    expect(await TodoList.findOne({ name: 'List1' }).exec()).toBeFalsy();
+    expect(await Todo.findOne({ text: 'Todo1' }).exec()).toBeFalsy();
   });
 });

@@ -12,16 +12,22 @@ const TodoListSchema = Schema({
 });
 
 TodoListSchema.pre('save', async function () {
-  const user = await this.model('User').findById(this.user);
-  user.lists.push(this._id);
-  await user.save();
+  if (this.isNew) {
+    const user = await this.model('User').findById(this.user);
+    user.lists.push(this._id);
+    await user.save();
+  }
 });
 
 TodoListSchema.pre('remove', async function () {
   const user = await this.model('User').findById(this.user);
-  user.lists.splice(user.todos.indexOf(this._id), 1);
+  user.lists.splice(user.lists.indexOf(this._id), 1);
   await user.save();
-  await this.model('Todo').remove({ list: this._id });
+
+  const todos = await this.model('Todo')
+    .find({ list: this._id })
+    .exec();
+  await Promise.all(todos.map(todo => todo.remove()));
 });
 
 TodoListSchema.methods.toJson = function () {

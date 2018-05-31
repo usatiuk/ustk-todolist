@@ -4,7 +4,6 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 
 const Todo = mongoose.model('Todo');
-const TodoList = mongoose.model('TodoList');
 const User = mongoose.model('User');
 
 jest.setTimeout(60000);
@@ -39,29 +38,29 @@ afterAll(async () => {
   await server.close();
 });
 
-describe('test lists', () => {
-  test('should index lists', async () => {
+describe('test todos', () => {
+  test('should index todos', async () => {
     const response = await request(server)
-      .get('/lists')
+      .get(`/lists/${list._id}/todos`)
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
-    expect(response.body.data[0].name).toEqual('List1');
+    expect(response.body.data[0].text).toEqual('Todo1');
   });
-  test('should not index lists without authentication', async () => {
+  test('should not index todos without authentication', async () => {
     await request(server)
-      .get('/lists')
+      .get(`/lists/${list._id}/todos`)
       .set('Accept', 'application/json')
       .expect(401);
   });
-  test('should create list', async () => {
+  test('should create todo', async () => {
     const response = await request(server)
-      .post('/lists')
+      .post(`/lists/${list._id}/todos`)
       .send({
-        name: 'List2',
+        text: 'Todo2',
       })
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
@@ -69,25 +68,27 @@ describe('test lists', () => {
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
-    expect(await TodoList.findOne({ name: 'List2' })).toBeTruthy();
+    expect(await Todo.findOne({ text: 'Todo2', list: list._id })).toBeTruthy();
     const freshUser = await User.findById(user.id).exec();
-    expect(freshUser.lists).toContain(response.body.data.id);
+    expect(freshUser.todos).toContain(response.body.data.id);
+    const freshList = await User.findById(user.id).exec();
+    expect(freshList.todos).toContain(response.body.data.id);
   });
-  test('should not create list without authentication', async () => {
+  test('should not create todo without authentication', async () => {
     await request(server)
-      .post('/lists')
+      .post(`/lists/${list._id}/todos`)
       .send({
-        name: 'List2',
+        text: 'Todo1',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
   });
-  test('should update list', async () => {
+  test('should update todo', async () => {
     const response = await request(server)
-      .patch(`/lists/${list._id}`)
+      .patch(`/lists/${list._id}/todos/${todo._id}`)
       .send({
-        name: 'List2',
+        text: 'Todo2',
       })
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
@@ -95,44 +96,42 @@ describe('test lists', () => {
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
-    expect(await TodoList.findOne({ name: 'List2' })).toBeTruthy();
+    expect(await Todo.findOne({ text: 'Todo2' })).toBeTruthy();
+    expect(await Todo.findOne({ text: 'Todo1' })).toBeFalsy();
   });
-  test('should not update list without authentication', async () => {
+  test('should not update todo without authentication', async () => {
     await request(server)
-      .patch(`/lists/${list._id}`)
+      .patch(`/lists/${list._id}/todos/${todo._id}`)
       .send({
-        name: 'List2',
+        text: 'Todo2',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
-    expect(await TodoList.findOne({ name: 'List2' })).toBeFalsy();
+    expect(await Todo.findOne({ text: 'Todo1' })).toBeTruthy();
+    expect(await Todo.findOne({ text: 'Todo2' })).toBeFalsy();
   });
-  test('should remove list', async () => {
+  test('should remove todo', async () => {
     const response = await request(server)
-      .delete(`/lists/${list._id}`)
+      .delete(`/lists/${list._id}/todos/${todo._id}`)
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
     expect(response.body.success).toBeTruthy();
-    expect(await TodoList.findOne({ name: 'List1' }).exec()).toBeFalsy();
     expect(await Todo.findOne({ text: 'Todo1' }).exec()).toBeFalsy();
     const freshUser = await User.findById(user.id).exec();
-    expect(freshUser.lists).not.toContain(list._id);
-    expect(freshUser.todos).not.toContain(todo._id);
+    expect(freshUser.todos).not.toContain(todo.id);
+    const freshList = await User.findById(user.id).exec();
+    expect(freshList.todos).not.toContain(todo.id);
   });
-  test('should not remove list without authentication', async () => {
+  test('should not remove todo without authentication', async () => {
     await request(server)
-      .delete(`/lists/${list._id}`)
+      .delete(`/lists/${list._id}/todos/${todo._id}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
-    expect(await TodoList.findOne({ name: 'List1' }).exec()).toBeTruthy();
     expect(await Todo.findOne({ text: 'Todo1' }).exec()).toBeTruthy();
-    const freshUser = await User.findById(user.id).exec();
-    expect(freshUser.lists).toContain(list._id);
-    expect(freshUser.todos).toContain(todo._id);
   });
 });

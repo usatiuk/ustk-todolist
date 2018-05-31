@@ -6,7 +6,6 @@ const router = express.Router();
 const TodoList = mongoose.model('TodoList');
 
 const asyncHelper = require('../asyncHelper');
-const auth = require('./auth');
 const { NotFoundError } = require('../errors');
 
 // index
@@ -36,9 +35,7 @@ router.delete(
   '/:listId',
   asyncHelper(async (req, res) => {
     const { listId } = req.params;
-    const list = await TodoList.find({ _id: listId, user: req.user.id })
-      .populate('todos')
-      .exec();
+    const list = await TodoList.findOne({ _id: listId, user: req.user.id }).exec();
     await list.remove();
     res.json({ success: true });
   }),
@@ -50,7 +47,7 @@ router.patch(
   asyncHelper(async (req, res) => {
     const { listId } = req.params;
     const { name } = req.body;
-    const list = await TodoList.find({ _id: listId, user: req.user.id });
+    const list = await TodoList.findOne({ _id: listId, user: req.user.id });
     if (!list) {
       throw new NotFoundError("can't find list");
     }

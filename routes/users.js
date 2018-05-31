@@ -51,7 +51,8 @@ router.delete(
   '/user',
   auth.required,
   asyncHelper(async (req, res) => {
-    await User.findByIdAndRemove(req.user.id).exec();
+    const user = await User.findById(req.user.id).exec();
+    await user.remove();
     res.json({ success: true });
   }),
 );
