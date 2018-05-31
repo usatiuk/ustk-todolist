@@ -13,13 +13,15 @@ const TodoSchema = Schema({
 });
 
 TodoSchema.pre('save', async function () {
-  const user = await this.model('User').findById(this.user);
-  user.todos.push(this._id);
-  await user.save();
+  if (this.isNew) {
+    const user = await this.model('User').findById(this.user);
+    user.todos.push(this._id);
+    await user.save();
 
-  const list = await this.model('TodoList').findById(this.list);
-  list.todos.push(this._id);
-  await list.save();
+    const list = await this.model('TodoList').findById(this.list);
+    list.todos.push(this._id);
+    await list.save();
+  }
 });
 
 TodoSchema.pre('remove', async function () {

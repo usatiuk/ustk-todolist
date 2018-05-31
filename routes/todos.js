@@ -36,7 +36,7 @@ router.patch(
   asyncHelper(async (req, res) => {
     const { todoId } = req.params;
     const { text, completed } = req.body;
-    const todo = await Todo.find({ _id: todoId, user: req.user.id });
+    const todo = await Todo.findOne({ _id: todoId, user: req.user.id });
     if (!todo) {
       throw new NotFoundError("can't find todo");
     }
@@ -46,6 +46,7 @@ router.patch(
     if (completed !== undefined) {
       todo.completed = completed;
     }
+    await todo.save();
     res.json({ success: true, data: todo.toJson() });
   }),
 );
@@ -55,7 +56,7 @@ router.delete(
   '/:todoId',
   asyncHelper(async (req, res) => {
     const { todoId } = req.params;
-    const todo = await Todo.find({ _id: todoId, user: req.user.id }).exec();
+    const todo = await Todo.findOne({ _id: todoId, user: req.user.id }).exec();
     if (!todo) {
       throw new NotFoundError(`can't find todo with id ${todoId}`);
     }
