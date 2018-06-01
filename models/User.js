@@ -15,6 +15,7 @@ const UserSchema = Schema({
     validate: /^\S*$/,
     minLength: 3,
     maxLength: 50,
+    trim: true,
   },
   lists: [{ type: Schema.Types.ObjectId, ref: 'TodoList' }],
   todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }],
@@ -35,7 +36,7 @@ UserSchema.pre('remove', async function () {
 });
 
 UserSchema.methods.generateJwt = function () {
-  return jwt.sign({ id: this._id, username: this.username }, secret, { expiresIn: '6m' });
+  return jwt.sign({ id: this._id, username: this.username }, secret, { expiresIn: '120d' });
 };
 
 UserSchema.methods.toJson = function () {
