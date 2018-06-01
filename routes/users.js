@@ -11,6 +11,16 @@ const auth = require('./auth');
 
 const { NotFoundError } = require('../errors');
 
+router.get(
+  '/user',
+  auth.required,
+  asyncHelper(async (req, res) => {
+    const { id } = req.user;
+    const user = await User.findById(id).exec();
+    res.json({ success: true, data: user.toJson() });
+  }),
+);
+
 router.post(
   '/',
   asyncHelper(async (req, res) => {

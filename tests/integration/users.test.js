@@ -14,6 +14,7 @@ const { seed, clean } = require('./utils');
 const { secret } = require('../../config');
 
 let token;
+let user;
 let mongoServer;
 
 beforeAll(async () => {
@@ -23,7 +24,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  ({ token } = await seed());
+  ({ token, user } = await seed());
 });
 
 afterEach(async () => {
@@ -37,6 +38,18 @@ afterAll(async () => {
 });
 
 describe('test users', () => {
+  test('should get user', async () => {
+    const response = await request(server)
+      .get('/users/user')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect('Content-Type', 'application/json; charset=utf-8');
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.data.id).toBe(user._id.toString());
+    expect(response.body.data.username).toBe(user.username);
+  });
   test('should create user', async () => {
     const response = await request(server)
       .post('/users')

@@ -32,6 +32,13 @@ UserSchema.methods.generateJwt = function () {
   return jwt.sign({ id: this._id, username: this.username }, secret, { expiresIn: '6m' });
 };
 
+UserSchema.methods.toJson = function () {
+  return {
+    id: this._id,
+    username: this.username,
+  };
+};
+
 UserSchema.methods.toAuthJson = function () {
   return {
     id: this._id,
