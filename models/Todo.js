@@ -6,6 +6,8 @@ const TodoSchema = Schema({
   text: {
     type: String,
     required: true,
+    minLength: 1,
+    maxLength: 300,
   },
   list: { type: Schema.Types.ObjectId, ref: 'TodoList', required: true },
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },

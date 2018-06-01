@@ -13,6 +13,8 @@ const UserSchema = Schema({
     required: true,
     unique: true,
     validate: /^\S*$/,
+    minLength: 3,
+    maxLength: 50,
   },
   lists: [{ type: Schema.Types.ObjectId, ref: 'TodoList' }],
   todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }],
