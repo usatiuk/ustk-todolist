@@ -20,12 +20,12 @@ const passport = require('./config/passport');
 
 app.use(passport.initialize());
 
-app.use('/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
 
 const auth = require('./routes/auth');
 
-app.use('/lists', auth.required, require('./routes/lists'));
-app.use('/todos', auth.required, require('./routes/todos'));
+app.use('/api/lists', auth.required, require('./routes/lists'));
+app.use('/api/todos', auth.required, require('./routes/todos'));
 
 // 404 route
 app.use((req, res) => {
