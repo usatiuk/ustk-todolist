@@ -26,9 +26,9 @@ export default function lists(
   state = {
     dirty: true,
     fetching: false,
-    lists: {},
+    lists: null,
     creating: false,
-    list: '',
+    list: null,
   },
   action,
 ) {

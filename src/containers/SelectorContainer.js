@@ -3,15 +3,16 @@ import Selector from '../components/Selector';
 import { changeList, addList, editList } from '../actions/lists';
 
 function mapStateToProps(state) {
-  const editing = state.lists.lists[state.lists.list]
-    ? state.lists.lists[state.lists.list].editing
-    : false;
+  const editing =
+    state.lists.list && !state.lists.dirty
+      ? state.lists.lists[state.lists.list].editing
+      : false;
   return {
-    lists: Object.values(state.lists.lists),
-    listObjs: state.lists,
+    lists: state.lists,
     list: state.lists.list,
     editing,
     creating: state.lists.creating,
+    dirty: state.lists.dirty,
   };
 }
 
