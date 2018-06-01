@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 const config = require('./');
 
 async function connect() {
-  const { host, port, name } = config.db;
-  const connectionString = `mongodb://${host}:${port}/${name}`;
-
-  await mongoose.connect(connectionString);
+  await mongoose.connect(config.db.uri);
 }
 
 async function disconnect() {

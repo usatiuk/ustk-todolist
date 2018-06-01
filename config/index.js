@@ -5,9 +5,7 @@ const dev = {
     port: process.env.DEV_APP_PORT || 4000,
   },
   db: {
-    host: process.env.DEV_DB_HOST || 'localhost',
-    port: process.env.DEV_DB_PORT || 27017,
-    name: process.env.DEV_DB_NAME || 'todolist',
+    uri: process.env.DEV_DB_URI || 'mongodb://localhost/todolist',
   },
   secret: process.env.DEV_SECRET || 'devsecret',
 };
