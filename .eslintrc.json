@@ -14,7 +14,8 @@
       {
         "allowTernary": true
       }
-    ]
+    ],
+    "max-len": "off"
   },
   "env": {
     "browser": true

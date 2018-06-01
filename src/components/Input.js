@@ -4,19 +4,13 @@ import PropTypes from 'prop-types';
 function Input(props) {
   let input;
 
-  const classes = [];
-
-  if (!props.inputBottomBorder) {
-    classes.push('no-border');
-  }
-
   function submit() {
     props.onClick(input.value);
     input.value = '';
   }
 
   return (
-    <div id="inputs" className={classes.join(' ')}>
+    <div id="inputs">
       <input
         ref={(node) => {
           input = node;
@@ -32,7 +26,6 @@ function Input(props) {
 }
 
 Input.propTypes = {
-  inputBottomBorder: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

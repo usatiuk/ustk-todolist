@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Lists from '../components/Lists';
-import { changeList, removeList, addList, editList } from '../actions';
+import { changeList, removeList, addList, editList } from '../actions/lists';
 
 function mapStateToProps(state) {
   return {
