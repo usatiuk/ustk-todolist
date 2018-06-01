@@ -1,11 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-export default function Link({ active, onClick, children }) {
-  const classes = ['filter'];
-  if (active) {
-    classes.push('filter--active');
-  }
+import { logout } from '../actions/user';
+
+function Link({ onClick, children }) {
+  const classes = ['logout'];
   return (
     <button
       className={classes.join(' ')}
@@ -20,7 +20,14 @@ export default function Link({ active, onClick, children }) {
 }
 
 Link.propTypes = {
-  active: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onClick: () => dispatch(logout()),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Link);

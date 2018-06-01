@@ -1,4 +1,4 @@
-import { VisibilityFilters } from '../actions';
+import { VisibilityFilters } from '../actions/todos';
 
 export default function getVisibleTodos(todos, filter) {
   switch (filter) {

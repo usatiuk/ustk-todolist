@@ -3,17 +3,15 @@ import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import App from './App';
+import AppContainer from './containers/AppContainer';
 import registerServiceWorker from './registerServiceWorker';
 import todoApp from './reducers';
-import { fetchLists } from './actions';
 
 const store = createStore(todoApp, applyMiddleware(thunk));
-store.dispatch(fetchLists());
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <AppContainer />
   </Provider>,
   document.getElementById('root'),
 );

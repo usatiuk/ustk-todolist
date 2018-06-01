@@ -3,20 +3,21 @@ import {
   INVALIDATE_LISTS,
   VALIDATE_LISTS,
   REQUEST_LISTS,
-  RECIEVE_TODOS,
+  RECIEVE_LISTS,
+  ADD_LIST,
+  REMOVE_LIST,
+  EDIT_LIST_NAME,
+} from '../actions/lists';
+import {
   ADD_TODO,
   INVALIDATE_TODOS,
   VALIDATE_TODOS,
   REQUEST_TODOS,
+  RECIEVE_TODOS,
   REMOVE_TODO,
   TOGGLE_TODO,
-  RECIEVE_LISTS,
-  ADD_LIST,
-  REMOVE_LIST,
   EDIT_TODO,
-  EDIT_LIST_NAME,
-} from '../actions';
-
+} from '../actions/todos';
 import list from './list';
 
 export default function lists(

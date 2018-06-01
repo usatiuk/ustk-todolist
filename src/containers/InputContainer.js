@@ -1,22 +1,7 @@
 import { connect } from 'react-redux';
 
 import Input from '../components/Input';
-import { addTodo } from '../actions';
-import getVisibleTodos from './getVisibleTodos';
-
-function mapStateToProps(state) {
-  const { list } = state.lists;
-  try {
-    const listTodos = state.lists.lists[list].todos;
-    return {
-      inputBottomBorder: getVisibleTodos(listTodos, state.visibilityFilter).length !== 0,
-    };
-  } catch (e) {
-    return {
-      inputBottomBorder: false,
-    };
-  }
-}
+import { addTodo } from '../actions/todos';
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -24,4 +9,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
+export default connect(null, mapDispatchToProps)(Input);

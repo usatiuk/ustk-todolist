@@ -7,9 +7,12 @@ import {
   INVALIDATE_TODOS,
   VALIDATE_TODOS,
   EDIT_TODO,
-} from '../actions';
+} from '../actions/todos';
 
-export default function todos(state = { dirty: true, fetching: false, todos: [] }, action) {
+export default function todos(
+  state = { dirty: true, fetching: false, todos: [] },
+  action,
+) {
   switch (action.type) {
     case RECIEVE_TODOS:
       return {
@@ -51,7 +54,10 @@ export default function todos(state = { dirty: true, fetching: false, todos: [] 
     case TOGGLE_TODO: {
       return {
         ...state,
-        todos: state.todos.map(todo => (todo.id === action.id ? { ...todo, completed: !todo.completed } : todo)),
+        todos: state.todos.map(todo =>
+          (todo.id === action.id
+            ? { ...todo, completed: !todo.completed }
+            : todo)),
       };
     }
     default:
