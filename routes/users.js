@@ -17,7 +17,7 @@ router.get(
   asyncHelper(async (req, res) => {
     const { id } = req.user;
     const user = await User.findById(id).exec();
-    res.json({ success: true, data: user.toJson() });
+    res.json({ success: true, data: user.toAuthJson() });
   }),
 );
 
