@@ -42,7 +42,7 @@ afterAll(async () => {
 describe('test lists', () => {
   test('should index lists', async () => {
     const response = await request(server)
-      .get('/lists')
+      .get('/api/lists')
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -53,13 +53,13 @@ describe('test lists', () => {
   });
   test('should not index lists without authentication', async () => {
     await request(server)
-      .get('/lists')
+      .get('/api/lists')
       .set('Accept', 'application/json')
       .expect(401);
   });
   test('should create list', async () => {
     const response = await request(server)
-      .post('/lists')
+      .post('/api/lists')
       .send({
         name: 'List2',
       })
@@ -75,7 +75,7 @@ describe('test lists', () => {
   });
   test('should not create list without authentication', async () => {
     await request(server)
-      .post('/lists')
+      .post('/api/lists')
       .send({
         name: 'List2',
       })
@@ -85,7 +85,7 @@ describe('test lists', () => {
   });
   test('should update list', async () => {
     const response = await request(server)
-      .patch(`/lists/${list._id}`)
+      .patch(`/api/lists/${list._id}`)
       .send({
         name: 'List2',
       })
@@ -99,7 +99,7 @@ describe('test lists', () => {
   });
   test('should not update list without authentication', async () => {
     await request(server)
-      .patch(`/lists/${list._id}`)
+      .patch(`/api/lists/${list._id}`)
       .send({
         name: 'List2',
       })
@@ -110,7 +110,7 @@ describe('test lists', () => {
   });
   test('should remove list', async () => {
     const response = await request(server)
-      .delete(`/lists/${list._id}`)
+      .delete(`/api/lists/${list._id}`)
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -125,7 +125,7 @@ describe('test lists', () => {
   });
   test('should not remove list without authentication', async () => {
     await request(server)
-      .delete(`/lists/${list._id}`)
+      .delete(`/api/lists/${list._id}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);

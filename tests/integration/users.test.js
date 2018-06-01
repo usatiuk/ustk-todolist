@@ -40,7 +40,7 @@ afterAll(async () => {
 describe('test users', () => {
   test('should get user', async () => {
     const response = await request(server)
-      .get('/users/user')
+      .get('/api/users/user')
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -52,7 +52,7 @@ describe('test users', () => {
   });
   test('should create user', async () => {
     const response = await request(server)
-      .post('/users')
+      .post('/api/users')
       .send({
         username: 'User2',
         password: 'password2',
@@ -69,7 +69,7 @@ describe('test users', () => {
   });
   test('should not create user with no username', async () => {
     const response = await request(server)
-      .post('/users')
+      .post('/api/users')
       .send({
         username: '',
         password: 'password2',
@@ -82,7 +82,7 @@ describe('test users', () => {
   });
   test('should not create user with no password', async () => {
     const response = await request(server)
-      .post('/users')
+      .post('/api/users')
       .send({
         username: 'User',
         password: '',
@@ -95,7 +95,7 @@ describe('test users', () => {
   });
   test('should login user', async () => {
     const response = await request(server)
-      .post('/users/login')
+      .post('/api/users/login')
       .send({
         username: 'User1',
         password: 'password1',
@@ -110,7 +110,7 @@ describe('test users', () => {
   });
   test('should not login user with no name', async () => {
     await request(server)
-      .post('/users/login')
+      .post('/api/users/login')
       .send({
         username: '',
         password: 'notpassword',
@@ -121,7 +121,7 @@ describe('test users', () => {
   });
   test('should not login user with wrong password', async () => {
     await request(server)
-      .post('/users/login')
+      .post('/api/users/login')
       .send({
         username: 'User',
         password: 'notpassword',
@@ -132,7 +132,7 @@ describe('test users', () => {
   });
   test('should update user', async () => {
     const response = await request(server)
-      .patch('/users/user')
+      .patch('/api/users/user')
       .send({
         username: 'User2',
         password: 'password2',
@@ -150,7 +150,7 @@ describe('test users', () => {
   });
   test('should not update user without authentication', async () => {
     const response = await request(server)
-      .patch('/users/user')
+      .patch('/api/users/user')
       .send({
         username: 'User2',
         password: 'password2',
@@ -162,7 +162,7 @@ describe('test users', () => {
   });
   test('should not delete user without authentication', async () => {
     const response = await request(server)
-      .delete('/users/user')
+      .delete('/api/users/user')
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
@@ -173,7 +173,7 @@ describe('test users', () => {
   });
   test('should delete user', async () => {
     const response = await request(server)
-      .delete('/users/user')
+      .delete('/api/users/user')
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')

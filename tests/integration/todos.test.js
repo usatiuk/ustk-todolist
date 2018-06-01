@@ -42,7 +42,7 @@ afterAll(async () => {
 describe('test todos', () => {
   test('should index todos', async () => {
     const response = await request(server)
-      .get(`/lists/${list._id}/todos`)
+      .get(`/api/lists/${list._id}/todos`)
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -53,13 +53,13 @@ describe('test todos', () => {
   });
   test('should not index todos without authentication', async () => {
     await request(server)
-      .get(`/lists/${list._id}/todos`)
+      .get(`/api/lists/${list._id}/todos`)
       .set('Accept', 'application/json')
       .expect(401);
   });
   test('should create todo', async () => {
     const response = await request(server)
-      .post(`/lists/${list._id}/todos`)
+      .post(`/api/lists/${list._id}/todos`)
       .send({
         text: 'Todo2',
       })
@@ -77,7 +77,7 @@ describe('test todos', () => {
   });
   test('should not create todo without authentication', async () => {
     await request(server)
-      .post(`/lists/${list._id}/todos`)
+      .post(`/api/lists/${list._id}/todos`)
       .send({
         text: 'Todo1',
       })
@@ -87,7 +87,7 @@ describe('test todos', () => {
   });
   test('should update todo', async () => {
     const response = await request(server)
-      .patch(`/lists/${list._id}/todos/${todo._id}`)
+      .patch(`/api/lists/${list._id}/todos/${todo._id}`)
       .send({
         text: 'Todo2',
       })
@@ -102,7 +102,7 @@ describe('test todos', () => {
   });
   test('should not update todo without authentication', async () => {
     await request(server)
-      .patch(`/lists/${list._id}/todos/${todo._id}`)
+      .patch(`/api/lists/${list._id}/todos/${todo._id}`)
       .send({
         text: 'Todo2',
       })
@@ -114,7 +114,7 @@ describe('test todos', () => {
   });
   test('should remove todo', async () => {
     const response = await request(server)
-      .delete(`/lists/${list._id}/todos/${todo._id}`)
+      .delete(`/api/lists/${list._id}/todos/${todo._id}`)
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -129,7 +129,7 @@ describe('test todos', () => {
   });
   test('should not remove todo without authentication', async () => {
     await request(server)
-      .delete(`/lists/${list._id}/todos/${todo._id}`)
+      .delete(`/api/lists/${list._id}/todos/${todo._id}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
