@@ -4,6 +4,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 
 const Todo = mongoose.model('Todo');
+const TodoList = mongoose.model('TodoList');
 const User = mongoose.model('User');
 
 jest.setTimeout(60000);
@@ -71,7 +72,7 @@ describe('test todos', () => {
     expect(await Todo.findOne({ text: 'Todo2', list: list._id })).toBeTruthy();
     const freshUser = await User.findById(user.id).exec();
     expect(freshUser.todos).toContain(response.body.data.id);
-    const freshList = await User.findById(user.id).exec();
+    const freshList = await TodoList.findById(list.id).exec();
     expect(freshList.todos).toContain(response.body.data.id);
   });
   test('should not create todo without authentication', async () => {
@@ -123,7 +124,7 @@ describe('test todos', () => {
     expect(await Todo.findOne({ text: 'Todo1' }).exec()).toBeFalsy();
     const freshUser = await User.findById(user.id).exec();
     expect(freshUser.todos).not.toContain(todo.id);
-    const freshList = await User.findById(user.id).exec();
+    const freshList = await TodoList.findById(list.id).exec();
     expect(freshList.todos).not.toContain(todo.id);
   });
   test('should not remove todo without authentication', async () => {
