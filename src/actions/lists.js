@@ -123,7 +123,13 @@ export function fetchLists() {
     const lists = json.data;
     const listsObj = lists.reduce((obj, list) => {
       const newObj = { ...obj };
-      newObj[list.id] = list;
+      newObj[list.id] = {
+        dirty: true,
+        fetching: false,
+        todos: null,
+        editing: false,
+        ...list,
+      };
       return newObj;
     }, {});
 

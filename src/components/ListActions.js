@@ -7,6 +7,7 @@ export default function ListActions({
   startCreateList,
   removeList,
   startEditList,
+  creating,
   list,
 }) {
   const editRemoveButtons = list
@@ -24,6 +25,7 @@ export default function ListActions({
       <button onClick={() => startCreateList()}>
         <FontAwesomeIcon icon={faPlus} />
       </button>
+      {!list && !creating ? 'add list' : null}
       {editRemoveButtons}
     </div>
   );
@@ -37,5 +39,6 @@ ListActions.propTypes = {
   startCreateList: PropTypes.func.isRequired,
   removeList: PropTypes.func.isRequired,
   startEditList: PropTypes.func.isRequired,
+  creating: PropTypes.bool.isRequired,
   list: PropTypes.string,
 };

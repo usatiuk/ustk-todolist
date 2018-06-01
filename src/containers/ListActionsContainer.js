@@ -5,6 +5,7 @@ import { startCreateList, startEditList, removeList } from '../actions/lists';
 function mapStateToProps(state) {
   return {
     list: state.lists.list,
+    creating: state.lists.creating,
   };
 }
 function mapDispatchToProps(dispatch) {
