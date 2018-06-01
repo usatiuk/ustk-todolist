@@ -10,7 +10,12 @@ import {
 } from '../actions/todos';
 
 export default function todos(
-  state = { dirty: true, fetching: false, todos: [] },
+  state = {
+    dirty: true,
+    fetching: false,
+    todos: [],
+    editing: false,
+  },
   action,
 ) {
   switch (action.type) {

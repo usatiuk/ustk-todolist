@@ -7,6 +7,8 @@ import {
   ADD_LIST,
   REMOVE_LIST,
   EDIT_LIST_NAME,
+  START_CREATE_LIST,
+  START_EDIT_LIST,
 } from '../actions/lists';
 import {
   ADD_TODO,
@@ -25,6 +27,7 @@ export default function lists(
     dirty: true,
     fetching: false,
     lists: {},
+    creating: false,
     list: '',
   },
   action,
@@ -39,9 +42,15 @@ export default function lists(
         fetching: false,
         lists: action.lists,
       };
+    case START_CREATE_LIST:
+      return {
+        ...state,
+        creating: true,
+      };
     case ADD_LIST:
       return {
         ...state,
+        creating: false,
         lists: { ...state.lists, [action.list.id]: action.list },
       };
     case REMOVE_LIST: {
@@ -52,10 +61,29 @@ export default function lists(
         lists: newLists,
       };
     }
+    case START_EDIT_LIST: {
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [state.list]: {
+            ...state.lists[state.list],
+            editing: true,
+          },
+        },
+      };
+    }
     case EDIT_LIST_NAME: {
       return {
         ...state,
-        lists: { ...state.lists, [action.id]: { ...state.lists[action.id], name: action.name } },
+        lists: {
+          ...state.lists,
+          [action.id]: {
+            ...state.lists[action.id],
+            name: action.name,
+            editing: false,
+          },
+        },
       };
     }
     case INVALIDATE_LISTS:
