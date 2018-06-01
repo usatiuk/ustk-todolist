@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import InputContainer from '../containers/InputContainer';
 import TodoListContainer from '../containers/TodoListContainer';
@@ -22,3 +22,9 @@ export default function Todos({ user, loadLists, history }) {
     </div>
   );
 }
+
+Todos.propTypes = {
+  loadLists: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+};

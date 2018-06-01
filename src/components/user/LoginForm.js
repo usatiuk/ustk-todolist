@@ -2,61 +2,69 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import InputField from './InputField';
 
-import { login } from '../../actions/user';
+import '../Form.css';
 
-function validate(values) {
-  const errors = {};
-  if (values.username === '') {
-    errors.username = 'should have username';
-  }
-  return errors;
-}
-
-const InputField = ({
-  input, label, meta: { touched, error }, type,
-}) => (
-  <div>
-    <label htmlFor={input.name}>
-      {label} <input {...input} type={type} />
-    </label>
-    {touched && error && <span className="error">{error}</span>}
-  </div>
-);
+import { login, reset } from '../../actions/user';
 
 function LoginForm({
-  handleSubmit, login, user, history,
+  handleSubmit, onLogin, user, history, resetUser,
 }) {
   let errors;
   if (user.errors) {
     if (user.errors.name === 'AuthenticationError') {
-      errors = <div>Wrong username or password</div>;
+      errors = <div className="error">Wrong username or password</div>;
     }
   }
   if (user.user) {
     history.push('/');
   }
+
   return (
-    <div id="login--form">
-      {errors}
-      <form onSubmit={handleSubmit(login)}>
-        <Field
-          label="username"
-          name="username"
-          component={InputField}
-          type="text"
-        />
-        <Field
-          label="password"
-          name="password"
-          component={InputField}
-          type="password"
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div>
+      <div id="user-header">
+        <button
+          onClick={() => {
+            resetUser();
+            history.push('/signup');
+          }}
+        >
+          signup
+        </button>
+      </div>
+      <div id="form">
+        {errors}
+        <form onSubmit={handleSubmit(onLogin)}>
+          <Field
+            label="username"
+            name="username"
+            required
+            component={InputField}
+            type="text"
+          />
+          <Field
+            label="password"
+            name="password"
+            required
+            component={InputField}
+            type="password"
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }
+
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  history: PropTypes.any.isRequired,
+  resetUser: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
@@ -66,7 +74,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: ({ username, password }) => dispatch(login({ username, password })),
+    resetUser: () => dispatch(reset()),
+    onLogin: ({ username, password }) =>
+      dispatch(login({ username, password })),
   };
 }
 
@@ -76,5 +86,4 @@ export default reduxForm({
     username: '',
     password: '',
   },
-  validate,
 })(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm)));

@@ -6,17 +6,22 @@ import PropTypes from 'prop-types';
 export default function ListActions({
   addList, removeList, editList, list,
 }) {
+  const editRemoveButtons = list
+    ? [
+      <button onClick={() => removeList(list)}>
+        <FontAwesomeIcon icon={faTrash} />
+      </button>,
+      <button onClick={() => editList(list, prompt('List name?'))}>
+        <FontAwesomeIcon icon={faEdit} />
+      </button>,
+    ]
+    : null;
   return (
     <div id="listactions">
       <button onClick={() => addList(prompt('List name?'))}>
         <FontAwesomeIcon icon={faPlus} />
       </button>
-      <button onClick={() => removeList(list)}>
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
-      <button onClick={() => editList(list, prompt('List name?'))}>
-        <FontAwesomeIcon icon={faEdit} />
-      </button>
+      {editRemoveButtons}
     </div>
   );
 }

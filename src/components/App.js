@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import 'normalize.css';
-import '../App.css';
+import './Container.css';
+import './App.css';
 
 import TodosContainer from '../containers/TodosContainer';
 import LoginForm from '../components/user/LoginForm';

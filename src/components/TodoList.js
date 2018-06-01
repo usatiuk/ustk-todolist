@@ -4,25 +4,30 @@ import { Transition } from 'react-spring';
 
 import Todo from './Todo';
 
-export default function TodosContainer(props) {
+export default function TodosContainer({
+  todos,
+  toggleTodo,
+  removeTodo,
+  editTodo,
+}) {
   return (
     <ul id="list">
       <Transition
         native
-        items={props.todos}
+        items={todos}
         keys={todo => todo.id}
-        from={todo => ({ height: 0, borderColor: '#ffffff', opacity: 0.9 })}
-        enter={todo => ({ height: 60, borderColor: '#dddddd', opacity: 1 })}
-        leave={todo => ({ height: 0, borderColor: '#ffffff', opacity: 0.5 })}
+        from={{ height: 0, borderColor: '#f0f0f0', opacity: 0.9 }}
+        enter={{ height: 60, borderColor: '#f0f0f0', opacity: 1 }}
+        leave={{ height: 0, borderColor: '#ffffff', opacity: 0.5 }}
       >
-        {props.todos.map(todo => styles => (
+        {todos.map(todo => styles => (
           <Todo
             key={todo.id}
             todo={todo}
             style={styles}
-            toggleTodo={() => props.toggleTodo(todo.id)}
-            removeTodo={() => props.removeTodo(todo.id)}
-            editTodo={text => props.editTodo(todo.id, text)}
+            toggleTodo={() => toggleTodo(todo.id)}
+            removeTodo={() => removeTodo(todo.id)}
+            editTodo={text => editTodo(todo.id, text)}
           />
         ))}
       </Transition>

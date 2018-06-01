@@ -8,6 +8,7 @@ export const LOGOUT = 'LOGOUT';
 export const START_LOGIN = 'INVALIDATE_USER';
 export const REQUEST_USER = 'REQUEST_USER';
 export const VALIDATE_USER = 'VALIDATE_USER';
+export const RESET_USER = 'RESET_USER';
 
 function startLogin() {
   return { type: START_LOGIN };
@@ -72,8 +73,8 @@ function signupSuccess(user) {
   return { type: SIGNUP_SUCCESS, user };
 }
 
-function signupFail(errors) {
-  return { type: SIGNUP_FAIL, errors };
+function signupFail(error) {
+  return { type: SIGNUP_FAIL, error };
 }
 
 export function signup(user) {
@@ -94,6 +95,10 @@ export function signup(user) {
       dispatch(signupFail(json.error));
     }
   };
+}
+
+export function reset() {
+  return { type: RESET_USER };
 }
 
 export function logout() {

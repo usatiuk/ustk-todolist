@@ -75,7 +75,11 @@ class Todo extends React.Component {
     );
     const buttons = this.state.editing
       ? [
-        <animated.button key="save" className="save" onClick={() => this.stopEdit(input.value)}>
+        <animated.button
+          key="save"
+          className="save"
+          onClick={() => this.stopEdit(input.value)}
+        >
           <FontAwesomeIcon icon={faCheck} />
         </animated.button>,
       ]
@@ -87,7 +91,11 @@ class Todo extends React.Component {
         >
           <FontAwesomeIcon icon={faTrash} />
         </animated.button>,
-        <animated.button key="edit" className={editClasses.join(' ')} onClick={this.startEdit}>
+        <animated.button
+          key="edit"
+          className={editClasses.join(' ')}
+          onClick={this.startEdit}
+        >
           <FontAwesomeIcon icon={faEdit} />
         </animated.button>,
       ];
@@ -115,7 +123,7 @@ Todo.propTypes = {
   removeTodo: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
-  style: PropTypes.shape({ maxHeight: PropTypes.number.isRequired }).isRequired,
+  style: PropTypes.shape({ height: PropTypes.object.isRequired }).isRequired,
 };
 
 export default Todo;
