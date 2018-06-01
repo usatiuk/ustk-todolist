@@ -2,7 +2,7 @@ import React from 'react';
 import FilterLink from '../containers/FilterLink';
 import LogoutLink from '../containers/LogoutLink';
 import { VisibilityFilters } from '../actions/todos';
-import ListsContainer from '../containers/ListsContainer';
+import Lists from '../components/Lists';
 
 export default function Header() {
   return (
@@ -11,7 +11,7 @@ export default function Header() {
         <LogoutLink>logout</LogoutLink>
       </div>
       <div id="lists-header">
-        <ListsContainer />
+        <Lists />
         <div id="filters">
           <FilterLink filter={VisibilityFilters.SHOW_ALL}>all</FilterLink>
           <FilterLink filter={VisibilityFilters.SHOW_ACTIVE}>active</FilterLink>

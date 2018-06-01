@@ -11,7 +11,7 @@ import LoginForm from '../components/user/LoginForm';
 import SignupForm from '../components/user/SignupForm';
 
 export default class App extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadUser();
   }
 

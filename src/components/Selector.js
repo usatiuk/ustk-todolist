@@ -13,13 +13,8 @@ export default function Selector({
   creating,
   addList,
   editList,
-  listObjs,
+  dirty,
 }) {
-  const listElements = lists.map(elem => (
-    <option key={elem.id} value={elem.id}>
-      {elem.name}
-    </option>
-  ));
   if (creating) {
     let input = null;
     return (
@@ -45,7 +40,7 @@ export default function Selector({
           ref={(node) => {
             input = node;
           }}
-          defaultValue={listObjs.lists[list].name}
+          defaultValue={lists.lists[list].name}
           id="input"
           type="text"
         />
@@ -55,6 +50,14 @@ export default function Selector({
       </div>
     );
   }
+  if (list === null && dirty) {
+    return <div id="listselector">loading</div>;
+  }
+  const listElements = Object.values(lists.lists).map(elem => (
+    <option key={elem.id} value={elem.id}>
+      {elem.name}
+    </option>
+  ));
   return (
     <div id="listselector">
       <select value={list} onChange={e => onChange(e.target.value)}>
@@ -69,14 +72,12 @@ Selector.defaultProps = {
 };
 
 Selector.propTypes = {
-  lists: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  })).isRequired,
   list: PropTypes.string,
   editing: PropTypes.bool.isRequired,
   creating: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
   addList: PropTypes.func.isRequired,
-  listObjs: PropTypes.func.isRequired,
+  lists: PropTypes.func.isRequired,
+  dirty: PropTypes.bool.isRequired,
 };

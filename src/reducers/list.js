@@ -13,7 +13,7 @@ export default function todos(
   state = {
     dirty: true,
     fetching: false,
-    todos: [],
+    todos: null,
     editing: false,
   },
   action,

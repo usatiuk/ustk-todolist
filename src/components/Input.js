@@ -5,7 +5,9 @@ function Input(props) {
   let input;
 
   function submit() {
-    props.onClick(input.value);
+    if (input.value.trim() !== '') {
+      props.onClick(input.value);
+    }
     input.value = '';
   }
 
