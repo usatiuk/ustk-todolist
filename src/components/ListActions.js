@@ -4,21 +4,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function ListActions({
-  addList, removeList, editList, list,
+  startCreateList,
+  removeList,
+  startEditList,
+  list,
 }) {
   const editRemoveButtons = list
     ? [
-      <button onClick={() => removeList(list)}>
+      <button onClick={() => removeList()}>
         <FontAwesomeIcon icon={faTrash} />
       </button>,
-      <button onClick={() => editList(list, prompt('List name?'))}>
+      <button onClick={() => startEditList()}>
         <FontAwesomeIcon icon={faEdit} />
       </button>,
     ]
     : null;
   return (
     <div id="listactions">
-      <button onClick={() => addList(prompt('List name?'))}>
+      <button onClick={() => startCreateList()}>
         <FontAwesomeIcon icon={faPlus} />
       </button>
       {editRemoveButtons}
@@ -31,8 +34,8 @@ ListActions.defaultProps = {
 };
 
 ListActions.propTypes = {
-  addList: PropTypes.func.isRequired,
+  startCreateList: PropTypes.func.isRequired,
   removeList: PropTypes.func.isRequired,
-  editList: PropTypes.func.isRequired,
+  startEditList: PropTypes.func.isRequired,
   list: PropTypes.string,
 };

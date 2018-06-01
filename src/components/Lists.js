@@ -4,11 +4,33 @@ import Selector from './Selector';
 import ListActions from './ListActions';
 
 export default function Lists({
-  list, lists, onChange, addList, removeList, editList,
+  list,
+  lists,
+  onChange,
+  addList,
+  creating,
+  editing,
+  removeList,
+  startCreateList,
+  startEditList,
+  editList,
+  listObjs,
 }) {
-  const selectorProps = { list, lists, onChange };
+  const selectorProps = {
+    list,
+    lists,
+    creating,
+    editing,
+    onChange,
+    editList,
+    addList,
+    listObjs,
+  };
   const actionsProps = {
-    addList, removeList, editList, list,
+    startCreateList,
+    removeList,
+    startEditList,
+    list,
   };
   return (
     <div id="lists">
@@ -31,4 +53,9 @@ Lists.propTypes = {
   addList: PropTypes.func.isRequired,
   removeList: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
+  startCreateList: PropTypes.func.isRequired,
+  startEditList: PropTypes.func.isRequired,
+  creating: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
+  listObjs: PropTypes.any.isRequired,
 };

@@ -8,6 +8,8 @@ export const REQUEST_LISTS = 'REQUEST_LISTS';
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS';
 export const VALIDATE_LISTS = 'VALIDATE_LISTS';
 export const CHANGE_LIST = 'CHANGE_LIST';
+export const START_CREATE_LIST = 'START_CREATE_LIST';
+export const START_EDIT_LIST = 'START_EDIT_LIST';
 
 function requestLists() {
   return { type: REQUEST_LISTS };
@@ -26,6 +28,12 @@ export function changeList(list) {
   return { type: CHANGE_LIST, list };
 }
 
+export function startCreateList() {
+  return { type: START_CREATE_LIST };
+}
+export function startEditList() {
+  return { type: START_EDIT_LIST };
+}
 function addListToState(list) {
   return { type: ADD_LIST, list };
 }
@@ -53,10 +61,12 @@ function removeListFromState(id) {
   return { type: REMOVE_LIST, id };
 }
 
-export function removeList(id) {
+export function removeList() {
   return async (dispatch, getState) => {
+    let state = getState();
+    const { list } = state.lists;
     dispatch(invalidateLists());
-    const response = await fetch(`${API_ROOT}/lists/${id}`, {
+    const response = await fetch(`${API_ROOT}/lists/${list}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
@@ -65,12 +75,12 @@ export function removeList(id) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(removeListFromState(id));
-      const state = getState();
-      const list = state.lists.lists[Object.keys(state.lists.lists)[0]]
+      dispatch(removeListFromState(list));
+      state = getState();
+      const newList = state.lists.lists[Object.keys(state.lists.lists)[0]]
         ? state.lists.lists[Object.keys(state.lists.lists)[0]].id
         : '';
-      dispatch(changeList(list));
+      dispatch(changeList(newList));
     }
     dispatch(validateLists());
   };
@@ -80,10 +90,12 @@ function editListNameInState(id, name) {
   return { type: EDIT_LIST_NAME, id, name };
 }
 
-export function editList(id, name) {
-  return async (dispatch) => {
+export function editList(name) {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const { list } = state.lists;
     dispatch(invalidateLists());
-    const response = await fetch(`${API_ROOT}/lists/${id}`, {
+    const response = await fetch(`${API_ROOT}/lists/${list}`, {
       body: JSON.stringify({ name }),
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -93,7 +105,7 @@ export function editList(id, name) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(editListNameInState(id, name));
+      dispatch(editListNameInState(list, name));
     }
     dispatch(validateLists());
   };

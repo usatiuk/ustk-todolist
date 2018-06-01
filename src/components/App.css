@@ -7,6 +7,8 @@
 #lists {
   display: flex;
   flex-direction: row;
+  flex-grow: 0;
+  max-width: 50%;
 }
 
 #listactions {
@@ -32,21 +34,7 @@
 #filters {
   margin-right: 0.75rem;
   align-self: center;
-}
-
-#listselector {
-  margin-left: 0.2rem;
-  align-self: center;
-  background-color: #fbfbfb;
-}
-
-#listselector select {
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 400;
-  outline: none;
-  border: none;
-  background-color: #fbfbfb;
+  flex-shrink: 0;
 }
 
 #inputs {
