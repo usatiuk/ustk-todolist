@@ -22,12 +22,20 @@ TodoListSchema.pre('save', async function () {
 TodoListSchema.pre('remove', async function () {
   const user = await this.model('User').findById(this.user);
   user.lists.splice(user.lists.indexOf(this._id), 1);
-  await user.save();
 
+  // removing todos in parallel can cause VersionError
+  // so we remove todos from user
   const todos = await this.model('Todo')
     .find({ list: this._id })
     .exec();
-  await Promise.all(todos.map(todo => todo.remove()));
+  const ids = todos.map(todo => todo._id);
+  user.todos = user.todos.filter(todo => ids.includes(todo._id));
+  await user.save();
+  // and remove them from db
+  await this.model('Todo')
+    .find({ list: this._id })
+    .remove()
+    .exec();
 });
 
 TodoListSchema.methods.toJson = function () {

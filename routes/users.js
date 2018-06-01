@@ -69,7 +69,7 @@ router.delete(
 
 router.post(
   '/login',
-  passport.authenticate('local', { session: false }),
+  passport.authenticate('local', { session: false, failWithError: true }),
   asyncHelper(async (req, res) => {
     res.json({ success: true, data: req.user.toAuthJson() });
   }),
