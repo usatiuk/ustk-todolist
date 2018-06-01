@@ -6,12 +6,9 @@ import TodoListContainer from '../containers/TodoListContainer';
 import Header from './Header';
 
 export default function Todos({ user, loadLists, history }) {
-  if (user.dirty) {
-    return <div>loading</div>;
-  }
   if (user.user) {
     loadLists();
-  } else {
+  } else if (!user.dirty) {
     history.push('/login');
   }
   return (

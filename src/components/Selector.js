@@ -58,13 +58,16 @@ export default function Selector({
       {elem.name}
     </option>
   ));
-  return (
-    <div id="listselector">
-      <select value={list} onChange={e => onChange(e.target.value)}>
-        {listElements}
-      </select>
-    </div>
-  );
+  if (list) {
+    return (
+      <div id="listselector">
+        <select value={list} onChange={e => onChange(e.target.value)}>
+          {listElements}
+        </select>
+      </div>
+    );
+  }
+  return null;
 }
 
 Selector.defaultProps = {
@@ -78,6 +81,6 @@ Selector.propTypes = {
   onChange: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
   addList: PropTypes.func.isRequired,
-  lists: PropTypes.func.isRequired,
+  lists: PropTypes.object.isRequired,
   dirty: PropTypes.bool.isRequired,
 };
