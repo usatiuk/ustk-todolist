@@ -22,10 +22,14 @@ UserSchema.plugin(passportLocalMongoose);
 UserSchema.plugin(uniqueValidator);
 
 UserSchema.pre('remove', async function () {
-  const lists = await this.model('TodoList')
+  await this.model('TodoList')
     .find({ user: this._id })
+    .remove()
     .exec();
-  await Promise.all(lists.map(list => list.remove()));
+  await this.model('Todo')
+    .find({ user: this._id })
+    .remove()
+    .exec();
 });
 
 UserSchema.methods.generateJwt = function () {

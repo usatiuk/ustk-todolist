@@ -117,7 +117,7 @@ describe('test users', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .expect(400);
+      .expect(401);
   });
   test('should not login user with wrong password', async () => {
     await request(server)

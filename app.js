@@ -53,6 +53,7 @@ app.use((error, req, res, next) => {
       res.status(400);
       res.json({ success: false, error });
       break;
+    case 'AuthenticationError':
     case 'UnauthorizedError':
       res.status(401);
       res.json({ success: false, error });
