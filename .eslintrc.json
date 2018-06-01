@@ -15,7 +15,8 @@
         "allowTernary": true
       }
     ],
-    "max-len": "off"
+    "max-len": "off",
+    "react/forbid-prop-types": "off"
   },
   "env": {
     "browser": true

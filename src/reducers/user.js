@@ -6,6 +6,7 @@ import {
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
   VALIDATE_USER,
+  RESET_USER,
 } from '../actions/user';
 
 export default function user(
@@ -33,6 +34,7 @@ export default function user(
       return {
         ...state,
         user: action.user,
+        errors: null,
         dirty: false,
         fetching: false,
       };
@@ -40,9 +42,17 @@ export default function user(
     case LOGIN_FAIL:
       return {
         ...state,
+        user: null,
         errors: action.error,
         dirty: false,
         fetching: false,
+      };
+    case RESET_USER:
+      return {
+        ...state,
+        fetching: false,
+        user: null,
+        errors: null,
       };
     case LOGOUT:
       return {

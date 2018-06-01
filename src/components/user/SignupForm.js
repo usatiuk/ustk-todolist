@@ -2,70 +2,91 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { signup } from '../../actions/user';
+import InputField from './InputField';
+
+import '../Form.css';
+
+import { signup, reset } from '../../actions/user';
 
 function validate(values) {
   const errors = {};
-  if (values.username === '') {
-    errors.username = 'should have username';
-  }
   if (values.password !== values.passwordRepeat) {
     errors.passwordRepeat = 'Invalid';
   }
   return errors;
 }
 
-const InputField = ({
-  input, label, meta: { touched, error }, type,
-}) => (
-  <div>
-    <label htmlFor={input.name}>
-      {label} <input {...input} type={type} />
-    </label>
-    {touched && error && <span className="error">{error}</span>}
-  </div>
-);
-
 function SignupForm({
-  handleSubmit, signup, user, history,
+  handleSubmit, onSignup, user, history, resetUser,
 }) {
   let errors;
   if (user.errors) {
     if (user.errors.name === 'AuthenticationError') {
-      errors = <div>Wrong username or password</div>;
+      errors = <div className="error">Wrong username or password</div>;
+    }
+    if (user.errors.name === 'ValidationError') {
+      if (user.errors.message.split(' ').includes('unique.')) {
+        errors = <div className="error">User already exists</div>;
+      } else {
+        errors = <div className="error">Validation error</div>;
+      }
     }
   }
   if (user.user) {
     history.push('/');
   }
   return (
-    <div id="signup--form">
-      {errors}
-      <form onSubmit={handleSubmit(signup)}>
-        <Field
-          label="username"
-          name="username"
-          component={InputField}
-          type="text"
-        />
-        <Field
-          label="password"
-          name="password"
-          component={InputField}
-          type="password"
-        />
-        <Field
-          label="repeat pasword"
-          name="passwordRepeat"
-          component={InputField}
-          type="password"
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div>
+      <div id="user-header">
+        <button
+          onClick={() => {
+            resetUser();
+            history.push('/login');
+          }}
+        >
+          login
+        </button>
+      </div>
+      <div id="form">
+        {errors}
+        <form onSubmit={handleSubmit(onSignup)}>
+          <Field
+            label="username"
+            name="username"
+            required
+            component={InputField}
+            type="text"
+          />
+          <Field
+            label="password"
+            name="password"
+            required
+            component={InputField}
+            type="password"
+          />
+          <Field
+            label="repeat pasword"
+            name="passwordRepeat"
+            required
+            component={InputField}
+            type="password"
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }
+
+SignupForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onSignup: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  history: PropTypes.any.isRequired,
+  resetUser: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
@@ -75,7 +96,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    signup: ({ username, password }) =>
+    resetUser: () => dispatch(reset()),
+    onSignup: ({ username, password }) =>
       dispatch(signup({ username, password })),
   };
 }
