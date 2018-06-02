@@ -63,7 +63,7 @@ class Todo extends React.Component {
         <textarea
           className="todo--input"
           defaultValue={this.props.todo.text}
-          ref={(node) => {
+          ref={node => {
             input = node;
           }}
         />
@@ -75,30 +75,30 @@ class Todo extends React.Component {
     );
     const buttons = this.state.editing
       ? [
-        <animated.button
-          key="save"
-          className="save"
-          onClick={() => this.stopEdit(input.value)}
-        >
-          <FontAwesomeIcon icon={faCheck} />
-        </animated.button>,
-      ]
+          <animated.button
+            key="save"
+            className="save"
+            onClick={() => this.stopEdit(input.value)}
+          >
+            <FontAwesomeIcon icon={faCheck} />
+          </animated.button>,
+        ]
       : [
-        <animated.button
-          key="remove"
-          className={deleteClasses.join(' ')}
-          onClick={this.props.removeTodo}
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </animated.button>,
-        <animated.button
-          key="edit"
-          className={editClasses.join(' ')}
-          onClick={this.startEdit}
-        >
-          <FontAwesomeIcon icon={faEdit} />
-        </animated.button>,
-      ];
+          <animated.button
+            key="remove"
+            className={deleteClasses.join(' ')}
+            onClick={this.props.removeTodo}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </animated.button>,
+          <animated.button
+            key="edit"
+            className={editClasses.join(' ')}
+            onClick={this.startEdit}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+          </animated.button>,
+        ];
     return (
       <animated.li
         style={this.props.style}

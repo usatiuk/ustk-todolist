@@ -39,7 +39,7 @@ function addListToState(list) {
 }
 
 export function addList(name) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(invalidateLists());
     const response = await fetch(`${API_ROOT}/lists`, {
       body: JSON.stringify({ name }),
@@ -112,7 +112,7 @@ export function editList(name) {
 }
 
 export function fetchLists() {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(requestLists());
     const response = await fetch(`${API_ROOT}/lists`, {
       headers: {
@@ -142,7 +142,7 @@ export function fetchLists() {
 }
 
 export function loadLists() {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(requestLists());
 
     try {

@@ -1,6 +1,12 @@
 {
-  "extends": ["airbnb", "plugin:jest/recommended"],
-  "plugins": ["jest"],
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+
+  "plugins": ["jest", "prettier"],
   "rules": {
     "react/jsx-filename-extension": [
       1,
@@ -15,8 +21,8 @@
         "allowTernary": true
       }
     ],
-    "max-len": "off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "prettier/prettier": "error"
   },
   "env": {
     "browser": true

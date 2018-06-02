@@ -36,11 +36,13 @@ export default function TodosContainer({
 }
 
 TodosContainer.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-  })).isRequired,
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
   removeTodo: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,

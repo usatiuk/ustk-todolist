@@ -12,13 +12,13 @@ export default function ListActions({
 }) {
   const editRemoveButtons = list
     ? [
-      <button onClick={() => removeList()}>
-        <FontAwesomeIcon icon={faTrash} />
-      </button>,
-      <button onClick={() => startEditList()}>
-        <FontAwesomeIcon icon={faEdit} />
-      </button>,
-    ]
+        <button onClick={() => removeList()}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>,
+        <button onClick={() => startEditList()}>
+          <FontAwesomeIcon icon={faEdit} />
+        </button>,
+      ]
     : null;
   return (
     <div id="listactions">
