@@ -6,22 +6,14 @@ import PropTypes from 'prop-types';
 import InputField from './InputField';
 
 import '../Form.css';
+import UserErrors from './UserErrors';
 
 import { login, reset } from '../../actions/user';
 
-function LoginForm({
-  handleSubmit, onLogin, user, history, resetUser,
-}) {
-  let errors;
-  if (user.errors) {
-    if (user.errors.name === 'AuthenticationError') {
-      errors = <div className="error">Wrong username or password</div>;
-    }
-  }
+function LoginForm({ handleSubmit, onLogin, user, history, resetUser }) {
   if (user.user) {
     history.push('/');
   }
-
   return (
     <div>
       <div id="user-header">
@@ -35,7 +27,7 @@ function LoginForm({
         </button>
       </div>
       <div id="form">
-        {errors}
+        <UserErrors user={user} />
         <form onSubmit={handleSubmit(onLogin)}>
           <Field
             label="username"

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import InputField from './InputField';
+import UserErrors from './UserErrors';
 
 import '../Form.css';
 
@@ -18,22 +19,7 @@ function validate(values) {
   return errors;
 }
 
-function SignupForm({
-  handleSubmit, onSignup, user, history, resetUser,
-}) {
-  let errors;
-  if (user.errors) {
-    if (user.errors.name === 'AuthenticationError') {
-      errors = <div className="error">Wrong username or password</div>;
-    }
-    if (user.errors.name === 'ValidationError') {
-      if (user.errors.message.split(' ').includes('unique.')) {
-        errors = <div className="error">User already exists</div>;
-      } else {
-        errors = <div className="error">Validation error</div>;
-      }
-    }
-  }
+function SignupForm({ handleSubmit, onSignup, user, history, resetUser }) {
   if (user.user) {
     history.push('/');
   }
@@ -50,7 +36,7 @@ function SignupForm({
         </button>
       </div>
       <div id="form">
-        {errors}
+        <UserErrors user={user} />
         <form onSubmit={handleSubmit(onSignup)}>
           <Field
             label="username"

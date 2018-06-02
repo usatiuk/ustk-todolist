@@ -20,7 +20,7 @@ export default function Selector({
     return (
       <div id="listselector">
         <input
-          ref={(node) => {
+          ref={node => {
             input = node;
           }}
           id="input"
@@ -37,7 +37,7 @@ export default function Selector({
     return (
       <div id="listselector">
         <input
-          ref={(node) => {
+          ref={node => {
             input = node;
           }}
           defaultValue={lists.lists[list].name}

@@ -44,7 +44,9 @@ export default function todos(
     case EDIT_TODO:
       return {
         ...state,
-        todos: state.todos.map(todo => (todo.id === action.id ? action.todo : todo)),
+        todos: state.todos.map(
+          todo => (todo.id === action.id ? action.todo : todo),
+        ),
       };
     case REQUEST_TODOS:
       return {
@@ -59,10 +61,12 @@ export default function todos(
     case TOGGLE_TODO: {
       return {
         ...state,
-        todos: state.todos.map(todo =>
-          (todo.id === action.id
-            ? { ...todo, completed: !todo.completed }
-            : todo)),
+        todos: state.todos.map(
+          todo =>
+            todo.id === action.id
+              ? { ...todo, completed: !todo.completed }
+              : todo,
+        ),
       };
     }
     default:

@@ -27,7 +27,7 @@ function validateUser() {
 }
 
 export function loadUser() {
-  return async (dispatch) => {
+  return async dispatch => {
     if (getToken()) {
       const response = await fetch(`${API_ROOT}/users/user`, {
         headers: {
@@ -50,7 +50,7 @@ export function loadUser() {
 }
 
 export function login(user) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(startLogin());
     const response = await fetch(`${API_ROOT}/users/login`, {
       body: JSON.stringify(user),
@@ -78,7 +78,7 @@ function signupFail(error) {
 }
 
 export function signup(user) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(startLogin());
     const response = await fetch(`${API_ROOT}/users`, {
       body: JSON.stringify(user),

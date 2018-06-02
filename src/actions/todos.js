@@ -68,7 +68,7 @@ function removeTodoFromList(id) {
 }
 
 export function removeTodo(id) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(invalidateTodos());
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       headers: {
@@ -113,7 +113,7 @@ function editTodoInList(id, todo) {
 }
 
 export function editTodo(id, text) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(invalidateTodos());
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       body: JSON.stringify({ text }),
@@ -133,7 +133,7 @@ export function editTodo(id, text) {
 }
 
 export function fetchTodos(list) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(requestTodos(list));
     const response = await fetch(`${API_ROOT}/lists/${list.id}/todos`, {
       headers: {

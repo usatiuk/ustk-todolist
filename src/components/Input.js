@@ -14,7 +14,7 @@ function Input(props) {
   return (
     <div id="inputs">
       <input
-        ref={(node) => {
+        ref={node => {
           input = node;
         }}
         id="input"

@@ -11,7 +11,7 @@ function Link({ active, onClick, children }) {
   return (
     <button
       className={classes.join(' ')}
-      onClick={(e) => {
+      onClick={e => {
         e.preventDefault();
         onClick();
       }}
