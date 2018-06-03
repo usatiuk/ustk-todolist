@@ -7,8 +7,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const button = {
-  width: 16,
-  height: 36,
+  width: 24,
+  height: 24,
+  padding: 0,
 };
 
 const icon = {
