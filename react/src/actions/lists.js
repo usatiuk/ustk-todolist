@@ -85,9 +85,8 @@ export function removeList() {
     if (json.success) {
       dispatch(removeListFromState(list));
       state = getState();
-      const newList = state.lists.lists[Object.keys(state.lists.lists)[0]]
-        ? state.lists.lists[Object.keys(state.lists.lists)[0]].id
-        : '';
+      const lists = Object.values(state.lists.lists);
+      const newList = lists.length ? lists[lists.length - 1].id : '';
       dispatch(changeList(newList));
     }
     dispatch(validateLists());
