@@ -15,7 +15,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(morgan('dev'));
+process.env.NODE_ENV === 'production'
+  ? app.use(morgan('combined'))
+  : app.use(morgan('dev'));
 
 const passport = require('./config/passport');
 
