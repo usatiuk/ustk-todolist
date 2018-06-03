@@ -1,0 +1,183 @@
+#lists-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fbfbfb;
+}
+
+#lists {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+  max-width: 50%;
+}
+
+#listactions {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2rem 0.1rem;
+}
+
+#listactions button {
+  font-size: 0.9rem;
+  color: #555555;
+  background: none;
+  border: none;
+  margin: 0.1rem 0.3rem;
+  padding: 0.3rem 0.7em;
+}
+
+#listactions button:hover {
+  transition: 0.1s ease-in-out;
+  color: #222222;
+}
+
+#filters {
+  margin-right: 0.75rem;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+#inputs {
+  transition: 0.4s ease-in-out;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
+  display: flex;
+  height: 2.5rem;
+}
+
+#input {
+  color: black;
+  background: white;
+  font-family: "Roboto";
+  box-sizing: border-box;
+  font-size: 1rem;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  padding-left: 1rem;
+  height: 100%;
+  line-height: 100%;
+  border: none;
+}
+
+#add {
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  max-width: 5rem;
+  background-color: white;
+  border: none;
+}
+
+li:first-child .delete,
+li:first-child .edit,
+li:first-child .save,
+li:first-child .todo {
+  border-top: none;
+}
+
+.done {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: line-through;
+}
+
+li button {
+  color: black;
+  outline: none;
+  text-align: left;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  text-align: center;
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  background: none;
+  width: 2rem;
+  font-size: 1rem;
+  transition: 0.4s ease-in-out;
+  overflow: hidden;
+  box-shadow: inset -3px 0 6px -3px rgba(0, 0, 0, 0.3);
+}
+
+li button.todo {
+  box-shadow: none;
+}
+
+.delete {
+  background-color: pink;
+}
+
+.edit {
+  background-color: lightcyan;
+}
+
+.save {
+  background-color: lightgreen;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  height: 60px;
+  width: 100%;
+  font-weight: 500;
+  overflow: hidden;
+  font-size: 1rem;
+  display: flex;
+}
+
+.todo {
+  text-align: left;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: 100%;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  border-top: 1px solid #f0f0f0;
+  font-weight: 400;
+  flex-grow: 2;
+  flex-shrink: 1;
+  transition: 0.3s ease-in-out;
+}
+
+.todo--input {
+  background: white;
+  color: black;
+  resize: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  transition: 0.3s ease-in-out;
+}
+
+.disabled {
+  width: 0;
+  padding: 0.5rem 0;
+}
+
+.filter {
+  margin: 0.1rem;
+  padding: 0.5rem;
+  color: #555555;
+  border: none;
+  background: none;
+  transition: 0.1s ease-in-out;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.filter--active {
+  font-weight: 400;
+  color: black;
+}
