@@ -24,7 +24,7 @@ const UserSchema = Schema({
 UserSchema.plugin(passportLocalMongoose);
 UserSchema.plugin(uniqueValidator);
 
-UserSchema.pre('remove', async function () {
+UserSchema.pre('remove', async function() {
   await this.model('TodoList')
     .find({ user: this._id })
     .remove()
@@ -35,18 +35,20 @@ UserSchema.pre('remove', async function () {
     .exec();
 });
 
-UserSchema.methods.generateJwt = function () {
-  return jwt.sign({ id: this._id, username: this.username }, secret, { expiresIn: '120d' });
+UserSchema.methods.generateJwt = function() {
+  return jwt.sign({ id: this._id, username: this.username }, secret, {
+    expiresIn: '120d',
+  });
 };
 
-UserSchema.methods.toJson = function () {
+UserSchema.methods.toJson = function() {
   return {
     id: this._id,
     username: this.username,
   };
 };
 
-UserSchema.methods.toAuthJson = function () {
+UserSchema.methods.toAuthJson = function() {
   return {
     id: this._id,
     username: this.username,

@@ -1,6 +1,6 @@
 {
-  "extends": ["airbnb-base", "plugin:jest/recommended"],
-  "plugins": ["jest"],
+  "extends": ["airbnb-base", "plugin:jest/recommended", "prettier"],
+  "plugins": ["jest", "prettier"],
   "rules": {
     "linebreak-style": "off",
     "no-unused-expressions": [
@@ -9,8 +9,17 @@
         "allowTernary": true
       }
     ],
-    "no-console": "off",
-    "no-underscore-dangle": ["warn", { "allow": ["_id"] }],
+    "prettier/prettier": "error",
+    "no-console": "warn",
+    "no-underscore-dangle": [
+      "warn",
+      {
+        "allow": ["_id"]
+      }
+    ],
     "func-names": "off"
+  },
+  "env": {
+    "node": true
   }
 }

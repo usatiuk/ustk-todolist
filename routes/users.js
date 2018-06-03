@@ -47,7 +47,9 @@ router.patch(
       { runValidators: true, context: 'query', new: true },
     ).exec();
     if (!user) {
-      throw new NotFoundError(`can't find user with username ${req.user.username}`);
+      throw new NotFoundError(
+        `can't find user with username ${req.user.username}`,
+      );
     }
     if (password !== undefined) {
       await user.setPassword(password);
