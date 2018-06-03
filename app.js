@@ -28,7 +28,7 @@ const auth = require('./routes/auth');
 app.use('/api/lists', auth.required, require('./routes/lists'));
 app.use('/api/todos', auth.required, require('./routes/todos'));
 
-if (process.env.NODE_ENV === 'prod') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'react/build')));
   app.use('*', express.static(path.join(__dirname, 'react/build/index.html')));
 }

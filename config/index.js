@@ -1,6 +1,6 @@
 const env = process.env.NODE_ENV;
 
-const prod = {
+const production = {
   app: {
     port: process.env.PORT,
   },
@@ -10,7 +10,7 @@ const prod = {
   secret: process.env.SECRET,
 };
 
-const dev = {
+const development = {
   app: {
     port: process.env.DEV_PORT || 4000,
   },
@@ -25,9 +25,9 @@ const test = {
 };
 
 const config = {
-  prod,
-  dev,
+  production,
+  development,
   test,
 };
 
-module.exports = config[env] || config.prod;
+module.exports = config[env] || config.production;
