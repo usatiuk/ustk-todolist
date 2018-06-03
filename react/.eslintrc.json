@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+
+  "plugins": ["jest", "prettier"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "linebreak-style": "off",
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTernary": true
+      }
+    ],
+    "react/forbid-prop-types": "off",
+    "prettier/prettier": "error"
+  },
+  "env": {
+    "browser": true
+  }
+}
