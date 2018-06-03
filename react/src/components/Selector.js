@@ -13,7 +13,6 @@ export default function Selector({
   creating,
   addList,
   editList,
-  dirty,
 }) {
   if (creating) {
     let input = null;
@@ -25,6 +24,11 @@ export default function Selector({
           }}
           id="input"
           type="text"
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              addList(input.value);
+            }
+          }}
         />
         <button onClick={() => addList(input.value)}>
           <FontAwesomeIcon icon={faPlus} />
@@ -43,6 +47,11 @@ export default function Selector({
           defaultValue={lists.lists[list].name}
           id="input"
           type="text"
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              editList(input.value);
+            }
+          }}
         />
         <button onClick={() => editList(input.value)}>
           <FontAwesomeIcon icon={faCheck} />
@@ -78,5 +87,4 @@ Selector.propTypes = {
   editList: PropTypes.func.isRequired,
   addList: PropTypes.func.isRequired,
   lists: PropTypes.object.isRequired,
-  dirty: PropTypes.bool.isRequired,
 };

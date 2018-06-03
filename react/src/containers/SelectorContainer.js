@@ -12,7 +12,6 @@ function mapStateToProps(state) {
     list: state.lists.list,
     editing,
     creating: state.lists.creating,
-    dirty: state.lists.dirty,
   };
 }
 
