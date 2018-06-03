@@ -1,8 +1,13 @@
-import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { animated } from 'react-spring';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
+
+const icon = {
+  fontSize: 16,
+};
 
 class Todo extends React.Component {
   constructor(props) {
@@ -83,7 +88,7 @@ class Todo extends React.Component {
             className="save"
             onClick={() => this.stopEdit(input.value)}
           >
-            <FontAwesomeIcon icon={faCheck} />
+            <CheckIcon style={icon} />
           </animated.button>,
         ]
       : [
@@ -92,14 +97,14 @@ class Todo extends React.Component {
             className={deleteClasses.join(' ')}
             onClick={this.props.removeTodo}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <DeleteIcon style={icon} />
           </animated.button>,
           <animated.button
             key="edit"
             className={editClasses.join(' ')}
             onClick={this.startEdit}
           >
-            <FontAwesomeIcon icon={faEdit} />
+            <EditIcon style={icon} />
           </animated.button>,
         ];
     return (

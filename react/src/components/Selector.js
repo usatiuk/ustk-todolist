@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { IconButton } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import CheckIcon from '@material-ui/icons/Check';
 
 import './Selector.css';
+
+const button = {
+  width: 16,
+  height: 36,
+};
+
+const icon = {
+  fontSize: 24,
+};
 
 export default function Selector({
   lists,
@@ -17,7 +27,7 @@ export default function Selector({
   if (creating) {
     let input = null;
     return (
-      <div id="listselector">
+      <div id="listselector" className="list--input">
         <input
           ref={node => {
             input = node;
@@ -30,16 +40,19 @@ export default function Selector({
             }
           }}
         />
-        <button onClick={() => addList(input.value)}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
+        <IconButton
+          style={button}
+          onClick={() => input.value.trim() && addList(input.value)}
+        >
+          <AddIcon style={icon} />
+        </IconButton>
       </div>
     );
   }
   if (editing) {
     let input = null;
     return (
-      <div id="listselector">
+      <div id="listselector" className="list--input">
         <input
           ref={node => {
             input = node;
@@ -53,9 +66,12 @@ export default function Selector({
             }
           }}
         />
-        <button onClick={() => editList(input.value)}>
-          <FontAwesomeIcon icon={faCheck} />
-        </button>
+        <IconButton
+          style={button}
+          onClick={() => input.value.trim() && editList(input.value)}
+        >
+          <CheckIcon style={icon} />
+        </IconButton>
       </div>
     );
   }

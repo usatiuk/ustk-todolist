@@ -19,6 +19,11 @@ function Input(props) {
         }}
         id="input"
         type="text"
+        onKeyPress={e => {
+          if (e.key === 'Enter') {
+            submit();
+          }
+        }}
       />
       <button id="add" onClick={() => submit()}>
         add
