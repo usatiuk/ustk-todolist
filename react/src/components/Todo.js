@@ -6,7 +6,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 
 const icon = {
-  fontSize: 16,
+  fontSize: 24,
+  padding: 0,
 };
 
 class Todo extends React.Component {

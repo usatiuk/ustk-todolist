@@ -99,7 +99,7 @@ li button {
   text-align: left;
   flex-shrink: 0;
   box-sizing: border-box;
-  padding: 0.5rem;
+  padding: 0;
   text-align: center;
   border: none;
   border-top: 1px solid #f0f0f0;
@@ -112,6 +112,7 @@ li button {
 }
 
 li button.todo {
+  padding: 0.5rem;
   box-shadow: none;
 }
 
