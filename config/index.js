@@ -2,17 +2,17 @@ const env = process.env.NODE_ENV;
 
 const prod = {
   app: {
-    port: process.env.APP_PORT,
+    port: process.env.PORT,
   },
   db: {
-    uri: process.env.DB_URI,
+    uri: process.env.DB_URI || process.env.MONGODB_URI,
   },
   secret: process.env.SECRET,
 };
 
 const dev = {
   app: {
-    port: process.env.DEV_APP_PORT || 4000,
+    port: process.env.DEV_PORT || 4000,
   },
   db: {
     uri: process.env.DEV_DB_URI || 'mongodb://localhost/todolist',

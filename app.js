@@ -21,16 +21,17 @@ const passport = require('./config/passport');
 
 app.use(passport.initialize());
 
-if (process.env.NODE_ENV === 'prod') {
-  app.use(express.static(path.join(__dirname, 'react/build')));
-}
-
 app.use('/api/users', require('./routes/users'));
 
 const auth = require('./routes/auth');
 
 app.use('/api/lists', auth.required, require('./routes/lists'));
 app.use('/api/todos', auth.required, require('./routes/todos'));
+
+if (process.env.NODE_ENV === 'prod') {
+  app.use(express.static(path.join(__dirname, 'react/build')));
+  app.use('*', express.static(path.join(__dirname, 'react/build/index.html')));
+}
 
 // 404 route
 app.use((req, res) => {
