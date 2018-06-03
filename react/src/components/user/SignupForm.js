@@ -59,7 +59,7 @@ function SignupForm({ handleSubmit, onSignup, user, history, resetUser }) {
             component={InputField}
             type="password"
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Signup</button>
         </form>
       </div>
     </div>
@@ -96,4 +96,11 @@ export default reduxForm({
     passwordRepeat: '',
   },
   validate,
-})(withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupForm)));
+})(
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(SignupForm),
+  ),
+);
