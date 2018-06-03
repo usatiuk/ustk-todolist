@@ -18,7 +18,13 @@ body {
   max-width: 25rem;
   border: 1px solid #dddddd;
   border-radius: 7px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 600px) {
+  #container {
+    max-width: 100%;
+  }
 }
 
 #user-header {
