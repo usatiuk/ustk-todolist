@@ -14,7 +14,7 @@ const TodoListSchema = Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
-TodoListSchema.pre('save', async function () {
+TodoListSchema.pre('save', async function() {
   if (this.isNew) {
     const user = await this.model('User').findById(this.user);
     user.lists.push(this._id);
@@ -22,7 +22,7 @@ TodoListSchema.pre('save', async function () {
   }
 });
 
-TodoListSchema.pre('remove', async function () {
+TodoListSchema.pre('remove', async function() {
   const user = await this.model('User').findById(this.user);
   user.lists.splice(user.lists.indexOf(this._id), 1);
 
@@ -41,8 +41,10 @@ TodoListSchema.pre('remove', async function () {
     .exec();
 });
 
-TodoListSchema.methods.toJson = function () {
-  const todos = this.populated('todos') ? this.todos.map(todo => todo.toJson()) : this.todos;
+TodoListSchema.methods.toJson = function() {
+  const todos = this.populated('todos')
+    ? this.todos.map(todo => todo.toJson())
+    : this.todos;
   return {
     id: this._id.toString(),
     user: this.user.toString(),

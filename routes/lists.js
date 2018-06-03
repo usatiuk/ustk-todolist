@@ -35,7 +35,10 @@ router.delete(
   '/:listId',
   asyncHelper(async (req, res) => {
     const { listId } = req.params;
-    const list = await TodoList.findOne({ _id: listId, user: req.user.id }).exec();
+    const list = await TodoList.findOne({
+      _id: listId,
+      user: req.user.id,
+    }).exec();
     await list.remove();
     res.json({ success: true });
   }),

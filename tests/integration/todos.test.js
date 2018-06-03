@@ -24,9 +24,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  ({
-    user, token, list, todo,
-  } = await seed());
+  ({ user, token, list, todo } = await seed());
 });
 
 afterEach(async () => {

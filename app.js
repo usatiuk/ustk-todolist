@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const config = require('./config');
 const db = require('./config/db');
+const path = require('path');
 
 require('./models/TodoList');
 require('./models/User');
@@ -26,6 +27,10 @@ const auth = require('./routes/auth');
 
 app.use('/api/lists', auth.required, require('./routes/lists'));
 app.use('/api/todos', auth.required, require('./routes/todos'));
+
+if (process.env.NODE_ENV === 'prod') {
+  app.use('/*', express.static(path.join(__dirname, '/react/build')));
+}
 
 // 404 route
 app.use((req, res) => {
@@ -73,6 +78,7 @@ let server;
 if (process.env.NODE_ENV !== 'test') {
   db.connect();
   server = app.listen(config.app.port, () => {
+    console.log(`Listening on port ${config.app.port}`);
     console.log('Started!');
   });
 } else {

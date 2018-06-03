@@ -15,7 +15,7 @@ const TodoSchema = Schema({
   completed: { type: Boolean, default: false },
 });
 
-TodoSchema.pre('save', async function () {
+TodoSchema.pre('save', async function() {
   if (this.isNew) {
     const user = await this.model('User').findById(this.user);
     user.todos.push(this._id);
@@ -27,7 +27,7 @@ TodoSchema.pre('save', async function () {
   }
 });
 
-TodoSchema.pre('remove', async function () {
+TodoSchema.pre('remove', async function() {
   const user = await this.model('User').findById(this.user);
   user.todos.splice(user.todos.indexOf(this._id), 1);
   await user.save();
@@ -37,7 +37,7 @@ TodoSchema.pre('remove', async function () {
   await list.save();
 });
 
-TodoSchema.methods.toJson = function () {
+TodoSchema.methods.toJson = function() {
   return {
     id: this._id.toString(),
     text: this.text,

@@ -1,0 +1,3 @@
+[submodule "react"]
+	path = react
+	url = https://usaatyuk@bitbucket.org/usaatyuk/todolist-web.git
