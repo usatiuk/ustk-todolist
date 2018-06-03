@@ -133,9 +133,9 @@ export function fetchLists() {
       newObj[list.id] = {
         dirty: true,
         fetching: false,
-        todos: null,
         editing: false,
         ...list,
+        todos: [...list.todos.reverse()],
       };
       return newObj;
     }, {});

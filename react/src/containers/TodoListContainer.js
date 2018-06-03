@@ -32,6 +32,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const TodosContainer = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+const TodosContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TodoList);
 
 export default TodosContainer;
