@@ -1,35 +1,71 @@
-import { faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import BackButton from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import PropTypes from 'prop-types';
+
+const button = {
+  width: 16,
+  height: 36,
+};
+
+const icon = {
+  fontSize: 24,
+};
 
 export default function ListActions({
   startCreateList,
   removeList,
   startEditList,
+  stopCreateList,
+  stopEditList,
   creating,
   editing,
   list,
 }) {
+  function back() {
+    if (editing) {
+      stopEditList();
+    }
+    if (creating) {
+      stopCreateList();
+    }
+  }
   return (
     <div id="listactions">
-      {!creating && (
-        <button onClick={() => startCreateList()}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
-      )}
-      {!list && !creating ? 'add list' : null}
-      {list && (
-        <button onClick={() => removeList()}>
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      )}
-      {list &&
+      {!creating &&
         !editing && (
-          <button onClick={() => startEditList()}>
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
+          <IconButton style={button} onClick={() => startCreateList()}>
+            <AddIcon style={icon} />
+          </IconButton>
         )}
+      {!list && !creating ? 'add list' : null}
+      {list &&
+        !creating &&
+        !editing && (
+          <IconButton style={button} onClick={() => removeList()}>
+            <DeleteIcon style={icon} />
+          </IconButton>
+        )}
+      {list &&
+        !creating &&
+        !editing && (
+          <IconButton style={button} onClick={() => startEditList()}>
+            <EditIcon style={icon} />
+          </IconButton>
+        )}
+
+      {(creating || editing) && (
+        <IconButton
+          style={button}
+          className="backbutton"
+          onClick={() => back()}
+        >
+          <BackButton style={icon} />
+        </IconButton>
+      )}
     </div>
   );
 }
@@ -45,4 +81,6 @@ ListActions.propTypes = {
   creating: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
   list: PropTypes.string,
+  stopCreateList: PropTypes.func.isRequired,
+  stopEditList: PropTypes.func.isRequired,
 };

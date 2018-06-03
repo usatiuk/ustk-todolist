@@ -23,12 +23,15 @@
 }
 
 #listactions button {
-  font-size: 0.9rem;
   color: #555555;
   background: none;
   border: none;
   margin: 0.1rem 0.3rem;
   padding: 0.3rem 0.7em;
+}
+
+#listactions .backbutton {
+  margin: 1rem 0;
 }
 
 #listactions button:hover {
