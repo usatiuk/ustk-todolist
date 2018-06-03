@@ -8,25 +8,28 @@ export default function ListActions({
   removeList,
   startEditList,
   creating,
+  editing,
   list,
 }) {
-  const editRemoveButtons = list
-    ? [
-        <button onClick={() => removeList()}>
-          <FontAwesomeIcon icon={faTrash} />
-        </button>,
-        <button onClick={() => startEditList()}>
-          <FontAwesomeIcon icon={faEdit} />
-        </button>,
-      ]
-    : null;
   return (
     <div id="listactions">
-      <button onClick={() => startCreateList()}>
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
+      {!creating && (
+        <button onClick={() => startCreateList()}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      )}
       {!list && !creating ? 'add list' : null}
-      {editRemoveButtons}
+      {list && (
+        <button onClick={() => removeList()}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      )}
+      {list &&
+        !editing && (
+          <button onClick={() => startEditList()}>
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+        )}
     </div>
   );
 }
@@ -40,5 +43,6 @@ ListActions.propTypes = {
   removeList: PropTypes.func.isRequired,
   startEditList: PropTypes.func.isRequired,
   creating: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
   list: PropTypes.string,
 };

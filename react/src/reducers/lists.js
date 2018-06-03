@@ -9,6 +9,8 @@ import {
   EDIT_LIST_NAME,
   START_CREATE_LIST,
   START_EDIT_LIST,
+  STOP_CREATE_LIST,
+  STOP_EDIT_LIST,
 } from '../actions/lists';
 import {
   ADD_TODO,
@@ -27,6 +29,7 @@ export default function lists(
     dirty: true,
     fetching: false,
     lists: null,
+    loaded: false,
     creating: false,
     list: null,
   },
@@ -39,6 +42,7 @@ export default function lists(
       return {
         ...state,
         dirty: false,
+        loaded: true,
         fetching: false,
         lists: action.lists,
       };
@@ -46,6 +50,11 @@ export default function lists(
       return {
         ...state,
         creating: true,
+      };
+    case STOP_CREATE_LIST:
+      return {
+        ...state,
+        creating: false,
       };
     case ADD_LIST:
       return {
@@ -69,6 +78,18 @@ export default function lists(
           [state.list]: {
             ...state.lists[state.list],
             editing: true,
+          },
+        },
+      };
+    }
+    case STOP_EDIT_LIST: {
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [state.list]: {
+            ...state.lists[state.list],
+            editing: false,
           },
         },
       };

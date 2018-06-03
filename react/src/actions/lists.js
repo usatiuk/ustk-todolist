@@ -10,6 +10,8 @@ export const VALIDATE_LISTS = 'VALIDATE_LISTS';
 export const CHANGE_LIST = 'CHANGE_LIST';
 export const START_CREATE_LIST = 'START_CREATE_LIST';
 export const START_EDIT_LIST = 'START_EDIT_LIST';
+export const STOP_CREATE_LIST = 'STOP_CREATE_LIST';
+export const STOP_EDIT_LIST = 'STOP_EDIT_LIST';
 
 function requestLists() {
   return { type: REQUEST_LISTS };
@@ -33,6 +35,12 @@ export function startCreateList() {
 }
 export function startEditList() {
   return { type: START_EDIT_LIST };
+}
+export function stopCreateList() {
+  return { type: STOP_CREATE_LIST };
+}
+export function stopEditList() {
+  return { type: STOP_EDIT_LIST };
 }
 function addListToState(list) {
   return { type: ADD_LIST, list };
