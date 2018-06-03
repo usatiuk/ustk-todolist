@@ -20,7 +20,7 @@ process.env.NODE_ENV === 'production'
   ? app.use(morgan('combined'))
   : app.use(morgan('dev'));
 
-if (process.env.NODE_ENV === 'production' && process.env.HSTS === true) {
+if (process.env.NODE_ENV === 'production' && process.env.HSTS === 'true') {
   app.use(
     hsts({
       maxAge: 31536000,
