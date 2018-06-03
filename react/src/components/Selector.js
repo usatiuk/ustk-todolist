@@ -50,19 +50,15 @@ export default function Selector({
       </div>
     );
   }
-  if (list === null && dirty) {
-    return <div id="listselector">loading</div>;
-  }
-  const listElements = Object.values(lists.lists).map(elem => (
-    <option key={elem.id} value={elem.id}>
-      {elem.name}
-    </option>
-  ));
   if (list) {
     return (
       <div id="listselector">
         <select value={list} onChange={e => onChange(e.target.value)}>
-          {listElements}
+          {Object.values(lists.lists).map(elem => (
+            <option key={elem.id} value={elem.id}>
+              {elem.name}
+            </option>
+          ))}
         </select>
       </div>
     );
