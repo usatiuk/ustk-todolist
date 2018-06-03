@@ -71,7 +71,7 @@ class Todo extends React.Component {
     ) : (
       <button
         className={todoClasses.join(' ')}
-        onClick={this.state.hover && this.props.toggleTodo}
+        onClick={this.state.hover ? this.props.toggleTodo : null}
       >
         {this.props.todo.text}
       </button>
