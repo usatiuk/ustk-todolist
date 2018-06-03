@@ -6,6 +6,7 @@ const cors = require('cors');
 const config = require('./config');
 const db = require('./config/db');
 const path = require('path');
+const hsts = require('hsts');
 
 require('./models/TodoList');
 require('./models/User');
@@ -18,6 +19,15 @@ app.use(cors());
 process.env.NODE_ENV === 'production'
   ? app.use(morgan('combined'))
   : app.use(morgan('dev'));
+
+if (process.env.NODE_ENV === 'production' && process.env.HSTS === true) {
+  app.use(
+    hsts({
+      maxAge: 31536000,
+      includeSubDomains: true,
+    }),
+  );
+}
 
 const passport = require('./config/passport');
 
