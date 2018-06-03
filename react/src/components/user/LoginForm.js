@@ -43,7 +43,7 @@ function LoginForm({ handleSubmit, onLogin, user, history, resetUser }) {
             component={InputField}
             type="password"
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
@@ -78,4 +78,11 @@ export default reduxForm({
     username: '',
     password: '',
   },
-})(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm)));
+})(
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(LoginForm),
+  ),
+);
