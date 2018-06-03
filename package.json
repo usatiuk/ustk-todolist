@@ -1,5 +1,5 @@
 {
-  "name": "todolist-nodeback",
+  "name": "todolist",
   "version": "0.1.0",
   "private": true,
   "description": "",
@@ -8,7 +8,7 @@
     "start": "node ./app.js",
     "debug": "cross-env NODE_ENV=development npx nodemon --inspect ./app.js",
     "test": "cross-env NODE_ENV=test jest",
-    "postinstall": "cd react && npm install && npm run build"
+    "heroku-postbuild": "cd react && npm install && npm run build"
   },
   "cacheDirectories": [
     "react/node_modules",
