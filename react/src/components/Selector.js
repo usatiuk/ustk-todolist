@@ -7,7 +7,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import './Selector.css';
 
 const button = {
-  width: 16,
+  width: 36,
   height: 36,
 };
 
