@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 
 function Input(props) {
   let input;
@@ -25,9 +26,9 @@ function Input(props) {
           }
         }}
       />
-      <button id="add" onClick={() => submit()}>
+      <Button id="add" onClick={() => submit()}>
         add
-      </button>
+      </Button>
     </div>
   );
 }

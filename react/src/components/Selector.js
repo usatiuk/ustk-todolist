@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 
@@ -78,13 +78,17 @@ export default function Selector({
   if (list) {
     return (
       <div id="listselector">
-        <select value={list} onChange={e => onChange(e.target.value)}>
+        <Select
+          style={{ fontSize: '1.5rem' }}
+          value={list}
+          onChange={e => onChange(e.target.value)}
+        >
           {Object.values(lists.lists).map(elem => (
-            <option key={elem.id} value={elem.id}>
+            <MenuItem key={elem.id} value={elem.id}>
               {elem.name}
-            </option>
+            </MenuItem>
           ))}
-        </select>
+        </Select>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TextField } from '@material-ui/core';
 
 export default function InputField({
   required,
@@ -9,12 +10,10 @@ export default function InputField({
   type,
 }) {
   return (
-    <div>
-      <label htmlFor={input.name}>
-        {label} <input required={required} {...input} type={type} />
-      </label>
+    <React.Fragment>
+      <TextField label={label} required={required} {...input} type={type} />
       {touched && error && <span className="error">{error}</span>}
-    </div>
+    </React.Fragment>
   );
 }
 

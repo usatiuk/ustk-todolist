@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { animated } from 'react-spring';
+import { ButtonBase } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
@@ -57,15 +58,10 @@ class Todo extends React.Component {
       editClasses.push('disabled');
     }
 
-    const todoClasses = ['todo'];
-    if (this.props.todo.completed) {
-      todoClasses.push('done');
-    }
-
     let input;
 
     const text = this.state.editing ? (
-      <div className={todoClasses.join(' ')}>
+      <div className="todo">
         <textarea
           className="todo--input"
           defaultValue={this.props.todo.text}
@@ -75,38 +71,48 @@ class Todo extends React.Component {
         />
       </div>
     ) : (
-      <button
-        className={todoClasses.join(' ')}
+      <ButtonBase
+        style={{
+          justifyContent: 'left',
+          paddingLeft: '1.5rem',
+          borderTop: '1px solid #f0f0f0',
+          textDecoration: this.props.todo.completed ? 'line-through' : 'none',
+          color: this.props.todo.completed ? '#888888' : 'black',
+        }}
+        className="todo"
         onClick={this.state.hover ? this.props.toggleTodo : null}
       >
         {this.props.todo.text}
-      </button>
+      </ButtonBase>
     );
-    const buttons = this.state.editing
+    const ButtonBases = this.state.editing
       ? [
-          <animated.button
+          <ButtonBase
             key="save"
+            style={{ backgroundColor: 'lightgreen' }}
             className="save"
             onClick={() => this.stopEdit(input.value)}
           >
             <CheckIcon style={icon} />
-          </animated.button>,
+          </ButtonBase>,
         ]
       : [
-          <animated.button
+          <ButtonBase
             key="remove"
+            style={{ backgroundColor: 'pink' }}
             className={deleteClasses.join(' ')}
             onClick={this.props.removeTodo}
           >
             <DeleteIcon style={icon} />
-          </animated.button>,
-          <animated.button
+          </ButtonBase>,
+          <ButtonBase
             key="edit"
+            style={{ backgroundColor: 'lightcyan' }}
             className={editClasses.join(' ')}
             onClick={this.startEdit}
           >
             <EditIcon style={icon} />
-          </animated.button>,
+          </ButtonBase>,
         ];
     return (
       <animated.li
@@ -116,7 +122,7 @@ class Todo extends React.Component {
         onMouseOut={this.onMouseOut}
         onBlur={this.onMouseOut}
       >
-        {buttons}
+        {ButtonBases}
         {text}
       </animated.li>
     );

@@ -1,13 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ButtonBase } from '@material-ui/core';
 
 import { logout } from '../actions/user';
 
 function Link({ onClick, children }) {
   const classes = ['logout'];
   return (
-    <button
+    <ButtonBase
+      style={{
+        marginRight: '1rem',
+        padding: '0 0.5rem',
+        borderRadius: '7px',
+      }}
       className={classes.join(' ')}
       onClick={e => {
         e.preventDefault();
@@ -15,7 +21,7 @@ function Link({ onClick, children }) {
       }}
     >
       {children}
-    </button>
+    </ButtonBase>
   );
 }
 
