@@ -7,6 +7,7 @@ const config = require('./config');
 const db = require('./config/db');
 const path = require('path');
 const hsts = require('hsts');
+const { redirectToHTTPS } = require('express-http-to-https');
 
 require('./models/TodoList');
 require('./models/User');
@@ -21,6 +22,7 @@ process.env.NODE_ENV === 'production'
   : app.use(morgan('dev'));
 
 if (process.env.NODE_ENV === 'production' && process.env.HSTS === 'true') {
+  app.use(redirectToHTTPS([/localhost:(\d{4})/]));
   app.use(
     hsts({
       maxAge: 31536000,
