@@ -19,6 +19,7 @@
 #listactions {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin: 0.2rem 0.1rem;
   margin-left: 0.5rem;
 }
