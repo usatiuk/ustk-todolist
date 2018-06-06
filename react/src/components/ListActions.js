@@ -1,10 +1,10 @@
-import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import BackButton from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Transition, config, animated } from 'react-spring';
 
 const button = {
   width: 30,
@@ -34,39 +34,64 @@ export default function ListActions({
       stopCreateList();
     }
   }
+  const actions = [];
+  if (!creating && !editing) {
+    actions.push(styles => (
+      <animated.button
+        key="create"
+        style={{ ...button, ...styles }}
+        onClick={() => startCreateList()}
+      >
+        <AddIcon style={icon} />
+      </animated.button>
+    ));
+  }
+  if (list && !creating && !editing) {
+    actions.push(styles => (
+      <animated.button
+        key="remove"
+        style={{ ...button, ...styles }}
+        onClick={() => removeList()}
+      >
+        <DeleteIcon style={icon} />
+      </animated.button>
+    ));
+  }
+  if (list && !creating && !editing) {
+    actions.push(styles => (
+      <animated.button
+        key="edit"
+        style={{ ...button, ...styles }}
+        onClick={() => startEditList()}
+      >
+        <EditIcon style={icon} />
+      </animated.button>
+    ));
+  }
+  if (creating || editing) {
+    actions.push(styles => (
+      <animated.button
+        key="back"
+        style={{ ...button, ...styles }}
+        className="backbutton"
+        onClick={() => back()}
+      >
+        <BackButton style={icon} />
+      </animated.button>
+    ));
+  }
   return (
     <div id="listactions">
-      {!creating &&
-        !editing && (
-          <IconButton style={button} onClick={() => startCreateList()}>
-            <AddIcon style={icon} />
-          </IconButton>
-        )}
-      {!list && !creating ? 'add list' : null}
-      {list &&
-        !creating &&
-        !editing && (
-          <IconButton style={button} onClick={() => removeList()}>
-            <DeleteIcon style={icon} />
-          </IconButton>
-        )}
-      {list &&
-        !creating &&
-        !editing && (
-          <IconButton style={button} onClick={() => startEditList()}>
-            <EditIcon style={icon} />
-          </IconButton>
-        )}
-
-      {(creating || editing) && (
-        <IconButton
-          style={button}
-          className="backbutton"
-          onClick={() => back()}
-        >
-          <BackButton style={icon} />
-        </IconButton>
-      )}
+      <Transition
+        native
+        config={config.stiff}
+        keys={actions.map(action => action({}).key)}
+        from={{ opacity: 0, height: 0, margin: 0, padding: 0 }}
+        enter={{ opacity: 1, height: 30 }}
+        leave={{ opacity: 0, height: 0, margin: 0, padding: 0 }}
+      >
+        {actions}
+      </Transition>
     </div>
   );
 }
