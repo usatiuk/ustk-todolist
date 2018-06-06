@@ -3,10 +3,12 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ButtonBase, Button } from '@material-ui/core';
+
 import InputField from './InputField';
+import UserErrors from './UserErrors';
 
 import '../Form.css';
-import UserErrors from './UserErrors';
 
 import { login, reset } from '../../actions/user';
 
@@ -15,20 +17,25 @@ function LoginForm({ handleSubmit, onLogin, user, history, resetUser }) {
     history.push('/');
   }
   return (
-    <div>
+    <React.Fragment>
       <div id="user-header">
-        <button
+        <ButtonBase
+          style={{
+            marginRight: '1rem',
+            padding: '0 0.5rem',
+            borderRadius: '7px',
+          }}
           onClick={() => {
             resetUser();
             history.push('/signup');
           }}
         >
           signup
-        </button>
+        </ButtonBase>
       </div>
       <div id="form">
-        <UserErrors user={user} />
         <form onSubmit={handleSubmit(onLogin)}>
+          <UserErrors user={user} />
           <Field
             label="username"
             name="username"
@@ -43,10 +50,14 @@ function LoginForm({ handleSubmit, onLogin, user, history, resetUser }) {
             component={InputField}
             type="password"
           />
-          <button type="submit">Login</button>
+          <div id="submitbutton">
+            <Button variant="contained" color="primary" type="submit">
+              Login
+            </Button>
+          </div>
         </form>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 

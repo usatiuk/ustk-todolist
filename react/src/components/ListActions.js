@@ -10,6 +10,7 @@ const button = {
   width: 24,
   height: 24,
   padding: 0,
+  margin: 3,
 };
 
 const icon = {

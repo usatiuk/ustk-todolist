@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ButtonBase } from '@material-ui/core';
 import { setVisibilityFilter } from '../actions/todos';
 
 function Link({ active, onClick, children }) {
@@ -9,7 +10,12 @@ function Link({ active, onClick, children }) {
     classes.push('filter--active');
   }
   return (
-    <button
+    <ButtonBase
+      style={{
+        margin: '0 0.2rem',
+        padding: '1rem 0.3rem',
+        borderRadius: '7px',
+      }}
       className={classes.join(' ')}
       onClick={e => {
         e.preventDefault();
@@ -17,7 +23,7 @@ function Link({ active, onClick, children }) {
       }}
     >
       {children}
-    </button>
+    </ButtonBase>
   );
 }
 
@@ -39,4 +45,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Link);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Link);

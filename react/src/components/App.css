@@ -116,18 +116,6 @@ li button.todo {
   box-shadow: none;
 }
 
-.delete {
-  background-color: pink;
-}
-
-.edit {
-  background-color: lightcyan;
-}
-
-.save {
-  background-color: lightgreen;
-}
-
 ul {
   margin: 0;
   padding: 0;

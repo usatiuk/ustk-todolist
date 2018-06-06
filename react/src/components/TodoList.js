@@ -16,9 +16,9 @@ export default function TodosContainer({
         native
         items={todos}
         keys={todo => todo.id}
-        from={{ height: 0, borderColor: '#f0f0f0', opacity: 0.9 }}
+        from={{ height: 0, borderColor: '#f0f0f0', opacity: 0.7 }}
         enter={{ height: 60, borderColor: '#f0f0f0', opacity: 1 }}
-        leave={{ height: 0, borderColor: '#ffffff', opacity: 0.5 }}
+        leave={{ height: 0, borderColor: '#ffffff', opacity: 0.3 }}
       >
         {todos.map(todo => styles => (
           <Todo

@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ButtonBase, Button } from '@material-ui/core';
 
 import InputField from './InputField';
 import UserErrors from './UserErrors';
@@ -14,7 +15,7 @@ import { signup, reset } from '../../actions/user';
 function validate(values) {
   const errors = {};
   if (values.password !== values.passwordRepeat) {
-    errors.passwordRepeat = 'Invalid';
+    errors.passwordRepeat = 'Passwords should match';
   }
   return errors;
 }
@@ -24,20 +25,25 @@ function SignupForm({ handleSubmit, onSignup, user, history, resetUser }) {
     history.push('/');
   }
   return (
-    <div>
+    <React.Fragment>
       <div id="user-header">
-        <button
+        <ButtonBase
+          style={{
+            marginRight: '1rem',
+            padding: '0 0.5rem',
+            borderRadius: '7px',
+          }}
           onClick={() => {
             resetUser();
             history.push('/login');
           }}
         >
           login
-        </button>
+        </ButtonBase>
       </div>
       <div id="form">
-        <UserErrors user={user} />
         <form onSubmit={handleSubmit(onSignup)}>
+          <UserErrors user={user} />
           <Field
             label="username"
             name="username"
@@ -59,10 +65,14 @@ function SignupForm({ handleSubmit, onSignup, user, history, resetUser }) {
             component={InputField}
             type="password"
           />
-          <button type="submit">Signup</button>
+          <div id="submitbutton">
+            <Button variant="contained" color="primary" type="submit">
+              Signup
+            </Button>
+          </div>
         </form>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 
