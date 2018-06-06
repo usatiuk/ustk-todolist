@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
+import { Spring, animated } from 'react-spring';
 
 import './Selector.css';
 
@@ -40,12 +41,16 @@ export default function Selector({
             }
           }}
         />
-        <IconButton
-          style={button}
-          onClick={() => input.value.trim() && addList(input.value)}
-        >
-          <AddIcon style={icon} />
-        </IconButton>
+        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+          {styles => (
+            <animated.button
+              style={{ ...button, ...styles }}
+              onClick={() => input.value.trim() && addList(input.value)}
+            >
+              <AddIcon style={icon} />
+            </animated.button>
+          )}
+        </Spring>
       </div>
     );
   }
@@ -66,12 +71,16 @@ export default function Selector({
             }
           }}
         />
-        <IconButton
-          style={button}
-          onClick={() => input.value.trim() && editList(input.value)}
-        >
-          <CheckIcon style={icon} />
-        </IconButton>
+        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+          {styles => (
+            <animated.button
+              style={{ ...button, ...styles }}
+              onClick={() => input.value.trim() && editList(input.value)}
+            >
+              <CheckIcon style={icon} />
+            </animated.button>
+          )}
+        </Spring>
       </div>
     );
   }

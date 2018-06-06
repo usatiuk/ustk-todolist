@@ -36,11 +36,6 @@
   margin: 1rem 0;
 }
 
-#listactions button:hover {
-  transition: 0.1s ease-in-out;
-  color: #222222;
-}
-
 #filters {
   margin-right: 0.75rem;
   align-self: center;
