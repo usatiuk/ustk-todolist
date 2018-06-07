@@ -128,7 +128,7 @@ class Todo extends React.Component {
     return (
       <animated.li
         style={this.props.style}
-        // onFocus and onBlur triggers when long pressing on smartphones
+        // onFocus and onBlur are triggered with long press on smartphones
         onFocus={this.onMouseOver}
         onBlur={this.onMouseOut}
       >
