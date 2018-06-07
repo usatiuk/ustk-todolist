@@ -41,7 +41,7 @@ export default function Selector({
             }
           }}
         />
-        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+        <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
           {styles => (
             <animated.button
               style={{ ...button, ...styles }}
@@ -71,7 +71,7 @@ export default function Selector({
             }
           }}
         />
-        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+        <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
           {styles => (
             <animated.button
               style={{ ...button, ...styles }}
@@ -88,7 +88,7 @@ export default function Selector({
     return (
       <div id="listselector">
         <Select
-          style={{ fontSize: '1.5rem' }}
+          style={{ fontSize: '1.5rem', width: '100%' }}
           value={list}
           onChange={e => onChange(e.target.value)}
         >
