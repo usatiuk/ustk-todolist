@@ -9,6 +9,7 @@ import {
   EDIT_TODO,
 } from '../actions/todos';
 import { REMOVE_LIST } from '../actions/lists';
+import { LOGOUT } from '../actions/user';
 
 export default function todos(
   state = {
@@ -19,6 +20,12 @@ export default function todos(
   action,
 ) {
   switch (action.type) {
+    case LOGOUT:
+      return {
+        dirty: true,
+        fetching: false,
+        todos: null,
+      };
     case RECIEVE_TODOS:
       return {
         ...state,

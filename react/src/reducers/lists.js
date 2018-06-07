@@ -13,6 +13,7 @@ import {
   STOP_EDIT_LIST,
 } from '../actions/lists';
 import { REMOVE_TODO, ADD_TODO } from '../actions/todos';
+import { LOGOUT } from '../actions/user';
 
 export default function lists(
   state = {
@@ -27,6 +28,16 @@ export default function lists(
   action,
 ) {
   switch (action.type) {
+    case LOGOUT:
+      return {
+        dirty: true,
+        fetching: false,
+        lists: null,
+        loaded: false,
+        creating: false,
+        list: null,
+        editing: false,
+      };
     case CHANGE_LIST:
       return { ...state, list: action.list };
     case RECIEVE_LISTS:

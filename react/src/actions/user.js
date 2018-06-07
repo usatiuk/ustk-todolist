@@ -103,5 +103,7 @@ export function reset() {
 
 export function logout() {
   localStorage.removeItem('jwt');
+  localStorage.removeItem('lists');
+  localStorage.removeItem('items');
   return { type: LOGOUT };
 }
