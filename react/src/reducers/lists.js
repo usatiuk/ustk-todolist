@@ -12,17 +12,7 @@ import {
   STOP_CREATE_LIST,
   STOP_EDIT_LIST,
 } from '../actions/lists';
-import {
-  ADD_TODO,
-  INVALIDATE_TODOS,
-  VALIDATE_TODOS,
-  REQUEST_TODOS,
-  RECIEVE_TODOS,
-  REMOVE_TODO,
-  TOGGLE_TODO,
-  EDIT_TODO,
-} from '../actions/todos';
-import list from './list';
+import { REMOVE_TODO, ADD_TODO } from '../actions/todos';
 
 export default function lists(
   state = {
@@ -32,6 +22,7 @@ export default function lists(
     loaded: false,
     creating: false,
     list: null,
+    editing: false,
   },
   action,
 ) {
@@ -64,45 +55,60 @@ export default function lists(
       };
     case REMOVE_LIST: {
       const newLists = { ...state.lists };
-      delete newLists[action.id];
+      delete newLists[action.list];
       return {
         ...state,
+        list: null,
         lists: newLists,
       };
     }
     case START_EDIT_LIST: {
       return {
         ...state,
-        lists: {
-          ...state.lists,
-          [state.list]: {
-            ...state.lists[state.list],
-            editing: true,
-          },
-        },
+        editing: true,
       };
     }
     case STOP_EDIT_LIST: {
       return {
         ...state,
-        lists: {
-          ...state.lists,
-          [state.list]: {
-            ...state.lists[state.list],
-            editing: false,
-          },
-        },
+        editing: false,
       };
     }
     case EDIT_LIST_NAME: {
       return {
         ...state,
+        editing: false,
         lists: {
           ...state.lists,
-          [action.id]: {
-            ...state.lists[action.id],
+          [action.list]: {
+            ...state.lists[action.list],
             name: action.name,
-            editing: false,
+          },
+        },
+      };
+    }
+    case REMOVE_TODO: {
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [state.list]: {
+            ...state.lists[state.list],
+            todos: state.lists[state.list].todos.filter(
+              todo => todo !== action.id,
+            ),
+          },
+        },
+      };
+    }
+    case ADD_TODO: {
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [state.list]: {
+            ...state.lists[state.list],
+            todos: [action.todo.id, ...state.lists[state.list].todos],
           },
         },
       };
@@ -121,21 +127,6 @@ export default function lists(
       return {
         ...state,
         fetching: true,
-      };
-    case RECIEVE_TODOS:
-    case ADD_TODO:
-    case EDIT_TODO:
-    case INVALIDATE_TODOS:
-    case VALIDATE_TODOS:
-    case REQUEST_TODOS:
-    case REMOVE_TODO:
-    case TOGGLE_TODO:
-      return {
-        ...state,
-        lists: {
-          ...state.lists,
-          [state.list]: list(state.lists[state.list], action),
-        },
       };
     default:
       return state;

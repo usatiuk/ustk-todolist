@@ -16,29 +16,15 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE',
 };
 
-function toggleTodoInList(id) {
-  return { type: TOGGLE_TODO, id };
-}
-
 export function setVisibilityFilter(filter) {
   return { type: SET_VISIBILITY_FILTER, filter };
 }
 
-function requestTodos(list) {
-  return { type: REQUEST_TODOS, list };
-}
-function recieveTodos(list, todos) {
-  return { type: RECIEVE_TODOS, list, todos };
-}
 function invalidateTodos() {
   return { type: INVALIDATE_TODOS };
 }
 function validateTodos() {
   return { type: VALIDATE_TODOS };
-}
-
-function addTodoToList(todo) {
-  return { type: ADD_TODO, todo };
 }
 
 export function addTodo(text) {
@@ -57,14 +43,10 @@ export function addTodo(text) {
       });
       const json = await response.json();
       const todo = json.data;
-      dispatch(addTodoToList(todo));
+      dispatch({ type: ADD_TODO, todo });
       dispatch(validateTodos());
     }
   };
-}
-
-function removeTodoFromList(id) {
-  return { type: REMOVE_TODO, id };
 }
 
 export function removeTodo(id) {
@@ -79,7 +61,7 @@ export function removeTodo(id) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(removeTodoFromList(id));
+      dispatch({ type: REMOVE_TODO, id });
     }
     dispatch(validateTodos());
   };
@@ -89,8 +71,7 @@ export function toggleTodo(id) {
   return async (dispatch, getState) => {
     dispatch(invalidateTodos());
     const state = getState();
-    const listObj = state.lists.lists[state.lists.list];
-    const todoObj = listObj.todos.find(todo => todo.id === id);
+    const todoObj = state.todos.todos[id];
     const completed = !todoObj.completed;
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       body: JSON.stringify({ completed }),
@@ -102,14 +83,10 @@ export function toggleTodo(id) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(toggleTodoInList(id));
+      dispatch({ type: TOGGLE_TODO, id });
     }
     dispatch(validateTodos());
   };
-}
-
-function editTodoInList(id, todo) {
-  return { type: EDIT_TODO, id, todo };
 }
 
 export function editTodo(id, text) {
@@ -126,7 +103,7 @@ export function editTodo(id, text) {
     const json = await response.json();
     if (json.success) {
       const todo = json.data;
-      dispatch(editTodoInList(id, todo));
+      dispatch({ type: EDIT_TODO, id, todo });
     }
     dispatch(validateTodos());
   };
@@ -134,14 +111,14 @@ export function editTodo(id, text) {
 
 export function fetchTodos(list) {
   return async dispatch => {
-    dispatch(requestTodos(list));
-    const response = await fetch(`${API_ROOT}/lists/${list.id}/todos`, {
+    dispatch({ type: REQUEST_TODOS, list });
+    const response = await fetch(`${API_ROOT}/todos`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
     });
     const json = await response.json();
     const todos = json.data;
-    dispatch(recieveTodos(list, todos));
+    dispatch({ type: RECIEVE_TODOS, todos });
   };
 }

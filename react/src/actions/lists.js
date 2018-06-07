@@ -1,4 +1,5 @@
 import { API_ROOT, getToken } from './util';
+import { RECIEVE_TODOS } from './todos';
 
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
@@ -42,9 +43,6 @@ export function stopCreateList() {
 export function stopEditList() {
   return { type: STOP_EDIT_LIST };
 }
-function addListToState(list) {
-  return { type: ADD_LIST, list };
-}
 
 export function addList(name) {
   return async dispatch => {
@@ -59,14 +57,10 @@ export function addList(name) {
     });
     const json = await response.json();
     const list = json.data;
-    dispatch(addListToState(list));
+    dispatch({ type: ADD_LIST, list });
     dispatch(changeList(list.id));
     dispatch(validateLists());
   };
-}
-
-function removeListFromState(id) {
-  return { type: REMOVE_LIST, id };
 }
 
 export function removeList() {
@@ -83,7 +77,7 @@ export function removeList() {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(removeListFromState(list));
+      dispatch({ type: REMOVE_LIST, list });
       state = getState();
       const lists = Object.values(state.lists.lists);
       const newList = lists.length ? lists[lists.length - 1].id : '';
@@ -91,10 +85,6 @@ export function removeList() {
     }
     dispatch(validateLists());
   };
-}
-
-function editListNameInState(id, name) {
-  return { type: EDIT_LIST_NAME, id, name };
 }
 
 export function editList(name) {
@@ -112,10 +102,23 @@ export function editList(name) {
     });
     const json = await response.json();
     if (json.success) {
-      dispatch(editListNameInState(list, name));
+      dispatch({ type: EDIT_LIST_NAME, list, name });
     }
     dispatch(validateLists());
   };
+}
+
+function normalizeTodos(lists) {
+  return lists.reduce((todos, list) => {
+    const listTodosObj = list.todos.reduce(
+      (listTodos, todo) => ({
+        ...listTodos,
+        [todo.id]: { ...todo },
+      }),
+      {},
+    );
+    return { ...todos, ...listTodosObj };
+  }, {});
 }
 
 export function fetchLists() {
@@ -135,11 +138,12 @@ export function fetchLists() {
         fetching: false,
         editing: false,
         ...list,
-        todos: [...list.todos.reverse()],
+        todos: list.todos.map(todo => todo.id),
       };
       return newObj;
     }, {});
 
+    dispatch({ type: RECIEVE_TODOS, todos: normalizeTodos(lists) });
     dispatch(recieveLists(listsObj));
     if (lists.length !== 0) {
       dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));

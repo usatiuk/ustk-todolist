@@ -5,23 +5,17 @@ import { toggleTodo, removeTodo, editTodo } from '../actions/todos';
 import getVisibleTodos from './getVisibleTodos';
 
 function mapStateToProps(state) {
-  const { list } = state.lists;
-  try {
-    const listObj = state.lists.lists[list];
-    const listTodos = state.lists.lists[list].todos;
-
-    return {
-      list,
-      todos: getVisibleTodos(listTodos, state.visibilityFilter),
-      dirty: listObj.dirty,
-    };
-  } catch (e) {
-    return {
-      list: '',
-      todos: [],
-      dirty: true,
-    };
-  }
+  return {
+    todos: state.lists.list
+      ? getVisibleTodos(
+          state.lists.lists[state.lists.list].todos.map(
+            id => state.todos.todos[id],
+          ),
+          state.visibilityFilter,
+        )
+      : [],
+    dirty: state.todos.dirty,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

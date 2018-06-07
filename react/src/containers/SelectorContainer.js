@@ -3,14 +3,10 @@ import Selector from '../components/Selector';
 import { changeList, addList, editList } from '../actions/lists';
 
 function mapStateToProps(state) {
-  const editing =
-    state.lists.list && !state.lists.dirty
-      ? state.lists.lists[state.lists.list].editing
-      : false;
   return {
     lists: state.lists,
     list: state.lists.list,
-    editing,
+    editing: state.lists.editing,
     creating: state.lists.creating,
   };
 }
@@ -19,7 +15,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onChange: list => dispatch(changeList(list)),
     addList: name => dispatch(addList(name)),
-    editList: (id, name) => dispatch(editList(id, name)),
+    editList: name => dispatch(editList(name)),
   };
 }
 
