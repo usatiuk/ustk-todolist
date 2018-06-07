@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import 'normalize.css';
 import './Container.css';
 import './App.css';
 
