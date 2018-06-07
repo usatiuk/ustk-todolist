@@ -74,13 +74,13 @@ class Todo extends React.Component {
       <ButtonBase
         style={{
           justifyContent: 'left',
-          paddingLeft: '1.5rem',
+          paddingLeft: '1rem',
           borderTop: '1px solid #f0f0f0',
           textDecoration: this.props.todo.completed ? 'line-through' : 'none',
           color: this.props.todo.completed ? '#888888' : 'black',
         }}
         className="todo"
-        onClick={this.state.hover ? this.props.toggleTodo : null}
+        onClick={this.props.toggleTodo}
       >
         {this.props.todo.text}
       </ButtonBase>
@@ -102,6 +102,10 @@ class Todo extends React.Component {
             style={{ backgroundColor: 'pink' }}
             className={deleteClasses.join(' ')}
             onClick={this.props.removeTodo}
+            onMouseOver={this.onMouseOver}
+            onFocus={this.onMouseOver}
+            onMouseOut={this.onMouseOut}
+            onBlur={this.onMouseOut}
           >
             <DeleteIcon style={icon} />
           </ButtonBase>,
@@ -110,6 +114,10 @@ class Todo extends React.Component {
             style={{ backgroundColor: 'lightcyan' }}
             className={editClasses.join(' ')}
             onClick={this.startEdit}
+            onMouseOver={this.onMouseOver}
+            onFocus={this.onMouseOver}
+            onMouseOut={this.onMouseOut}
+            onBlur={this.onMouseOut}
           >
             <EditIcon style={icon} />
           </ButtonBase>,
@@ -117,9 +125,8 @@ class Todo extends React.Component {
     return (
       <animated.li
         style={this.props.style}
-        onMouseOver={this.onMouseOver}
+        // onFocus and onBlur triggers when long pressing on smartphones
         onFocus={this.onMouseOver}
-        onMouseOut={this.onMouseOut}
         onBlur={this.onMouseOut}
       >
         {ButtonBases}
