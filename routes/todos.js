@@ -13,7 +13,9 @@ router.get(
   '/',
   asyncHelper(async (req, res) => {
     const { listId } = res.locals || req.body;
-    const todos = await Todo.find({ list: listId, user: req.user.id }).exec();
+    const todos = listId
+      ? await Todo.find({ list: listId, user: req.user.id }).exec()
+      : await Todo.find({ user: req.user.id }).exec();
     res.json({ success: true, data: todos.map(todo => todo.toJson()) });
   }),
 );
