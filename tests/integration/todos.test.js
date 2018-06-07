@@ -49,6 +49,17 @@ describe('test todos', () => {
     expect(response.body.success).toBeTruthy();
     expect(response.body.data[0].text).toEqual('Todo1');
   });
+  test('should index all todos', async () => {
+    const response = await request(server)
+      .get(`/api/todos`)
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect('Content-Type', 'application/json; charset=utf-8');
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.data[0].text).toEqual('Todo1');
+  });
   test('should not index todos without authentication', async () => {
     await request(server)
       .get(`/api/lists/${list._id}/todos`)
