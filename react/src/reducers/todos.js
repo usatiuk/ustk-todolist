@@ -8,13 +8,13 @@ import {
   VALIDATE_TODOS,
   EDIT_TODO,
 } from '../actions/todos';
+import { REMOVE_LIST } from '../actions/lists';
 
 export default function todos(
   state = {
     dirty: true,
     fetching: false,
     todos: null,
-    editing: false,
   },
   action,
 ) {
@@ -29,7 +29,7 @@ export default function todos(
     case ADD_TODO:
       return {
         ...state,
-        todos: [action.todo, ...state.todos],
+        todos: { [action.todo.id]: action.todo, ...state.todos },
       };
     case INVALIDATE_TODOS:
       return {
@@ -44,29 +44,46 @@ export default function todos(
     case EDIT_TODO:
       return {
         ...state,
-        todos: state.todos.map(
-          todo => (todo.id === action.id ? action.todo : todo),
-        ),
+        todos: {
+          ...state.todos,
+          [action.id]: action.todo,
+        },
       };
     case REQUEST_TODOS:
       return {
         ...state,
         fetching: true,
       };
-    case REMOVE_TODO:
+    case REMOVE_TODO: {
+      const newTodos = { ...state.todos };
+      delete newTodos[action.id];
       return {
         ...state,
-        todos: state.todos.filter(todo => todo.id !== action.id),
+        todos: newTodos,
       };
+    }
+    case REMOVE_LIST: {
+      const newTodos = { ...state.todos };
+      Object.keys(newTodos).forEach(todoId => {
+        if (newTodos[todoId].list === action.list) {
+          delete newTodos[todoId];
+        }
+      });
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
     case TOGGLE_TODO: {
       return {
         ...state,
-        todos: state.todos.map(
-          todo =>
-            todo.id === action.id
-              ? { ...todo, completed: !todo.completed }
-              : todo,
-        ),
+        todos: {
+          ...state.todos,
+          [action.id]: {
+            ...state.todos[action.id],
+            completed: !state.todos[action.id].completed,
+          },
+        },
       };
     }
     default:
