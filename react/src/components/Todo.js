@@ -80,7 +80,10 @@ class Todo extends React.Component {
           color: this.props.todo.completed ? '#888888' : 'black',
         }}
         className="todo"
-        onClick={this.props.toggleTodo}
+        onClick={() => {
+          this.onMouseOut();
+          this.props.toggleTodo();
+        }}
       >
         {this.props.todo.text}
       </ButtonBase>
