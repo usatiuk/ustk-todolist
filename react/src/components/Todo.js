@@ -10,6 +10,10 @@ const icon = {
   fontSize: 24,
   padding: 0,
 };
+const disabledAction = {
+  backgroundColor: '#fafafa',
+  color: '#dddddd',
+};
 
 class Todo extends React.Component {
   constructor(props) {
@@ -47,6 +51,7 @@ class Todo extends React.Component {
     this.setState({
       ...this.state,
       editing: false,
+      hover: false,
     });
   }
 
@@ -75,13 +80,11 @@ class Todo extends React.Component {
         style={{
           justifyContent: 'left',
           paddingLeft: '1rem',
-          borderTop: '1px solid #f0f0f0',
           textDecoration: this.props.todo.completed ? 'line-through' : 'none',
           color: this.props.todo.completed ? '#888888' : 'black',
         }}
         className="todo"
         onClick={() => {
-          this.onMouseOut();
           this.props.toggleTodo();
         }}
       >
@@ -102,38 +105,40 @@ class Todo extends React.Component {
       : [
           <ButtonBase
             key="remove"
-            style={{ backgroundColor: 'pink' }}
+            style={
+              this.state.hover ? { backgroundColor: 'pink' } : disabledAction
+            }
             className={deleteClasses.join(' ')}
             onClick={this.props.removeTodo}
-            onMouseOver={this.onMouseOver}
-            onFocus={this.onMouseOver}
-            onMouseOut={this.onMouseOut}
-            onBlur={this.onMouseOut}
           >
             <DeleteIcon style={icon} />
           </ButtonBase>,
           <ButtonBase
             key="edit"
-            style={{ backgroundColor: 'lightcyan' }}
+            style={
+              this.state.hover
+                ? { backgroundColor: 'lightcyan' }
+                : disabledAction
+            }
             className={editClasses.join(' ')}
             onClick={this.startEdit}
-            onMouseOver={this.onMouseOver}
-            onFocus={this.onMouseOver}
-            onMouseOut={this.onMouseOut}
-            onBlur={this.onMouseOut}
           >
             <EditIcon style={icon} />
           </ButtonBase>,
         ];
     return (
       <animated.li
-        style={this.props.style}
-        // onFocus and onBlur are triggered with long press on smartphones
+        style={{
+          ...this.props.style,
+          borderTop: '1px solid #f0f0f0',
+        }}
+        onMouseOver={this.onMouseOver}
         onFocus={this.onMouseOver}
+        onMouseOut={this.onMouseOut}
         onBlur={this.onMouseOut}
       >
-        {ButtonBases}
         {text}
+        {ButtonBases}
       </animated.li>
     );
   }
