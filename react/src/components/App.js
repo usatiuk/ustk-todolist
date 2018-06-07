@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import 'normalize.css';
 import './Container.css';
@@ -17,13 +18,16 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div id="container">
-          <Route exact path="/" component={TodosContainer} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/signup" component={SignupForm} />
-        </div>
-      </Router>
+      <React.Fragment>
+        <CssBaseline />
+        <Router>
+          <div id="container">
+            <Route exact path="/" component={TodosContainer} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/signup" component={SignupForm} />
+          </div>
+        </Router>
+      </React.Fragment>
     );
   }
 }
