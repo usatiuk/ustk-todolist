@@ -31,6 +31,10 @@ function validateUser() {
 export function loadUser() {
   return async dispatch => {
     if (await getToken()) {
+      const user = await localforage.getItem('user');
+      dispatch(loginSuccess(user));
+      dispatch(loadLists());
+
       const response = await fetch(`${API_ROOT}/users/user`, {
         headers: {
           Authorization: `Bearer ${await getToken()}`,
@@ -40,7 +44,7 @@ export function loadUser() {
       });
       const json = await response.json();
       if (json.success) {
-        await localforage.setItem('jwt', json.data.jwt);
+        await localforage.setItem('user', json.data);
         dispatch(loginSuccess(json.data));
         dispatch(loadLists());
       } else {
@@ -64,7 +68,7 @@ export function login(user) {
     });
     const json = await response.json();
     if (json.success) {
-      await localforage.setItem('jwt', json.data.jwt);
+      await localforage.setItem('user', json.data);
       dispatch(loginSuccess(json.data));
       dispatch(loadLists());
     } else {
@@ -93,7 +97,7 @@ export function signup(user) {
     });
     const json = await response.json();
     if (json.success) {
-      await await localforage.setItem('jwt', json.data.jwt);
+      await await localforage.setItem('user', json.data);
       dispatch(signupSuccess(json.data));
       dispatch(loadLists());
     } else {
@@ -108,7 +112,7 @@ export function reset() {
 
 export function logout() {
   return async dispatch => {
-    await localforage.removeItem('jwt');
+    await localforage.removeItem('user');
     await localforage.removeItem('lists');
     await localforage.removeItem('items');
     dispatch({ type: LOGOUT });

@@ -149,7 +149,8 @@ export function fetchLists() {
     if (lists.length !== 0) {
       dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
     }
-    await localforage.setItem('lists', JSON.stringify(listsObj));
+    await localforage.setItem('lists', listsObj);
+    await localforage.setItem('todos', normalizeTodos(lists));
   };
 }
 
@@ -157,15 +158,13 @@ export function loadLists() {
   return async dispatch => {
     dispatch(requestLists());
 
-    try {
-      const listsJson = await localforage.getTodo('lists');
-      const listsObj = JSON.parse(listsJson);
-      dispatch(recieveLists(listsObj));
-      dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
-    } catch (e) {
-      await localforage.removeItem('lists');
+    const lists = await localforage.getItem('lists');
+    const todos = await localforage.getItem('todos');
+    dispatch(recieveLists(lists));
+    dispatch({ type: RECIEVE_TODOS, todos });
+    if (lists[Object.keys(lists)[0]]) {
+      dispatch(changeList(lists[Object.keys(lists)[0]].id));
     }
-
     dispatch(fetchLists());
   };
 }
