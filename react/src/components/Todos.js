@@ -5,23 +5,24 @@ import InputContainer from '../containers/InputContainer';
 import TodoListContainer from '../containers/TodoListContainer';
 import Header from './Header';
 
-export default function Todos({ user, loadLists, history }) {
-  if (user.user) {
-    loadLists();
-  } else if (!user.dirty) {
-    history.push('/login');
+export default class Todos extends React.Component {
+  componentDidUpdate() {
+    if (!this.props.user.user && !this.props.user.dirty) {
+      this.props.history.push('/login');
+    }
   }
-  return (
-    <div id="todos">
-      <Header />
-      <InputContainer />
-      <TodoListContainer />
-    </div>
-  );
+  render() {
+    return (
+      <div id="todos">
+        <Header />
+        <InputContainer />
+        <TodoListContainer />
+      </div>
+    );
+  }
 }
 
 Todos.propTypes = {
-  loadLists: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
