@@ -162,7 +162,7 @@ export function loadLists() {
     const todos = await localforage.getItem('todos');
     dispatch(recieveLists(lists));
     dispatch({ type: RECIEVE_TODOS, todos });
-    if (lists[Object.keys(lists)[0]]) {
+    if (lists && Object.keys(lists).length) {
       dispatch(changeList(lists[Object.keys(lists)[0]].id));
     }
     dispatch(fetchLists());
