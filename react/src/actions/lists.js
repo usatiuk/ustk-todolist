@@ -1,3 +1,4 @@
+import localforage from 'localforage';
 import { API_ROOT, getToken } from './util';
 import { RECIEVE_TODOS } from './todos';
 
@@ -50,7 +51,7 @@ export function addList(name) {
     const response = await fetch(`${API_ROOT}/lists`, {
       body: JSON.stringify({ name }),
       headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${await getToken()}`,
         'content-type': 'application/json',
       },
       method: 'POST',
@@ -70,7 +71,7 @@ export function removeList() {
     dispatch(invalidateLists());
     const response = await fetch(`${API_ROOT}/lists/${list}`, {
       headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${await getToken()}`,
         'content-type': 'application/json',
       },
       method: 'DELETE',
@@ -95,7 +96,7 @@ export function editList(name) {
     const response = await fetch(`${API_ROOT}/lists/${list}`, {
       body: JSON.stringify({ name }),
       headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${await getToken()}`,
         'content-type': 'application/json',
       },
       method: 'PATCH',
@@ -126,7 +127,7 @@ export function fetchLists() {
     dispatch(requestLists());
     const response = await fetch(`${API_ROOT}/lists`, {
       headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${await getToken()}`,
       },
     });
     const json = await response.json();
@@ -148,7 +149,7 @@ export function fetchLists() {
     if (lists.length !== 0) {
       dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
     }
-    localStorage.setItem('lists', JSON.stringify(listsObj));
+    await localforage.setItem('lists', JSON.stringify(listsObj));
   };
 }
 
@@ -157,12 +158,12 @@ export function loadLists() {
     dispatch(requestLists());
 
     try {
-      const listsJson = localStorage.getTodo('lists');
+      const listsJson = await localforage.getTodo('lists');
       const listsObj = JSON.parse(listsJson);
       dispatch(recieveLists(listsObj));
       dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
     } catch (e) {
-      localStorage.removeItem('lists');
+      await localforage.removeItem('lists');
     }
 
     dispatch(fetchLists());

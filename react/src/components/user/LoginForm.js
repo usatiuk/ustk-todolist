@@ -51,7 +51,7 @@ function LoginForm({ handleSubmit, onLogin, user, history, resetUser }) {
             type="password"
           />
           <div id="submitbutton">
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant="raised" color="primary" type="submit">
               Login
             </Button>
           </div>

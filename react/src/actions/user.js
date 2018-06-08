@@ -1,3 +1,4 @@
+import localforage from 'localforage';
 import { API_ROOT, getToken } from './util';
 import { loadLists } from './lists';
 
@@ -29,17 +30,17 @@ function validateUser() {
 
 export function loadUser() {
   return async dispatch => {
-    if (getToken()) {
+    if (await getToken()) {
       const response = await fetch(`${API_ROOT}/users/user`, {
         headers: {
-          Authorization: `Bearer ${getToken()}`,
+          Authorization: `Bearer ${await getToken()}`,
           'content-type': 'application/json',
         },
         method: 'GET',
       });
       const json = await response.json();
       if (json.success) {
-        localStorage.setItem('jwt', json.data.jwt);
+        await localforage.setItem('jwt', json.data.jwt);
         dispatch(loginSuccess(json.data));
         dispatch(loadLists());
       } else {
@@ -63,7 +64,7 @@ export function login(user) {
     });
     const json = await response.json();
     if (json.success) {
-      localStorage.setItem('jwt', json.data.jwt);
+      await localforage.setItem('jwt', json.data.jwt);
       dispatch(loginSuccess(json.data));
       dispatch(loadLists());
     } else {
@@ -92,7 +93,7 @@ export function signup(user) {
     });
     const json = await response.json();
     if (json.success) {
-      localStorage.setItem('jwt', json.data.jwt);
+      await await localforage.setItem('jwt', json.data.jwt);
       dispatch(signupSuccess(json.data));
       dispatch(loadLists());
     } else {
@@ -106,8 +107,10 @@ export function reset() {
 }
 
 export function logout() {
-  localStorage.removeItem('jwt');
-  localStorage.removeItem('lists');
-  localStorage.removeItem('items');
-  return { type: LOGOUT };
+  return async dispatch => {
+    await localforage.removeItem('jwt');
+    await localforage.removeItem('lists');
+    await localforage.removeItem('items');
+    dispatch({ type: LOGOUT });
+  };
 }
