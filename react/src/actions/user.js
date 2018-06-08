@@ -1,4 +1,5 @@
 import { API_ROOT, getToken } from './util';
+import { loadLists } from './lists';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
@@ -40,6 +41,7 @@ export function loadUser() {
       if (json.success) {
         localStorage.setItem('jwt', json.data.jwt);
         dispatch(loginSuccess(json.data));
+        dispatch(loadLists());
       } else {
         dispatch(loginFail(json.error));
       }
@@ -63,6 +65,7 @@ export function login(user) {
     if (json.success) {
       localStorage.setItem('jwt', json.data.jwt);
       dispatch(loginSuccess(json.data));
+      dispatch(loadLists());
     } else {
       dispatch(loginFail(json.error));
     }
@@ -91,6 +94,7 @@ export function signup(user) {
     if (json.success) {
       localStorage.setItem('jwt', json.data.jwt);
       dispatch(signupSuccess(json.data));
+      dispatch(loadLists());
     } else {
       dispatch(signupFail(json.error));
     }
