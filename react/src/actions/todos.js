@@ -1,4 +1,5 @@
 import { API_ROOT, getToken } from './util';
+import { fetchLists } from './lists';
 
 export const ADD_TODO = 'ADD_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
@@ -27,6 +28,20 @@ function validateTodos() {
   return { type: VALIDATE_TODOS };
 }
 
+export function fetchTodos() {
+  return async dispatch => {
+    dispatch({ type: REQUEST_TODOS });
+    const response = await fetch(`${API_ROOT}/todos`, {
+      headers: {
+        Authorization: `Bearer ${await getToken()}`,
+      },
+    });
+    const json = await response.json();
+    const todos = json.data;
+    dispatch({ type: RECIEVE_TODOS, todos });
+  };
+}
+
 export function addTodo(text) {
   return async (dispatch, getState) => {
     const state = getState();
@@ -43,7 +58,11 @@ export function addTodo(text) {
       });
       const json = await response.json();
       const todo = json.data;
-      dispatch({ type: ADD_TODO, todo });
+      if (json.success) {
+        dispatch({ type: ADD_TODO, todo });
+      } else {
+        dispatch(fetchLists());
+      }
       dispatch(validateTodos());
     }
   };
@@ -62,6 +81,8 @@ export function removeTodo(id) {
     const json = await response.json();
     if (json.success) {
       dispatch({ type: REMOVE_TODO, id });
+    } else {
+      dispatch(fetchLists());
     }
     dispatch(validateTodos());
   };
@@ -84,6 +105,8 @@ export function toggleTodo(id) {
     const json = await response.json();
     if (json.success) {
       dispatch({ type: TOGGLE_TODO, id });
+    } else {
+      dispatch(fetchLists());
     }
     dispatch(validateTodos());
   };
@@ -104,21 +127,9 @@ export function editTodo(id, text) {
     if (json.success) {
       const todo = json.data;
       dispatch({ type: EDIT_TODO, id, todo });
+    } else {
+      dispatch(fetchLists());
     }
     dispatch(validateTodos());
-  };
-}
-
-export function fetchTodos(list) {
-  return async dispatch => {
-    dispatch({ type: REQUEST_TODOS, list });
-    const response = await fetch(`${API_ROOT}/todos`, {
-      headers: {
-        Authorization: `Bearer ${await getToken()}`,
-      },
-    });
-    const json = await response.json();
-    const todos = json.data;
-    dispatch({ type: RECIEVE_TODOS, todos });
   };
 }
