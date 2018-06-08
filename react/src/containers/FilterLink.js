@@ -14,6 +14,7 @@ function Link({ active, onClick, children }) {
       style={{
         margin: '0 0.2rem',
         padding: '1rem 0.3rem',
+        color: active ? 'black' : '#444444',
         borderRadius: '7px',
       }}
       className={classes.join(' ')}
