@@ -33,7 +33,7 @@ export function fetchTodos() {
     dispatch({ type: REQUEST_TODOS });
     const response = await fetch(`${API_ROOT}/todos`, {
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     const json = await response.json();
@@ -51,7 +51,7 @@ export function addTodo(text) {
       const response = await fetch(`${API_ROOT}/lists/${list}/todos`, {
         body: JSON.stringify({ text }),
         headers: {
-          Authorization: `Bearer ${await getToken()}`,
+          Authorization: `Bearer ${getToken()}`,
           'content-type': 'application/json',
         },
         method: 'POST',
@@ -73,7 +73,7 @@ export function removeTodo(id) {
     dispatch(invalidateTodos());
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
       },
       method: 'DELETE',
@@ -97,7 +97,7 @@ export function toggleTodo(id) {
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       body: JSON.stringify({ completed }),
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
       },
       method: 'PATCH',
@@ -118,7 +118,7 @@ export function editTodo(id, text) {
     const response = await fetch(`${API_ROOT}/todos/${id}`, {
       body: JSON.stringify({ text }),
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
       },
       method: 'PATCH',

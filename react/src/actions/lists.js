@@ -1,4 +1,3 @@
-import localforage from 'localforage';
 import { API_ROOT, getToken } from './util';
 import { RECIEVE_TODOS } from './todos';
 
@@ -51,7 +50,7 @@ export function addList(name) {
     const response = await fetch(`${API_ROOT}/lists`, {
       body: JSON.stringify({ name }),
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
       },
       method: 'POST',
@@ -71,7 +70,7 @@ export function removeList() {
     dispatch(invalidateLists());
     const response = await fetch(`${API_ROOT}/lists/${list}`, {
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
       },
       method: 'DELETE',
@@ -96,7 +95,7 @@ export function editList(name) {
     const response = await fetch(`${API_ROOT}/lists/${list}`, {
       body: JSON.stringify({ name }),
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
         'content-type': 'application/json',
       },
       method: 'PATCH',
@@ -127,7 +126,7 @@ export function fetchLists() {
     dispatch(requestLists());
     const response = await fetch(`${API_ROOT}/lists`, {
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     const json = await response.json();
@@ -149,22 +148,12 @@ export function fetchLists() {
     if (lists.length !== 0) {
       dispatch(changeList(listsObj[Object.keys(listsObj)[0]].id));
     }
-    await localforage.setItem('lists', listsObj);
-    await localforage.setItem('todos', normalizeTodos(lists));
   };
 }
 
 export function loadLists() {
   return async dispatch => {
     dispatch(requestLists());
-
-    const lists = await localforage.getItem('lists');
-    const todos = await localforage.getItem('todos');
-    dispatch(recieveLists(lists));
-    dispatch({ type: RECIEVE_TODOS, todos });
-    if (lists && Object.keys(lists).length) {
-      dispatch(changeList(lists[Object.keys(lists)[0]].id));
-    }
     dispatch(fetchLists());
   };
 }
