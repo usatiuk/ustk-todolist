@@ -7,6 +7,7 @@ const config = require('./config');
 const db = require('./config/db');
 const path = require('path');
 const hsts = require('hsts');
+const compression = require('compression');
 const { redirectToHTTPS } = require('express-http-to-https');
 
 require('./models/TodoList');
@@ -17,6 +18,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(compression());
 process.env.NODE_ENV === 'production'
   ? app.use(morgan('combined'))
   : app.use(morgan('dev'));
