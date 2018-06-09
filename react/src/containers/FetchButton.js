@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ButtonBase } from '@material-ui/core';
 
-import { logout } from '../actions/user';
+import { fetchLists } from '../actions/lists';
 
-function Link({ onClick, children }) {
+function FetchButton({ onClick, children }) {
   return (
     <ButtonBase
       style={{
-        marginRight: '1rem',
+        marginRight: 'auto',
         padding: '0 0.5rem',
         borderRadius: '7px',
+        marginLeft: '1rem',
       }}
       onClick={e => {
         e.preventDefault();
@@ -23,18 +24,18 @@ function Link({ onClick, children }) {
   );
 }
 
-Link.propTypes = {
+FetchButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClick: () => dispatch(logout()),
+    onClick: () => dispatch(fetchLists()),
   };
 }
 
 export default connect(
   null,
   mapDispatchToProps,
-)(Link);
+)(FetchButton);

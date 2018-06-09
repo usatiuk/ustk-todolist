@@ -1,7 +1,7 @@
 import React from 'react';
 
 function UserErrors({ user }) {
-  let errors = [];
+  const errors = [];
   if (user.errors) {
     if (user.errors.name === 'AuthenticationError') {
       errors.push(

@@ -1,5 +1,4 @@
-import localforage from 'localforage';
-import { API_ROOT, getToken } from './util';
+import { API_ROOT, getToken, setToken } from './util';
 import { loadLists } from './lists';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -30,21 +29,16 @@ function validateUser() {
 
 export function loadUser() {
   return async dispatch => {
-    if (await getToken()) {
-      const user = await localforage.getItem('user');
-      dispatch(loginSuccess(user));
-      dispatch(loadLists());
-
+    if (getToken()) {
       const response = await fetch(`${API_ROOT}/users/user`, {
         headers: {
-          Authorization: `Bearer ${await getToken()}`,
+          Authorization: `Bearer ${getToken()}`,
           'content-type': 'application/json',
         },
         method: 'GET',
       });
       const json = await response.json();
       if (json.success) {
-        await localforage.setItem('user', json.data);
         dispatch(loginSuccess(json.data));
         dispatch(loadLists());
       } else {
@@ -68,7 +62,7 @@ export function login(user) {
     });
     const json = await response.json();
     if (json.success) {
-      await localforage.setItem('user', json.data);
+      setToken(json.data.jwt);
       dispatch(loginSuccess(json.data));
       dispatch(loadLists());
     } else {
@@ -97,7 +91,7 @@ export function signup(user) {
     });
     const json = await response.json();
     if (json.success) {
-      await await localforage.setItem('user', json.data);
+      setToken(json.data.jwt);
       dispatch(signupSuccess(json.data));
       dispatch(loadLists());
     } else {
@@ -112,9 +106,6 @@ export function reset() {
 
 export function logout() {
   return async dispatch => {
-    await localforage.removeItem('user');
-    await localforage.removeItem('lists');
-    await localforage.removeItem('items');
     dispatch({ type: LOGOUT });
   };
 }
