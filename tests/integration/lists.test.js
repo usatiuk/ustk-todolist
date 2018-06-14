@@ -9,7 +9,7 @@ const User = mongoose.model('User');
 
 jest.setTimeout(60000);
 const MongoDBMemoryServer = require('mongodb-memory-server').default;
-const { seed, clean } = require('./utils');
+const { seed, clean, mongodbMemoryServerConfig } = require('./utils');
 
 let user;
 let token;
@@ -18,7 +18,7 @@ let todo;
 let mongoServer;
 
 beforeAll(async () => {
-  mongoServer = new MongoDBMemoryServer();
+  mongoServer = new MongoDBMemoryServer(mongodbMemoryServerConfig);
   const mongoUri = await mongoServer.getConnectionString();
   await mongoose.connect(mongoUri);
 });
