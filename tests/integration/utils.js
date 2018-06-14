@@ -30,4 +30,10 @@ async function clean() {
   await User.remove({}).exec();
 }
 
-module.exports = { seed, clean };
+const mongodbMemoryServerConfig = {
+  binary: {
+    version: 'latest',
+  },
+};
+
+module.exports = { seed, clean, mongodbMemoryServerConfig };
