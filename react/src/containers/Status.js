@@ -13,8 +13,8 @@ function Status({ userFetching, listsFetching }) {
         marginLeft: '1rem',
       }}
     >
-      {userFetching ? 'user' : null}
-      {listsFetching ? 'lists' : null}
+      {userFetching ? 'loading user' : null}
+      {listsFetching ? 'loading lists' : null}
     </ButtonBase>
   );
 }
