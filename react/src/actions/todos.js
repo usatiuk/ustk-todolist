@@ -1,5 +1,5 @@
 import { API_ROOT, getToken } from './util';
-import { fetchLists } from './lists';
+import { fetchLists, INVALIDATE_LISTS } from './lists';
 
 export const ADD_TODO = 'ADD_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
@@ -70,66 +70,78 @@ export function addTodo(text) {
 
 export function removeTodo(id) {
   return async dispatch => {
-    dispatch(invalidateTodos());
-    const response = await fetch(`${API_ROOT}/todos/${id}`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'content-type': 'application/json',
+    dispatch({
+      type: REMOVE_TODO,
+      id,
+      meta: {
+        offline: {
+          effect: {
+            url: `${API_ROOT}/todos/${id}`,
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+              'content-type': 'application/json',
+            },
+            method: 'DELETE',
+          },
+          rollback: {
+            type: INVALIDATE_LISTS,
+          },
+        },
       },
-      method: 'DELETE',
     });
-    const json = await response.json();
-    if (json.success) {
-      dispatch({ type: REMOVE_TODO, id });
-    } else {
-      dispatch(fetchLists());
-    }
-    dispatch(validateTodos());
   };
 }
 
 export function toggleTodo(id) {
   return async (dispatch, getState) => {
-    dispatch(invalidateTodos());
     const state = getState();
     const todoObj = state.todos.todos[id];
     const completed = !todoObj.completed;
-    const response = await fetch(`${API_ROOT}/todos/${id}`, {
-      body: JSON.stringify({ completed }),
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'content-type': 'application/json',
+    dispatch({
+      type: TOGGLE_TODO,
+      id,
+      meta: {
+        offline: {
+          effect: {
+            url: `${API_ROOT}/todos/${id}`,
+            body: JSON.stringify({ completed }),
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+              'content-type': 'appl   ication/json',
+            },
+            method: 'PATCH',
+          },
+          rollback: {
+            type: INVALIDATE_LISTS,
+          },
+        },
       },
-      method: 'PATCH',
     });
-    const json = await response.json();
-    if (json.success) {
-      dispatch({ type: TOGGLE_TODO, id });
-    } else {
-      dispatch(fetchLists());
-    }
-    dispatch(validateTodos());
   };
 }
 
 export function editTodo(id, text) {
   return async dispatch => {
-    dispatch(invalidateTodos());
-    const response = await fetch(`${API_ROOT}/todos/${id}`, {
-      body: JSON.stringify({ text }),
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'content-type': 'application/json',
+    dispatch({
+      type: EDIT_TODO,
+      id,
+      text,
+      meta: {
+        offline: {
+          effect: {
+            url: `${API_ROOT}/todos/${id}`,
+            body: JSON.stringify({ text }),
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+              'content-type': 'application/json',
+            },
+            method: 'PATCH',
+          },
+          rollback: {
+            type: INVALIDATE_LISTS,
+          },
+        },
       },
-      method: 'PATCH',
     });
-    const json = await response.json();
-    if (json.success) {
-      const todo = json.data;
-      dispatch({ type: EDIT_TODO, id, todo });
-    } else {
-      dispatch(fetchLists());
-    }
-    dispatch(validateTodos());
   };
 }

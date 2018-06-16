@@ -53,7 +53,7 @@ export default function todos(
         ...state,
         todos: {
           ...state.todos,
-          [action.id]: action.todo,
+          [action.id]: { ...state.todos[action.id], text: action.text },
         },
       };
     case REQUEST_TODOS:
