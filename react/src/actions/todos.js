@@ -107,7 +107,7 @@ export function toggleTodo(id) {
             body: JSON.stringify({ completed }),
             headers: {
               Authorization: `Bearer ${getToken()}`,
-              'content-type': 'appl   ication/json',
+              'content-type': 'application/json',
             },
             method: 'PATCH',
           },

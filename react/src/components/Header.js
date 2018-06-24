@@ -1,13 +1,13 @@
 import React from 'react';
 import FilterLink from '../containers/FilterLink';
-import UserHeaderContainer from '../containers/UserHeaderContainer';
+import UserHeader from '../components/UserHeader';
 import { VisibilityFilters } from '../actions/todos';
 import ListsContainer from '../containers/ListsContainer';
 
 export default function Header() {
   return (
     <div id="header">
-      <UserHeaderContainer />
+      <UserHeader />
       <div id="lists-header">
         <ListsContainer />
         <div id="filters">
