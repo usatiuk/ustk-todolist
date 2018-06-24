@@ -10,6 +10,7 @@ import AppContainer from './containers/AppContainer';
 import registerServiceWorker from './registerServiceWorker';
 import todoApp from './reducers';
 import { setToken } from './actions/util';
+import keepSynced from './middleware/keepSynced';
 
 let store;
 
@@ -29,8 +30,8 @@ const persistCallback = () => {
 store = createStore(
   todoApp,
   compose(
-    applyMiddleware(thunk),
     offline({ ...offlineConfig, persistCallback }),
+    applyMiddleware(thunk, keepSynced),
   ),
 );
 
