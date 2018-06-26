@@ -71,6 +71,25 @@ describe('test lists', () => {
     const freshUser = await User.findById(user.id).exec();
     expect(freshUser.lists).toContain(response.body.data.id);
   });
+  test('should create list with custom id', async () => {
+    const id = mongoose.Types.ObjectId();
+    const response = await request(server)
+      .post('/api/lists')
+      .send({
+        name: 'List2',
+        id,
+      })
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect('Content-Type', 'application/json; charset=utf-8');
+    expect(response.body.success).toBeTruthy();
+    expect(await TodoList.findOne({ name: 'List2', _id: id })).toBeTruthy();
+    const freshUser = await User.findById(user.id).exec();
+    expect(freshUser.lists).toContain(response.body.data.id);
+  });
+
   test('should not create list without authentication', async () => {
     await request(server)
       .post('/api/lists')

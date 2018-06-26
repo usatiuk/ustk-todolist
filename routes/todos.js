@@ -26,7 +26,8 @@ router.post(
   asyncHelper(async (req, res) => {
     const { listId } = res.locals || req.body;
     const { text } = req.body;
-    const todo = new Todo({ text, list: listId, user: req.user.id });
+    const { id } = req.body || mongoose.Types.ObjectId();
+    const todo = new Todo({ text, list: listId, user: req.user.id, _id: id });
     await todo.save();
     res.json({ success: true, data: todo.toJson() });
   }),

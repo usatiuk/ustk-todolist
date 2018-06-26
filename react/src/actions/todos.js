@@ -1,5 +1,5 @@
-import { API_ROOT, getToken } from './util';
-import { fetchLists, INVALIDATE_LISTS } from './lists';
+import { API_ROOT, getToken, mongoObjectId } from './util';
+import { INVALIDATE_LISTS } from './lists';
 
 export const ADD_TODO = 'ADD_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
@@ -21,13 +21,6 @@ export function setVisibilityFilter(filter) {
   return { type: SET_VISIBILITY_FILTER, filter };
 }
 
-function invalidateTodos() {
-  return { type: INVALIDATE_TODOS };
-}
-function validateTodos() {
-  return { type: VALIDATE_TODOS };
-}
-
 export function fetchTodos() {
   return async dispatch => {
     dispatch({ type: REQUEST_TODOS });
@@ -46,24 +39,32 @@ export function addTodo(text) {
   return async (dispatch, getState) => {
     const state = getState();
     const { list } = state.lists;
+    const id = mongoObjectId();
     if (list) {
-      dispatch(invalidateTodos());
-      const response = await fetch(`${API_ROOT}/lists/${list}/todos`, {
-        body: JSON.stringify({ text }),
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-          'content-type': 'application/json',
+      dispatch({
+        type: ADD_TODO,
+        todo: {
+          text,
+          id,
+          completed: false,
         },
-        method: 'POST',
+        meta: {
+          offline: {
+            effect: {
+              url: `${API_ROOT}/lists/${list}/todos`,
+              body: JSON.stringify({ text, id }),
+              headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'content-type': 'application/json',
+              },
+              method: 'POST',
+            },
+            rollback: {
+              type: INVALIDATE_LISTS,
+            },
+          },
+        },
       });
-      const json = await response.json();
-      const todo = json.data;
-      if (json.success) {
-        dispatch({ type: ADD_TODO, todo });
-      } else {
-        dispatch(fetchLists());
-      }
-      dispatch(validateTodos());
     }
   };
 }
