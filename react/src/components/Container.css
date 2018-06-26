@@ -49,6 +49,7 @@ body {
   transition: 0.1s ease-in-out;
   font-size: 0.8rem;
   font-weight: 300;
+  font-family: Roboto;
 }
 
 #user-header button:hover {
