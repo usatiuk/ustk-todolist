@@ -1,5 +1,5 @@
 import { API_ROOT, getToken, setToken } from './util';
-import { loadLists } from './lists';
+import { fetchLists } from './lists';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
@@ -40,7 +40,7 @@ export function loadUser() {
       const json = await response.json();
       if (json.success) {
         dispatch(loginSuccess(json.data));
-        dispatch(loadLists());
+        dispatch(fetchLists());
       } else {
         dispatch(loginFail(json.error));
       }
@@ -64,7 +64,7 @@ export function login(user) {
     if (json.success) {
       setToken(json.data.jwt);
       dispatch(loginSuccess(json.data));
-      dispatch(loadLists());
+      dispatch(fetchLists());
     } else {
       dispatch(loginFail(json.error));
     }
@@ -93,7 +93,7 @@ export function signup(user) {
     if (json.success) {
       setToken(json.data.jwt);
       dispatch(signupSuccess(json.data));
-      dispatch(loadLists());
+      dispatch(fetchLists());
     } else {
       dispatch(signupFail(json.error));
     }

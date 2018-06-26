@@ -40,14 +40,23 @@ export default function lists(
       };
     case CHANGE_LIST:
       return { ...state, list: action.list };
-    case RECIEVE_LISTS:
+    case RECIEVE_LISTS: {
+      const newLists = Object.values(action.lists);
+      let { list } = state;
+      if (newLists.length !== 0) {
+        if (!newLists.some(curList => curList.id === list)) {
+          list = newLists[0].id;
+        }
+      }
       return {
         ...state,
         dirty: false,
         loaded: true,
         fetching: false,
         lists: action.lists,
+        list,
       };
+    }
     case START_CREATE_LIST:
       return {
         ...state,
@@ -63,13 +72,16 @@ export default function lists(
         ...state,
         creating: false,
         lists: { ...state.lists, [action.list.id]: action.list },
+        list: action.list.id,
       };
     case REMOVE_LIST: {
       const newLists = { ...state.lists };
       delete newLists[action.list];
+      const listsObjs = Object.values(newLists);
+      const list = listsObjs.length ? listsObjs[listsObjs.length - 1].id : '';
       return {
         ...state,
-        list: null,
+        list,
         lists: newLists,
       };
     }

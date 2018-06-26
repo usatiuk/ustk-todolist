@@ -84,6 +84,28 @@ describe('test todos', () => {
     const freshList = await TodoList.findById(list.id).exec();
     expect(freshList.todos).toContain(response.body.data.id);
   });
+  test('should create todo with custom id', async () => {
+    const id = mongoose.Types.ObjectId();
+    const response = await request(server)
+      .post(`/api/lists/${list._id}/todos`)
+      .send({
+        text: 'Todo2',
+        id,
+      })
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect('Content-Type', 'application/json; charset=utf-8');
+    expect(response.body.success).toBeTruthy();
+    expect(
+      await Todo.findOne({ text: 'Todo2', list: list._id, _id: id }),
+    ).toBeTruthy();
+    const freshUser = await User.findById(user.id).exec();
+    expect(freshUser.todos).toContain(response.body.data.id);
+    const freshList = await TodoList.findById(list.id).exec();
+    expect(freshList.todos).toContain(response.body.data.id);
+  });
   test('should not create todo without authentication', async () => {
     await request(server)
       .post(`/api/lists/${list._id}/todos`)

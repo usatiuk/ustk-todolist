@@ -24,7 +24,8 @@ router.post(
   '/',
   asyncHelper(async (req, res) => {
     const { name } = req.body;
-    const newList = new TodoList({ name, user: req.user.id });
+    const { id } = req.body || mongoose.Types.ObjectId();
+    const newList = new TodoList({ name, user: req.user.id, _id: id });
     await newList.save();
     res.json({ success: true, data: newList.toJson() });
   }),
