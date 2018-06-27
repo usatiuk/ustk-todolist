@@ -45,8 +45,10 @@ export default function lists(
       let { list } = state;
       if (newLists.length !== 0) {
         if (!newLists.some(curList => curList.id === list)) {
-          list = newLists[0].id;
+          list = newLists[0].id || null;
         }
+      } else {
+        list = null;
       }
       return {
         ...state,
@@ -78,7 +80,7 @@ export default function lists(
       const newLists = { ...state.lists };
       delete newLists[action.list];
       const listsObjs = Object.values(newLists);
-      const list = listsObjs.length ? listsObjs[listsObjs.length - 1].id : '';
+      const list = listsObjs.length ? listsObjs[listsObjs.length - 1].id : null;
       return {
         ...state,
         list,
