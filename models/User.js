@@ -21,7 +21,10 @@ const UserSchema = Schema({
   todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }],
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose, {
+  limitAttempts: true,
+  maxAttempts: 20,
+});
 UserSchema.plugin(uniqueValidator);
 
 UserSchema.pre('remove', async function() {
