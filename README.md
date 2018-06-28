@@ -13,7 +13,7 @@ And visit it at http://localhost:3000
 
 ## Configuration
 
-By default development server uses mongodb todolist database at localhost, you can change it with environment variable `DEV_DB_URI`
+By default development server uses mongodb todolist database at localhost, you can change it with environment variable `DB_URI`
 
 If you are running it in production environment, you should set these environment variables:
 

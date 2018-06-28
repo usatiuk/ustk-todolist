@@ -2,26 +2,25 @@ const env = process.env.NODE_ENV;
 
 const production = {
   app: {
-    port: process.env.PORT,
+    port: process.env.PORT || 4000,
   },
   db: {
-    uri: process.env.DB_URI || process.env.MONGODB_URI,
+    uri:
+      process.env.DB_URI ||
+      process.env.MONGODB_URI ||
+      'mongodb://localhost/todolist',
   },
   secret: process.env.SECRET,
 };
 
 const development = {
-  app: {
-    port: process.env.DEV_PORT || 4000,
-  },
-  db: {
-    uri: process.env.DEV_DB_URI || 'mongodb://localhost/todolist',
-  },
-  secret: process.env.DEV_SECRET || 'devsecret',
+  ...production,
+  secret: process.env.SECRET || 'devsecret',
 };
 
 const test = {
-  secret: process.env.TEST_SECRET || 'testsecret',
+  ...production,
+  secret: process.env.SECRET || 'testsecret',
 };
 
 const config = {
