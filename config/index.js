@@ -10,6 +10,12 @@ const production = {
       process.env.MONGODB_URI ||
       'mongodb://localhost/todolist',
   },
+  googleOAuth: {
+    googleEnabled: process.env.GOOGLE_ENABLED,
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    googleCallback: `${process.env.HOST}/api/users/login/google/callback`,
+  },
   secret: process.env.SECRET,
 };
 

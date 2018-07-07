@@ -65,8 +65,13 @@ function SignupForm({ handleSubmit, onSignup, user, history, resetUser }) {
             component={InputField}
             type="password"
           />
-          <div id="submitbutton">
-            <Button variant="raised" color="primary" type="submit">
+          <div id="buttons">
+            <Button
+              id="submitbutton"
+              variant="raised"
+              color="primary"
+              type="submit"
+            >
               Signup
             </Button>
           </div>

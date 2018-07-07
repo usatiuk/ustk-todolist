@@ -16,8 +16,18 @@ form {
   color: red;
 }
 
+#googlebutton {
+  margin: auto;
+  margin-left: 0rem;
+}
+
 #submitbutton {
   margin: auto;
+  margin-right: 0rem;
+}
+
+#buttons {
   margin-top: 1rem;
-  margin-right: 0.5rem;
+  display: flex;
+  justify-content: space-around;
 }

@@ -8,7 +8,7 @@ import Header from './Header';
 export default class Todos extends React.Component {
   componentDidUpdate() {
     if (!this.props.user.user && !this.props.user.dirty) {
-      this.props.history.push('/login');
+      this.props.history.replace('/login');
     }
   }
   render() {
