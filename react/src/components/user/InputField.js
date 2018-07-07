@@ -11,7 +11,13 @@ export default function InputField({
 }) {
   return (
     <React.Fragment>
-      <TextField label={label} required={required} {...input} type={type} />
+      <TextField
+        label={label}
+        required={required}
+        {...input}
+        type={type}
+        style={{ marginBottom: '1rem' }}
+      />
       {touched && error && <span className="error">{error}</span>}
     </React.Fragment>
   );

@@ -74,6 +74,7 @@ app.use((error, req, res, next) => {
   switch (error.name) {
     case 'ValidationError':
     case 'MissingPasswordError':
+    case 'BadRequest':
     case 'BadRequestError':
       res.status(400);
       res.json({ success: false, error });
@@ -90,6 +91,12 @@ app.use((error, req, res, next) => {
     default:
       res.status(500);
       res.json({ success: false, error });
+  }
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'test'
+  ) {
+    console.error(error);
   }
   next(error);
 });

@@ -8,6 +8,8 @@ const router = express.Router();
 
 const asyncHelper = require('../asyncHelper');
 const auth = require('./auth');
+const { googleEnabled } = require('../config').googleOAuth;
+const googleOAuth = require('./google');
 
 const { NotFoundError } = require('../errors');
 
@@ -69,6 +71,9 @@ router.delete(
   }),
 );
 
+if (googleEnabled) {
+  router.use('/login', googleOAuth);
+}
 router.post(
   '/login',
   passport.authenticate('local', { session: false, failWithError: true }),

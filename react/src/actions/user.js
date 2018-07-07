@@ -71,6 +71,27 @@ export function login(user) {
   };
 }
 
+export function loginJWT(jwt) {
+  return async dispatch => {
+    dispatch(startLogin());
+    const response = await fetch(`${API_ROOT}/users/user`, {
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: 'GET',
+    });
+    const json = await response.json();
+    if (json.success) {
+      setToken(jwt);
+      dispatch(loginSuccess(json.data));
+      dispatch(fetchLists());
+    } else {
+      dispatch(loginFail(json.error));
+    }
+  };
+}
+
 function signupSuccess(user) {
   return { type: SIGNUP_SUCCESS, user };
 }

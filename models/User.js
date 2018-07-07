@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const jwt = require('jsonwebtoken');
 const uniqueValidator = require('mongoose-unique-validator');
+const findOrCreate = require('mongoose-findorcreate');
+const { BadRequestError } = require('../errors');
 
 const { secret } = require('../config');
 
@@ -10,12 +12,16 @@ const { Schema } = mongoose;
 const UserSchema = Schema({
   username: {
     type: String,
-    required: true,
     unique: true,
     validate: /^\S*$/,
     minLength: 3,
     maxLength: 50,
     trim: true,
+  },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
   },
   lists: [{ type: Schema.Types.ObjectId, ref: 'TodoList' }],
   todos: [{ type: Schema.Types.ObjectId, ref: 'Todo' }],
@@ -26,6 +32,13 @@ UserSchema.plugin(passportLocalMongoose, {
   maxAttempts: 20,
 });
 UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(findOrCreate);
+
+UserSchema.pre('validate', async function() {
+  if (!this.username && !this.googleId) {
+    throw new BadRequestError('username is required');
+  }
+});
 
 UserSchema.pre('remove', async function() {
   await this.model('TodoList')
