@@ -77,21 +77,18 @@ app.use((error, req, res, next) => {
     case 'BadRequest':
     case 'BadRequestError':
       res.status(400);
-      res.json({ success: false, error });
       break;
     case 'AuthenticationError':
     case 'UnauthorizedError':
       res.status(401);
-      res.json({ success: false, error });
       break;
     case 'NotFound':
       res.status(404);
-      res.json({ success: false, error });
       break;
     default:
       res.status(500);
-      res.json({ success: false, error });
   }
+  res.json({ success: false, error });
   if (
     process.env.NODE_ENV === 'production' ||
     process.env.NODE_ENV === 'test'
