@@ -10,7 +10,7 @@ import TodosContainer from '../containers/TodosContainer';
 import LoginForm from '../components/user/LoginForm';
 import SignupForm from '../components/user/SignupForm';
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   componentDidMount() {
     this.props.loadUser();
   }

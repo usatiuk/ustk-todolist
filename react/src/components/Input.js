@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
 function Input(props) {
   let input;
@@ -20,14 +21,15 @@ function Input(props) {
         }}
         id="input"
         type="text"
+        placeholder="Add something!"
         onKeyPress={e => {
           if (e.key === 'Enter') {
             submit();
           }
         }}
       />
-      <Button id="add" onClick={() => submit()}>
-        add
+      <Button style={{ borderRadius: 0 }} id="add" onClick={() => submit()}>
+        <AddIcon />
       </Button>
     </div>
   );
