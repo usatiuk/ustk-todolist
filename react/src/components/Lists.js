@@ -6,7 +6,7 @@ import SelectorContainer from '../containers/SelectorContainer';
 
 export default function Lists({ userLoaded, listsLoaded }) {
   return (
-    <React.Fragment>
+    <div id="lists-header">
       {userLoaded &&
         listsLoaded && (
           <div id="lists">
@@ -16,7 +16,7 @@ export default function Lists({ userLoaded, listsLoaded }) {
         )}
       {!userLoaded && <span className="loading">loading.</span>}
       {userLoaded && !listsLoaded && <span className="loading">loading..</span>}
-    </React.Fragment>
+    </div>
   );
 }
 

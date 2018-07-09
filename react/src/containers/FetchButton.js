@@ -9,10 +9,9 @@ function FetchButton({ onClick, children }) {
   return (
     <ButtonBase
       style={{
+        marginLeft: 0,
         marginRight: 'auto',
-        padding: '0 0.5rem',
-        borderRadius: '7px',
-        marginLeft: '1rem',
+        padding: '0 1rem',
       }}
       onClick={e => {
         e.preventDefault();

@@ -12,7 +12,7 @@ import '../Form.css';
 
 import { login, reset, loginJWT } from '../../actions/user';
 
-class LoginForm extends React.Component {
+class LoginForm extends React.PureComponent {
   componentDidMount() {
     const params = new URLSearchParams(new URL(window.location).search);
     if (params.has('jwt')) {
