@@ -314,7 +314,7 @@ module.exports = {
       navigateFallback: `${publicUrl}/index.html`,
       // Ignores URLs starting from /__ (useful for Firebase):
       // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
-      navigateFallbackWhitelist: [/^(?!\/__).*/, /\/api\//],
+      navigateFallbackWhitelist: [/^(?!\/api\/.*)/],
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
 
@@ -322,7 +322,7 @@ module.exports = {
       // so we should disable it in order for Google OAuth to work.
       runtimeCaching: [
         {
-          urlPattern: /\/api\//,
+          urlPattern: /^\/api\//,
           handler: 'networkOnly',
         },
       ],
