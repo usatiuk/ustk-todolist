@@ -12,10 +12,9 @@ function Link({ active, onClick, children }) {
   return (
     <ButtonBase
       style={{
-        margin: '0 0.2rem',
-        padding: '1rem 0.3rem',
+        padding: '0 1rem',
         color: active ? 'black' : '#444444',
-        borderRadius: '7px',
+        height: '2rem',
       }}
       className={classes.join(' ')}
       onClick={e => {
