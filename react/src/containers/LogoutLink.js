@@ -9,9 +9,9 @@ function Link({ onClick, children }) {
   return (
     <ButtonBase
       style={{
-        marginRight: '1rem',
-        padding: '0 0.5rem',
-        borderRadius: '7px',
+        marginLeft: 'auto',
+        marginRight: 0,
+        padding: '0 1rem',
       }}
       onClick={e => {
         e.preventDefault();
