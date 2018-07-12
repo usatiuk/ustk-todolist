@@ -37,12 +37,15 @@ const passport = require('./config/passport');
 
 app.use(passport.initialize());
 
-app.use('/api/users', require('./routes/users'));
+// Addresses, starting with /__, are not cached by service worker
+// https://github.com/facebook/create-react-app/issues/2237
+
+app.use('/__/users', require('./routes/users'));
 
 const auth = require('./routes/auth');
 
-app.use('/api/lists', auth.required, require('./routes/lists'));
-app.use('/api/todos', auth.required, require('./routes/todos'));
+app.use('/__/lists', auth.required, require('./routes/lists'));
+app.use('/__/todos', auth.required, require('./routes/todos'));
 
 if (
   process.env.NODE_ENV === 'production' ||

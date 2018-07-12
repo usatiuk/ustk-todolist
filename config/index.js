@@ -14,7 +14,7 @@ const production = {
     googleEnabled: process.env.GOOGLE_ENABLED,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    googleCallback: `${process.env.HOST}/api/users/login/google/callback`,
+    googleCallback: `${process.env.HOST}/__/users/login/google/callback`,
   },
   secret: process.env.SECRET,
 };

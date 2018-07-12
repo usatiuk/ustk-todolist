@@ -1,4 +1,4 @@
-export const API_ROOT = '/api';
+export const API_ROOT = '/__';
 
 let token = null;
 
