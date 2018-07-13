@@ -7,12 +7,13 @@ import './Container.css';
 import './App.css';
 
 import TodosContainer from '../containers/TodosContainer';
-import LoginForm from '../components/user/LoginForm';
-import SignupForm from '../components/user/SignupForm';
+import LoginForm from './user/LoginForm';
+import SignupForm from './user/SignupForm';
 
 export default class App extends React.PureComponent {
   componentDidMount() {
-    this.props.loadUser();
+    const { loadUser } = this.props;
+    loadUser();
   }
 
   render() {

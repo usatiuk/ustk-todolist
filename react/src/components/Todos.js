@@ -8,10 +8,12 @@ import Filters from './Filters';
 
 export default class Todos extends React.PureComponent {
   componentDidUpdate() {
-    if (!this.props.user.user && !this.props.user.dirty) {
-      this.props.history.replace('/login');
+    const { user, history } = this.props;
+    if (!user.user && !user.dirty) {
+      history.replace('/login');
     }
   }
+
   render() {
     return (
       <div id="todos">

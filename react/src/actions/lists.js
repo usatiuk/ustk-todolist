@@ -1,18 +1,19 @@
-import { API_ROOT, getToken, mongoObjectId } from './util';
-import { RECIEVE_TODOS } from './todos';
+import {
+  REQUEST_LISTS,
+  RECIEVE_LISTS,
+  CHANGE_LIST,
+  START_CREATE_LIST,
+  START_EDIT_LIST,
+  STOP_CREATE_LIST,
+  STOP_EDIT_LIST,
+  ADD_LIST,
+  INVALIDATE_LISTS,
+  REMOVE_LIST,
+  EDIT_LIST_NAME,
+  RECIEVE_TODOS,
+} from './defs';
 
-export const ADD_LIST = 'ADD_LIST';
-export const REMOVE_LIST = 'REMOVE_LIST';
-export const EDIT_LIST_NAME = 'EDIT_LIST_NAME';
-export const RECIEVE_LISTS = 'RECIEVE_LISTS';
-export const REQUEST_LISTS = 'REQUEST_LISTS';
-export const INVALIDATE_LISTS = 'INVALIDATE_LISTS';
-export const VALIDATE_LISTS = 'VALIDATE_LISTS';
-export const CHANGE_LIST = 'CHANGE_LIST';
-export const START_CREATE_LIST = 'START_CREATE_LIST';
-export const START_EDIT_LIST = 'START_EDIT_LIST';
-export const STOP_CREATE_LIST = 'STOP_CREATE_LIST';
-export const STOP_EDIT_LIST = 'STOP_EDIT_LIST';
+import { API_ROOT, getToken, mongoObjectId } from './util';
 
 function requestLists() {
   return { type: REQUEST_LISTS };

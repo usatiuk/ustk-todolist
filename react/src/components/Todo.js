@@ -28,28 +28,35 @@ class Todo extends React.PureComponent {
   }
 
   onMouseOver() {
+    const { state } = this;
     this.setState({
-      ...this.state,
+      ...state,
       hover: true,
     });
   }
+
   onMouseOut() {
+    const { state } = this;
     this.setState({
-      ...this.state,
+      ...state,
       hover: false,
     });
   }
 
   startEdit() {
+    const { state } = this;
     this.setState({
-      ...this.state,
+      ...state,
       editing: true,
     });
   }
+
   stopEdit(value) {
-    this.props.editTodo(value);
+    const { editTodo } = this.props;
+    editTodo(value);
+    const { state } = this;
     this.setState({
-      ...this.state,
+      ...state,
       editing: false,
       hover: false,
     });
@@ -58,18 +65,20 @@ class Todo extends React.PureComponent {
   render() {
     const deleteClasses = ['delete'];
     const editClasses = ['edit'];
-    if (!this.state.hover) {
+    const { hover } = this.state;
+    const { editing, todo, removeTodo, toggleTodo, style } = this.props;
+    if (!hover) {
       deleteClasses.push('disabled');
       editClasses.push('disabled');
     }
 
     let input;
 
-    const text = this.state.editing ? (
+    const text = editing ? (
       <div className="todo">
         <textarea
           className="todo--input"
-          defaultValue={this.props.todo.text}
+          defaultValue={todo.text}
           ref={node => {
             input = node;
           }}
@@ -80,18 +89,18 @@ class Todo extends React.PureComponent {
         style={{
           justifyContent: 'left',
           paddingLeft: '1rem',
-          textDecoration: this.props.todo.completed ? 'line-through' : 'none',
-          color: this.props.todo.completed ? '#888888' : 'black',
+          textDecoration: todo.completed ? 'line-through' : 'none',
+          color: todo.completed ? '#888888' : 'black',
         }}
         className="todo"
         onClick={() => {
-          this.props.toggleTodo();
+          toggleTodo();
         }}
       >
-        {this.props.todo.text}
+        {todo.text}
       </ButtonBase>
     );
-    const ButtonBases = this.state.editing
+    const ButtonBases = editing
       ? [
           <ButtonBase
             key="save"
@@ -105,21 +114,15 @@ class Todo extends React.PureComponent {
       : [
           <ButtonBase
             key="remove"
-            style={
-              this.state.hover ? { backgroundColor: 'pink' } : disabledAction
-            }
+            style={hover ? { backgroundColor: 'pink' } : disabledAction}
             className={deleteClasses.join(' ')}
-            onClick={this.props.removeTodo}
+            onClick={removeTodo}
           >
             <DeleteIcon style={icon} />
           </ButtonBase>,
           <ButtonBase
             key="edit"
-            style={
-              this.state.hover
-                ? { backgroundColor: 'lightcyan' }
-                : disabledAction
-            }
+            style={hover ? { backgroundColor: 'lightcyan' } : disabledAction}
             className={editClasses.join(' ')}
             onClick={this.startEdit}
           >
@@ -129,7 +132,7 @@ class Todo extends React.PureComponent {
     return (
       <animated.li
         style={{
-          ...this.props.style,
+          ...style,
           borderTop: '1px solid #f0f0f0',
         }}
         onMouseOver={this.onMouseOver}
@@ -153,6 +156,7 @@ Todo.propTypes = {
   removeTodo: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
   style: PropTypes.shape({ height: PropTypes.object.isRequired }).isRequired,
 };
 

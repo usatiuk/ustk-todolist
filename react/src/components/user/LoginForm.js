@@ -14,20 +14,23 @@ import { login, reset, loginJWT } from '../../actions/user';
 
 class LoginForm extends React.PureComponent {
   componentDidMount() {
+    const { setJWT } = this.props;
     const params = new URLSearchParams(new URL(window.location).search);
     if (params.has('jwt')) {
       const jwt = params.get('jwt');
-      this.props.setJWT(jwt);
+      setJWT(jwt);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.user.user) {
-      this.props.history.push('/');
+    const { user, history } = this.props;
+    if (user.user) {
+      history.push('/');
     }
   }
 
   render() {
+    const { resetUser, history, handleSubmit, user, onLogin } = this.props;
     return (
       <React.Fragment>
         <div id="user-header">
@@ -38,16 +41,16 @@ class LoginForm extends React.PureComponent {
               borderRadius: '7px',
             }}
             onClick={() => {
-              this.props.resetUser();
-              this.props.history.push('/signup');
+              resetUser();
+              history.push('/signup');
             }}
           >
             signup
           </ButtonBase>
         </div>
         <div id="form">
-          <form onSubmit={this.props.handleSubmit(this.props.onLogin)}>
-            <UserErrors user={this.props.user} />
+          <form onSubmit={handleSubmit(onLogin)}>
+            <UserErrors user={user} />
             <Field
               label="username"
               name="username"

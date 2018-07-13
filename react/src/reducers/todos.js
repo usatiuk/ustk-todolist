@@ -7,9 +7,9 @@ import {
   INVALIDATE_TODOS,
   VALIDATE_TODOS,
   EDIT_TODO,
-} from '../actions/todos';
-import { REMOVE_LIST } from '../actions/lists';
-import { LOGOUT } from '../actions/user';
+  REMOVE_LIST,
+  LOGOUT,
+} from '../actions/defs';
 
 export default function todos(
   state = {
