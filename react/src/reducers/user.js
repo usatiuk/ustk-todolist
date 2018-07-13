@@ -7,7 +7,7 @@ import {
   SIGNUP_SUCCESS,
   VALIDATE_USER,
   RESET_USER,
-} from '../actions/user';
+} from '../actions/defs';
 
 export default function user(
   state = {

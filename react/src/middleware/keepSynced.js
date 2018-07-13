@@ -1,4 +1,5 @@
-import { fetchLists, REQUEST_LISTS, INVALIDATE_LISTS } from '../actions/lists';
+import { REQUEST_LISTS, INVALIDATE_LISTS } from '../actions/defs';
+import { fetchLists } from '../actions/lists';
 
 export default store => next => action => {
   next(action);

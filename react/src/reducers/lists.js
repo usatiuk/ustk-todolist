@@ -11,9 +11,10 @@ import {
   START_EDIT_LIST,
   STOP_CREATE_LIST,
   STOP_EDIT_LIST,
-} from '../actions/lists';
-import { REMOVE_TODO, ADD_TODO } from '../actions/todos';
-import { LOGOUT } from '../actions/user';
+  REMOVE_TODO,
+  ADD_TODO,
+  LOGOUT,
+} from '../actions/defs';
 
 export default function lists(
   state = {

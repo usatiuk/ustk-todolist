@@ -1,25 +1,14 @@
+import {
+  REQUEST_TODOS,
+  RECIEVE_TODOS,
+  ADD_TODO,
+  REMOVE_TODO,
+  TOGGLE_TODO,
+  EDIT_TODO,
+  INVALIDATE_LISTS,
+} from './defs';
+
 import { API_ROOT, getToken, mongoObjectId } from './util';
-import { INVALIDATE_LISTS } from './lists';
-
-export const ADD_TODO = 'ADD_TODO';
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const TOGGLE_TODO = 'TOGGLE_TODO';
-export const EDIT_TODO = 'EDIT_TODO';
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
-export const RECIEVE_TODOS = 'RECIEVE_TODOS';
-export const REQUEST_TODOS = 'REQUEST_TODOS';
-export const INVALIDATE_TODOS = 'INVALIDATE_TODOS';
-export const VALIDATE_TODOS = 'VALIDATE_TODOS';
-
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE',
-};
-
-export function setVisibilityFilter(filter) {
-  return { type: SET_VISIBILITY_FILTER, filter };
-}
 
 export function fetchTodos() {
   return async dispatch => {

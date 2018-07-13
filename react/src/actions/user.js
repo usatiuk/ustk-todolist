@@ -1,15 +1,16 @@
+import {
+  START_LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  VALIDATE_USER,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
+  RESET_USER,
+  LOGOUT,
+} from './defs';
+
 import { API_ROOT, getToken, setToken } from './util';
 import { fetchLists } from './lists';
-
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_FAIL = 'SIGNUP_FAIL';
-export const LOGOUT = 'LOGOUT';
-export const START_LOGIN = 'INVALIDATE_USER';
-export const REQUEST_USER = 'REQUEST_USER';
-export const VALIDATE_USER = 'VALIDATE_USER';
-export const RESET_USER = 'RESET_USER';
 
 function startLogin() {
   return { type: START_LOGIN };

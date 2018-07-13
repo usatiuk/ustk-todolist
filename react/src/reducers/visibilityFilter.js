@@ -1,4 +1,4 @@
-import { VisibilityFilters, SET_VISIBILITY_FILTER } from '../actions/todos';
+import { VisibilityFilters, SET_VISIBILITY_FILTER } from '../actions/defs';
 
 const { SHOW_ALL } = VisibilityFilters;
 
