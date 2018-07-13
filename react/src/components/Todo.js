@@ -15,7 +15,7 @@ const disabledAction = {
   color: '#dddddd',
 };
 
-class Todo extends React.PureComponent {
+class Todo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,8 +65,8 @@ class Todo extends React.PureComponent {
   render() {
     const deleteClasses = ['delete'];
     const editClasses = ['edit'];
-    const { hover } = this.state;
-    const { editing, todo, removeTodo, toggleTodo, style } = this.props;
+    const { hover, editing } = this.state;
+    const { todo, removeTodo, toggleTodo, style } = this.props;
     if (!hover) {
       deleteClasses.push('disabled');
       editClasses.push('disabled');
@@ -156,7 +156,6 @@ Todo.propTypes = {
   removeTodo: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
-  editing: PropTypes.bool.isRequired,
   style: PropTypes.shape({ height: PropTypes.object.isRequired }).isRequired,
 };
 
