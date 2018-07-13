@@ -3,12 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-const config = require('./config');
-const db = require('./config/db');
 const path = require('path');
 const hsts = require('hsts');
 const compression = require('compression');
 const { redirectToHTTPS } = require('express-http-to-https');
+const db = require('./config/db');
+const config = require('./config');
 
 require('./models/TodoList');
 require('./models/User');
@@ -74,22 +74,26 @@ app.use((req, res) => {
 
 // handle errors
 app.use((error, req, res, next) => {
-  switch (error.name) {
-    case 'ValidationError':
-    case 'MissingPasswordError':
-    case 'BadRequest':
-    case 'BadRequestError':
-      res.status(400);
-      break;
-    case 'AuthenticationError':
-    case 'UnauthorizedError':
-      res.status(401);
-      break;
-    case 'NotFound':
-      res.status(404);
-      break;
-    default:
-      res.status(500);
+  if (error.code) {
+    res.status(error.code);
+  } else {
+    switch (error.name) {
+      case 'ValidationError':
+      case 'MissingPasswordError':
+      case 'BadRequest':
+      case 'BadRequestError':
+        res.status(400);
+        break;
+      case 'AuthenticationError':
+      case 'UnauthorizedError':
+        res.status(401);
+        break;
+      case 'NotFound':
+        res.status(404);
+        break;
+      default:
+        res.status(500);
+    }
   }
   res.json({ success: false, error });
   if (

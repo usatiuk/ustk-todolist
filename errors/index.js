@@ -4,6 +4,7 @@ class NotFoundError extends Error {
     Error.captureStackTrace(this, NotFoundError);
     this.name = 'NotFound';
     this.text = text;
+    this.code = 404;
   }
 }
 
@@ -13,6 +14,7 @@ class BadRequestError extends Error {
     Error.captureStackTrace(this, NotFoundError);
     this.name = 'BadRequest';
     this.text = text;
+    this.code = 400;
   }
 }
 
