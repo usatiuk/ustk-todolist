@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-import { Spring, animated } from 'react-spring';
+import { Transition, animated } from 'react-spring';
 
 import './Selector.css';
 
@@ -28,65 +28,83 @@ export default function Selector({
   if (creating) {
     let input = null;
     return (
-      <div id="listselector" className="list--input">
-        <input
-          ref={node => {
-            input = node;
-          }}
-          id="input"
-          type="text"
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              addList(input.value);
-            }
-          }}
-        />
-        <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
-          {styles => (
+      <Transition
+        native
+        from={{ opacity: 0, maxHeight: 0 }}
+        enter={{ opacity: 1, maxHeight: 64 }}
+        leave={{ opacity: 0, maxHeight: 0 }}
+      >
+        {styles => (
+          <animated.div
+            style={styles}
+            id="listselector"
+            className="list--input"
+          >
+            <input
+              ref={node => {
+                input = node;
+              }}
+              id="input"
+              type="text"
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  addList(input.value);
+                }
+              }}
+            />
             <animated.button
               style={{ ...button, ...styles }}
               onClick={() => input.value.trim() && addList(input.value)}
             >
               <AddIcon style={icon} />
             </animated.button>
-          )}
-        </Spring>
-      </div>
+          </animated.div>
+        )}
+      </Transition>
     );
   }
   if (editing) {
     let input = null;
     return (
-      <div id="listselector" className="list--input">
-        <input
-          ref={node => {
-            input = node;
-          }}
-          defaultValue={lists.lists[list].name}
-          id="input"
-          type="text"
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              editList(input.value);
-            }
-          }}
-        />
-        <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
-          {styles => (
+      <Transition
+        native
+        from={{ opacity: 0, maxHeight: 0 }}
+        enter={{ opacity: 1, maxHeight: 64 }}
+        leave={{ opacity: 0, maxHeight: 0 }}
+      >
+        {styles => (
+          <animated.div
+            style={styles}
+            id="listselector"
+            className="list--input"
+          >
+            <input
+              ref={node => {
+                input = node;
+              }}
+              defaultValue={lists.lists[list].name}
+              id="input"
+              type="text"
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  editList(input.value);
+                }
+              }}
+            />
             <animated.button
-              style={{ ...button, ...styles }}
+              style={{ ...button }}
               onClick={() => input.value.trim() && editList(input.value)}
             >
               <CheckIcon style={icon} />
             </animated.button>
-          )}
-        </Spring>
-      </div>
+          </animated.div>
+        )}
+      </Transition>
     );
   }
   if (list) {
     return (
-      <div id="listselector">
+      <animated.div id="listselector">
         <Select
           style={{ fontSize: '1.5rem', width: '100%' }}
           value={list}
@@ -98,7 +116,7 @@ export default function Selector({
             </MenuItem>
           ))}
         </Select>
-      </div>
+      </animated.div>
     );
   }
   return null;

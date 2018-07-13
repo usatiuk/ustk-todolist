@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-function Input(props) {
+function Input({ onClick, styles }) {
   let input;
 
   function submit() {
     if (input.value.trim() !== '') {
-      props.onClick(input.value);
+      onClick(input.value);
     }
     input.value = '';
   }
 
   return (
-    <div id="inputs">
+    <div style={styles} id="inputs">
       <input
         ref={node => {
           input = node;
@@ -36,6 +36,7 @@ function Input(props) {
 }
 
 Input.propTypes = {
+  styles: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

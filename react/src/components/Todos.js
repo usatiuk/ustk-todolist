@@ -1,32 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-spring';
 
 import InputContainer from '../containers/InputContainer';
 import TodoListContainer from '../containers/TodoListContainer';
 import Header from './Header';
 import Filters from './Filters';
 
-export default class Todos extends React.PureComponent {
-  componentDidUpdate() {
-    const { user, history } = this.props;
-    if (!user.user && !user.dirty) {
-      history.replace('/login');
-    }
-  }
-
-  render() {
-    return (
-      <div id="todos">
-        <Header />
-        <InputContainer />
-        <TodoListContainer />
-        <Filters />
-      </div>
-    );
-  }
+export default function Todos({ list }) {
+  return (
+    <div id="todos">
+      <Header />
+      <Transition
+        from={{ opacity: 0, maxHeight: 0 }}
+        enter={{ opacity: 1, maxHeight: 38 }}
+        leave={{ opacity: 0, maxHeight: 0 }}
+      >
+        {list && (styles => <InputContainer styles={styles} />)}
+      </Transition>
+      <TodoListContainer />
+      <Transition
+        from={{ opacity: 0, maxHeight: 0 }}
+        enter={{ opacity: 1, maxHeight: 32 }}
+        leave={{ opacity: 0, maxHeight: 0 }}
+      >
+        {list && Filters}
+      </Transition>
+    </div>
+  );
 }
 
 Todos.propTypes = {
-  history: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  list: PropTypes.bool.isRequired,
 };

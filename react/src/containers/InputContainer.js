@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import Input from '../components/Input';
 import { addTodo } from '../actions/todos';
 
+function mapStateToProps(state, ownProps) {
+  return { ...ownProps };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onClick: text => dispatch(addTodo(text)),
@@ -10,6 +14,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Input);

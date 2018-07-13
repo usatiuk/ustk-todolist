@@ -2,9 +2,9 @@ import React from 'react';
 import FilterLink from '../containers/FilterLink';
 import { VisibilityFilters } from '../actions/defs';
 
-function Filters() {
+function Filters(styles) {
   return (
-    <div id="filters">
+    <div style={styles} id="filters">
       <FilterLink filter={VisibilityFilters.SHOW_ALL}>all</FilterLink>
       <FilterLink filter={VisibilityFilters.SHOW_ACTIVE}>active</FilterLink>
       <FilterLink filter={VisibilityFilters.SHOW_COMPLETED}>

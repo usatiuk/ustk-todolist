@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import './Container.css';
 import './App.css';
 
-import TodosContainer from '../containers/TodosContainer';
+import MainViewContainer from '../containers/MainViewContainer';
 import LoginForm from './user/LoginForm';
 import SignupForm from './user/SignupForm';
 
@@ -22,7 +22,7 @@ export default class App extends React.PureComponent {
         <CssBaseline />
         <Router>
           <div id="container">
-            <Route exact path="/" component={TodosContainer} />
+            <Route exact path="/" component={MainViewContainer} />
             <Route path="/login" component={LoginForm} />
             <Route path="/signup" component={SignupForm} />
           </div>
