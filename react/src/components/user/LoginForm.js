@@ -68,7 +68,7 @@ class LoginForm extends React.Component {
                 id="googlebutton"
                 variant="raised"
                 onClick={() => {
-                  window.location = '/api/users/login/google/';
+                  window.location = '/__/users/login/google/';
                 }}
               >
                 Google
