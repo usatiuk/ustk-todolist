@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-spring';
-import { config } from 'react-spring';
+import { Transition, config } from 'react-spring';
 
 import Todo from './Todo';
 
