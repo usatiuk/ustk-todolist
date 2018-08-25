@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+require('../../models/Todo');
+require('../../models/TodoList');
+require('../../models/User');
+
 const User = mongoose.model('User');
 const Todo = mongoose.model('Todo');
 const TodoList = mongoose.model('TodoList');
