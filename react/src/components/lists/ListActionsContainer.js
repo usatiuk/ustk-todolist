@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import ListActions from '../components/ListActions';
+import ListActions from './ListActions';
 import {
   startCreateList,
   startEditList,
   removeList,
   stopCreateList,
   stopEditList,
-} from '../actions/lists';
+} from '../../actions/lists';
 
 function mapStateToProps(state) {
   return {

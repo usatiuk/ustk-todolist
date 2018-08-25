@@ -6,7 +6,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import { offline } from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 
-import AppContainer from './containers/AppContainer';
+import AppContainer from './components/AppContainer';
 import registerServiceWorker from './registerServiceWorker';
 import todoApp from './reducers';
 import { setToken } from './actions/util';

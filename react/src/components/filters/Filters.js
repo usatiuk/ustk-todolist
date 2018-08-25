@@ -1,6 +1,6 @@
 import React from 'react';
-import FilterLink from '../containers/FilterLink';
-import { VisibilityFilters } from '../actions/defs';
+import FilterLink from './FilterLink';
+import { VisibilityFilters } from '../../actions/defs';
 
 function Filters(styles) {
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import LogoutLink from '../containers/LogoutLink';
-import FetchButton from '../containers/FetchButton';
-import Status from '../containers/Status';
+import LogoutLink from './LogoutLink';
+import FetchButton from './FetchButton';
+import Status from './Status';
 
 export default function UserHeader() {
   return (

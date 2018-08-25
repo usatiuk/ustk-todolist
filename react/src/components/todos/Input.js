@@ -1,7 +1,10 @@
+import { connect } from 'react-redux';
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { addTodo } from '../../actions/todos';
 
 function Input({ onClick, styles }) {
   let input;
@@ -40,4 +43,17 @@ Input.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default Input;
+function mapStateToProps(state, ownProps) {
+  return { ...ownProps };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onClick: text => dispatch(addTodo(text)),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Input);

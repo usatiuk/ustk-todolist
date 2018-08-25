@@ -1,10 +1,11 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ListActionsContainer from '../containers/ListActionsContainer';
-import SelectorContainer from '../containers/SelectorContainer';
+import ListActionsContainer from './ListActionsContainer';
+import SelectorContainer from '../todolist/SelectorContainer';
 
-export default function Lists({ userLoaded, listsLoaded }) {
+function Lists({ userLoaded, listsLoaded }) {
   return (
     <div id="lists-header">
       {userLoaded &&
@@ -24,3 +25,12 @@ Lists.propTypes = {
   userLoaded: PropTypes.bool.isRequired,
   listsLoaded: PropTypes.bool.isRequired,
 };
+
+function mapStateToProps(state) {
+  return {
+    userLoaded: state.user.loaded,
+    listsLoaded: state.lists.loaded,
+  };
+}
+
+export default connect(mapStateToProps)(Lists);

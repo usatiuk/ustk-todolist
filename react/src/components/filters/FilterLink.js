@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase } from '@material-ui/core';
-import setVisibilityFilter from '../actions/visibilityFilter';
+import setVisibilityFilter from '../../actions/visibilityFilter';
 
 function Link({ active, onClick, children }) {
   const classes = ['filter'];
