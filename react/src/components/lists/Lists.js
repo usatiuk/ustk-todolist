@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ListActionsContainer from './ListActionsContainer';
-import SelectorContainer from '../todolist/SelectorContainer';
+import SelectorContainer from './SelectorContainer';
 
 function Lists({ userLoaded, listsLoaded }) {
   return (

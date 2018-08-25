@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Selector from '../lists/Selector';
+import Selector from './Selector';
 import { changeList, addList, editList } from '../../actions/lists';
 
 function mapStateToProps(state) {
