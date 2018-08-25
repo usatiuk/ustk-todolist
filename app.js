@@ -74,8 +74,8 @@ app.use((req, res) => {
 
 // handle errors
 app.use((error, req, res, next) => {
-  if (error.code) {
-    res.status(error.code);
+  if (error.status) {
+    res.status(error.status);
   } else {
     switch (error.name) {
       case 'ValidationError':

@@ -1,8 +1,10 @@
-const server = require('../../app.js');
-
 const request = require('supertest');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+
+require('../../models/Todo');
+require('../../models/TodoList');
+require('../../models/User');
 
 const Todo = mongoose.model('Todo');
 const TodoList = mongoose.model('TodoList');
@@ -10,6 +12,7 @@ const User = mongoose.model('User');
 
 jest.setTimeout(60000);
 const MongoDBMemoryServer = require('mongodb-memory-server').default;
+const server = require('../../app.js');
 const { seed, clean, mongodbMemoryServerConfig } = require('./utils');
 const { secret } = require('../../config');
 
@@ -34,13 +37,12 @@ afterEach(async () => {
 afterAll(async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
-  await server.close();
 });
 
 describe('test users', () => {
   test('should get user', async () => {
     const response = await request(server)
-      .get('/api/users/user')
+      .get('/__/users/user')
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -52,7 +54,7 @@ describe('test users', () => {
   });
   test('should create user', async () => {
     const response = await request(server)
-      .post('/api/users')
+      .post('/__/users')
       .send({
         username: 'User2',
         password: 'password2',
@@ -69,7 +71,7 @@ describe('test users', () => {
   });
   test('should not create user with no username', async () => {
     const response = await request(server)
-      .post('/api/users')
+      .post('/__/users')
       .send({
         username: '',
         password: 'password2',
@@ -82,7 +84,7 @@ describe('test users', () => {
   });
   test('should not create user with no password', async () => {
     const response = await request(server)
-      .post('/api/users')
+      .post('/__/users')
       .send({
         username: 'User',
         password: '',
@@ -95,7 +97,7 @@ describe('test users', () => {
   });
   test('should login user', async () => {
     const response = await request(server)
-      .post('/api/users/login')
+      .post('/__/users/login')
       .send({
         username: 'User1',
         password: 'password1',
@@ -110,18 +112,18 @@ describe('test users', () => {
   });
   test('should not login user with no name', async () => {
     await request(server)
-      .post('/api/users/login')
+      .post('/__/users/login')
       .send({
         username: '',
         password: 'notpassword',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .expect(401);
+      .expect(400);
   });
   test('should not login user with wrong password', async () => {
     await request(server)
-      .post('/api/users/login')
+      .post('/__/users/login')
       .send({
         username: 'User',
         password: 'notpassword',
@@ -132,7 +134,7 @@ describe('test users', () => {
   });
   test('should update user', async () => {
     const response = await request(server)
-      .patch('/api/users/user')
+      .patch('/__/users/user')
       .send({
         username: 'User2',
         password: 'password2',
@@ -150,7 +152,7 @@ describe('test users', () => {
   });
   test('should not update user without authentication', async () => {
     const response = await request(server)
-      .patch('/api/users/user')
+      .patch('/__/users/user')
       .send({
         username: 'User2',
         password: 'password2',
@@ -162,7 +164,7 @@ describe('test users', () => {
   });
   test('should not delete user without authentication', async () => {
     const response = await request(server)
-      .delete('/api/users/user')
+      .delete('/__/users/user')
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
@@ -173,7 +175,7 @@ describe('test users', () => {
   });
   test('should delete user', async () => {
     const response = await request(server)
-      .delete('/api/users/user')
+      .delete('/__/users/user')
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')

@@ -1,7 +1,9 @@
-const server = require('../../app.js');
-
 const request = require('supertest');
 const mongoose = require('mongoose');
+
+require('../../models/Todo');
+require('../../models/TodoList');
+require('../../models/User');
 
 const Todo = mongoose.model('Todo');
 const TodoList = mongoose.model('TodoList');
@@ -9,6 +11,7 @@ const User = mongoose.model('User');
 
 jest.setTimeout(60000);
 const MongoDBMemoryServer = require('mongodb-memory-server').default;
+const server = require('../../app.js');
 const { seed, clean, mongodbMemoryServerConfig } = require('./utils');
 
 let user;
@@ -34,13 +37,12 @@ afterEach(async () => {
 afterAll(async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
-  await server.close();
 });
 
 describe('test lists', () => {
   test('should index lists', async () => {
     const response = await request(server)
-      .get('/api/lists')
+      .get('/__/lists')
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -51,13 +53,13 @@ describe('test lists', () => {
   });
   test('should not index lists without authentication', async () => {
     await request(server)
-      .get('/api/lists')
+      .get('/__/lists')
       .set('Accept', 'application/json')
       .expect(401);
   });
   test('should create list', async () => {
     const response = await request(server)
-      .post('/api/lists')
+      .post('/__/lists')
       .send({
         name: 'List2',
       })
@@ -74,7 +76,7 @@ describe('test lists', () => {
   test('should create list with custom id', async () => {
     const id = mongoose.Types.ObjectId();
     const response = await request(server)
-      .post('/api/lists')
+      .post('/__/lists')
       .send({
         name: 'List2',
         id,
@@ -92,7 +94,7 @@ describe('test lists', () => {
 
   test('should not create list without authentication', async () => {
     await request(server)
-      .post('/api/lists')
+      .post('/__/lists')
       .send({
         name: 'List2',
       })
@@ -102,7 +104,7 @@ describe('test lists', () => {
   });
   test('should update list', async () => {
     const response = await request(server)
-      .patch(`/api/lists/${list._id}`)
+      .patch(`/__/lists/${list._id}`)
       .send({
         name: 'List2',
       })
@@ -116,7 +118,7 @@ describe('test lists', () => {
   });
   test('should not update list without authentication', async () => {
     await request(server)
-      .patch(`/api/lists/${list._id}`)
+      .patch(`/__/lists/${list._id}`)
       .send({
         name: 'List2',
       })
@@ -127,7 +129,7 @@ describe('test lists', () => {
   });
   test('should remove list', async () => {
     const response = await request(server)
-      .delete(`/api/lists/${list._id}`)
+      .delete(`/__/lists/${list._id}`)
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -142,7 +144,7 @@ describe('test lists', () => {
   });
   test('should not remove list without authentication', async () => {
     await request(server)
-      .delete(`/api/lists/${list._id}`)
+      .delete(`/__/lists/${list._id}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .expect(401);
