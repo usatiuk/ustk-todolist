@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ButtonBase } from '@material-ui/core';
 
-import { fetchLists } from '../actions/lists';
+import { fetchLists } from '../../actions/lists';
 
 function FetchButton({ onClick, children }) {
   return (

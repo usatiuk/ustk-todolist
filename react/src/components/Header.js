@@ -1,12 +1,12 @@
 import React from 'react';
-import UserHeader from './UserHeader';
-import ListsContainer from '../containers/ListsContainer';
+import UserHeader from './user/UserHeader';
+import Lists from './lists/Lists';
 
 export default function Header() {
   return (
     <div id="header">
       <UserHeader />
-      <ListsContainer />
+      <Lists />
     </div>
   );
 }

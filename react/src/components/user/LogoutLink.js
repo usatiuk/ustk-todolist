@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ButtonBase } from '@material-ui/core';
 
-import { logout } from '../actions/user';
+import { logout } from '../../actions/user';
 
 function Link({ onClick, children }) {
   return (
