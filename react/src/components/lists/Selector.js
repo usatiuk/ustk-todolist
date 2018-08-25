@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-import { animated } from 'react-spring';
+import { animated, Transition } from 'react-spring';
 
 import './Selector.css';
 
@@ -29,18 +29,28 @@ export default function Selector({
     let input = null;
     return (
       <div id="listselector" className="list--input">
-        <input
-          ref={node => {
-            input = node;
-          }}
-          id="input"
-          type="text"
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              addList(input.value);
-            }
-          }}
-        />
+        <Transition
+          native
+          from={{ paddingBottom: 18 }}
+          enter={{ paddingBottom: 0 }}
+          leave={{ paddingBottom: 18 }}
+        >
+          {styles => (
+            <input
+              ref={node => {
+                input = node;
+              }}
+              style={styles}
+              id="input"
+              type="text"
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  addList(input.value);
+                }
+              }}
+            />
+          )}
+        </Transition>
         <animated.button
           style={button}
           onClick={() => input.value.trim() && addList(input.value)}
@@ -54,19 +64,29 @@ export default function Selector({
     let input = null;
     return (
       <div id="listselector" className="list--input">
-        <input
-          ref={node => {
-            input = node;
-          }}
-          defaultValue={lists.lists[list].name}
-          id="input"
-          type="text"
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              editList(input.value);
-            }
-          }}
-        />
+        <Transition
+          native
+          from={{ paddingBottom: 18 }}
+          enter={{ paddingBottom: 0 }}
+          leave={{ paddingBottom: 18 }}
+        >
+          {styles => (
+            <input
+              ref={node => {
+                input = node;
+              }}
+              style={styles}
+              defaultValue={lists.lists[list].name}
+              id="input"
+              type="text"
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  editList(input.value);
+                }
+              }}
+            />
+          )}
+        </Transition>
         <animated.button
           style={button}
           onClick={() => input.value.trim() && editList(input.value)}
