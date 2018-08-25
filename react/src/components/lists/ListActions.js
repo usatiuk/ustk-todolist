@@ -87,7 +87,7 @@ export default function ListActions({
         config={config.stiff}
         keys={actions.map(action => action({}).key)}
         from={{ opacity: 0, height: 0, margin: 0, padding: 0 }}
-        enter={{ opacity: 1, height: 30 }}
+        enter={{ opacity: 1, height: 30, margin: 0, padding: 0 }}
         leave={{ opacity: 0, height: 0, margin: 0, padding: 0 }}
       >
         {actions}

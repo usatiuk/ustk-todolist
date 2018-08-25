@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-import { animated, Transition } from 'react-spring';
+import { Transition, config } from 'react-spring';
 
 import './Selector.css';
 
@@ -31,6 +31,7 @@ export default function Selector({
       <div id="listselector" className="list--input">
         <Transition
           native
+          config={config.stiff}
           from={{ paddingBottom: 18 }}
           enter={{ paddingBottom: 0 }}
           leave={{ paddingBottom: 18 }}
@@ -51,12 +52,13 @@ export default function Selector({
             />
           )}
         </Transition>
-        <animated.button
+        <button
           style={button}
+          type="submit"
           onClick={() => input.value.trim() && addList(input.value)}
         >
           <AddIcon style={icon} />
-        </animated.button>
+        </button>
       </div>
     );
   }
@@ -65,7 +67,7 @@ export default function Selector({
     return (
       <div id="listselector" className="list--input">
         <Transition
-          native
+          config={config.stiff}
           from={{ paddingBottom: 18 }}
           enter={{ paddingBottom: 0 }}
           leave={{ paddingBottom: 18 }}
@@ -87,12 +89,13 @@ export default function Selector({
             />
           )}
         </Transition>
-        <animated.button
+        <button
           style={button}
+          type="submit"
           onClick={() => input.value.trim() && editList(input.value)}
         >
           <CheckIcon style={icon} />
-        </animated.button>
+        </button>
       </div>
     );
   }
