@@ -16,8 +16,16 @@ export default function TodosContainer({
         native
         items={todos}
         keys={todo => todo.id}
-        from={{ height: 0, borderColor: '#f0f0f0', opacity: 0.7 }}
-        enter={{ height: 60, borderColor: '#f0f0f0', opacity: 1 }}
+        from={{
+          height: 0,
+          borderColor: '#f0f0f0',
+          opacity: 0.7,
+        }}
+        enter={{
+          height: 60,
+          borderColor: '#f0f0f0',
+          opacity: 1,
+        }}
         leave={{
           height: 0,
           borderColor: '#ffffff',
@@ -25,6 +33,7 @@ export default function TodosContainer({
           opacity: 0.3,
           padding: 0,
           margin: 0,
+          pointerEvents: 'none',
         }}
       >
         {todos.map(todo => styles => (
