@@ -8,7 +8,7 @@ import { ButtonBase, Button } from '@material-ui/core';
 import InputField from './InputField';
 import UserErrors from './UserErrors';
 
-import '../Form.css';
+import './Form.css';
 
 import { login, reset, loginJWT } from '../../actions/user';
 
