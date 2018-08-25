@@ -5,6 +5,8 @@
   align-self: center;
   background-color: #fbfbfb;
   flex-grow: 1;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 #listselector input {
@@ -17,7 +19,6 @@
   background-color: #fbfbfb;
   border-bottom: 1px solid #888888;
   width: 80%;
-  margin: 1rem 0;
 }
 
 #listselector button {
