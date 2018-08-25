@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-spring';
+import { config } from 'react-spring';
 
 import Todo from './Todo';
 
@@ -14,6 +15,12 @@ export default function TodosContainer({
     <ul id="list">
       <Transition
         native
+        config={{
+          ...config.default,
+          overshootClamping: true,
+          restSpeedThreshold: 1,
+          restDisplacementThreshold: 1,
+        }}
         items={todos}
         keys={todo => todo.id}
         from={{
