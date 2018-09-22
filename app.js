@@ -51,8 +51,8 @@ if (
   process.env.NODE_ENV === 'production' ||
   process.env.NODE_ENV === 'development'
 ) {
-  app.use(express.static(path.join(__dirname, 'react/build')));
-  app.use('*', express.static(path.join(__dirname, 'react/build/index.html')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use('*', express.static(path.join(__dirname, 'client/build/index.html')));
 }
 
 // 404 route
