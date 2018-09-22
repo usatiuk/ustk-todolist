@@ -1,14 +1,13 @@
 # Simple Todo list
 
-This is a simple todo list, written in javascript, using express for the backend and react/redux for the frontend.
-It also can work in offline, thanks to redux-offline.
+This is a simple todo list, written in javascript, using express for the backend and react+redux for the frontend.
+It also can work in offline thanks to redux-offline (without any conflict resolving, though).
 
 ## Getting started
 
-To run it you should start the backend and the frontend.
-You can do it with `npm run dev`
+Start with `npm run dev`
 
-create-react-app proxy will be listening at http://localhost:3000.
+create-react-app server will be listening at http://localhost:3000, with proxy to the backend at localhost:4000
 
 ## Configuration
 
@@ -28,7 +27,7 @@ There is google OAuth support, which can be enabled by setting `GOOGLE_ENABLED` 
 
 ## Offline
 
-To enable service worker, the frontend should be run in production environment.
-To run it locally you should build the frontend: `cd react && npm run build`.
+The create-react-app's service worker works only in production environment.
+You can build the frontend with `cd react && npm run build`.
 
 Express is listening at http://localhost:4000 and serving the built frontend.
