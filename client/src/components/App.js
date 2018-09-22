@@ -9,17 +9,20 @@ import './App.css';
 
 const LoadableTodosView = Loadable({
   loader: () => import('./todolist/TodosView'),
-  loading: () => <span>'loading'</span>,
+  loading: () => <span>loading</span>,
+  delay: 200,
 });
 
 const LoadableLoginForm = Loadable({
   loader: () => import('./user/LoginForm'),
-  loading: () => <span>'loading'</span>,
+  loading: () => <span>loading</span>,
+  delay: 200,
 });
 
 const LoadableSignupForm = Loadable({
   loader: () => import('./user/SignupForm'),
-  loading: () => <span>'loading'</span>,
+  loading: () => <span>loading</span>,
+  delay: 200,
 });
 
 export default class App extends React.PureComponent {
