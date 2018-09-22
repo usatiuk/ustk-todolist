@@ -2,13 +2,25 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Loadable from 'react-loadable';
 
 import './Container.css';
 import './App.css';
 
-import TodosView from './todolist/TodosView';
-import LoginForm from './user/LoginForm';
-import SignupForm from './user/SignupForm';
+const LoadableTodosView = Loadable({
+  loader: () => import('./todolist/TodosView'),
+  loading: () => <span>'loading'</span>,
+});
+
+const LoadableLoginForm = Loadable({
+  loader: () => import('./user/LoginForm'),
+  loading: () => <span>'loading'</span>,
+});
+
+const LoadableSignupForm = Loadable({
+  loader: () => import('./user/SignupForm'),
+  loading: () => <span>'loading'</span>,
+});
 
 export default class App extends React.PureComponent {
   componentDidMount() {
@@ -22,9 +34,9 @@ export default class App extends React.PureComponent {
         <CssBaseline />
         <Router>
           <div id="container">
-            <Route exact path="/" component={TodosView} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/signup" component={SignupForm} />
+            <Route exact path="/" component={LoadableTodosView} />
+            <Route path="/login" component={LoadableLoginForm} />
+            <Route path="/signup" component={LoadableSignupForm} />
           </div>
         </Router>
       </React.Fragment>
