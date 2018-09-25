@@ -15,8 +15,6 @@ function Lists({ userLoaded, listsLoaded }) {
             <SelectorContainer />
           </div>
         )}
-      {!userLoaded && <span className="loading">loading.</span>}
-      {userLoaded && !listsLoaded && <span className="loading">loading..</span>}
     </div>
   );
 }

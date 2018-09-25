@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-import { Transition, config } from 'react-spring';
 
+import ListInput from './ListInput';
 import './Selector.css';
-
-const button = {
-  width: 36,
-  height: 36,
-};
 
 const icon = {
   fontSize: 24,
@@ -26,84 +21,24 @@ export default function Selector({
   editList,
 }) {
   if (creating) {
-    let input = null;
     return (
-      <div id="listselector" className="list--input">
-        <Transition
-          native
-          config={config.stiff}
-          from={{ paddingBottom: 18 }}
-          enter={{ paddingBottom: 0 }}
-          leave={{ paddingBottom: 18 }}
-        >
-          {styles => (
-            <input
-              ref={node => {
-                input = node;
-              }}
-              style={styles}
-              id="input"
-              type="text"
-              onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  addList(input.value);
-                }
-              }}
-            />
-          )}
-        </Transition>
-        <button
-          style={button}
-          type="submit"
-          onClick={() => input.value.trim() && addList(input.value)}
-        >
-          <AddIcon style={icon} />
-        </button>
-      </div>
+      <ListInput onClick={addList}>
+        <AddIcon style={icon} />
+      </ListInput>
     );
   }
   if (editing) {
-    let input = null;
     return (
-      <div id="listselector" className="list--input">
-        <Transition
-          config={config.stiff}
-          from={{ paddingBottom: 18 }}
-          enter={{ paddingBottom: 0 }}
-          leave={{ paddingBottom: 18 }}
-        >
-          {styles => (
-            <input
-              ref={node => {
-                input = node;
-              }}
-              style={styles}
-              defaultValue={lists.lists[list].name}
-              id="input"
-              type="text"
-              onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  editList(input.value);
-                }
-              }}
-            />
-          )}
-        </Transition>
-        <button
-          style={button}
-          type="submit"
-          onClick={() => input.value.trim() && editList(input.value)}
-        >
-          <CheckIcon style={icon} />
-        </button>
-      </div>
+      <ListInput onClick={editList} defaultValue={lists.lists[list].name}>
+        <CheckIcon style={icon} />
+      </ListInput>
     );
   }
   if (list) {
     return (
       <div id="listselector">
         <Select
-          style={{ fontSize: '1.5rem', width: '100%' }}
+          style={{ fontSize: '1.5rem', width: '100%', height: 40 }}
           value={list}
           onChange={e => onChange(e.target.value)}
         >
