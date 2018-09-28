@@ -12,7 +12,7 @@ const production = {
   },
   googleOAuth: {
     googleEnabled:
-      process.env.GOOGLE_ENABLED.toUpperCase() === 'TRUE',
+      process.env.GOOGLE_ENABLED ? process.env.GOOGLE_ENABLED.toUpperCase() === 'TRUE' : false,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
     googleCallback: `${process.env.HOST}/__/users/login/google/callback`,
