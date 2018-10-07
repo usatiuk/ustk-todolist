@@ -36,3 +36,7 @@ export const START_LOGIN = 'INVALIDATE_USER';
 export const REQUEST_USER = 'REQUEST_USER';
 export const VALIDATE_USER = 'VALIDATE_USER';
 export const RESET_USER = 'RESET_USER';
+export const EDIT_START = 'EDIT_START';
+export const EDIT_SUCCESS = 'EDIT_SUCCESS';
+export const EDIT_FAIL = 'EDIT_FAIL';
+export const RESET_EDIT = 'RESET_EDIT';

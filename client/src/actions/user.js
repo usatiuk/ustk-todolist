@@ -7,6 +7,10 @@ import {
   SIGNUP_FAIL,
   RESET_USER,
   LOGOUT,
+  EDIT_START,
+  EDIT_SUCCESS,
+  EDIT_FAIL,
+  RESET_EDIT,
 } from './defs';
 
 import { API_ROOT, getToken, setToken } from './util';
@@ -120,6 +124,57 @@ export function signup(user) {
       dispatch(signupFail(json.error));
     }
   };
+}
+
+
+function startEdit(user) {
+  return { type: EDIT_START, user };
+}
+
+function editSuccess(user) {
+  return { type: EDIT_SUCCESS, user };
+}
+
+function editFail(error) {
+  return { type: EDIT_FAIL, error };
+}
+
+export function edit(user) {
+  return async dispatch => {
+    dispatch(startEdit());
+    const response = await fetch(`${API_ROOT}/users/user`, {
+      body: JSON.stringify(user),
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'PATCH',
+    });
+    const json = await response.json();
+    if (json.success) {
+      dispatch(editSuccess(json.data));
+    } else {
+      dispatch(editFail(json.error));
+    }
+  };
+}
+
+export function deleteUser() {
+  return async dispatch => {
+    await fetch(`${API_ROOT}/users/user`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        'content-type': 'application/json',
+      },
+      method: 'DELETE',
+    });
+    dispatch(reset());
+  };
+}
+
+
+export function resetEdit() {
+  return { type: RESET_EDIT };
 }
 
 export function reset() {
