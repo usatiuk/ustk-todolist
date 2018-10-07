@@ -1,5 +1,7 @@
 # Simple Todo list
 
+![screenshot](docs/screenshot1.png)
+
 This is a simple todo list, written in javascript, using express for the backend and react+redux for the frontend.
 It also can work in offline thanks to redux-offline (without any conflict resolving, though). The code is of somewhat questionable quality, so you probably don't want to look at it.
 
