@@ -19,6 +19,7 @@ function Input({ onClick, styles }) {
   return (
     <div style={styles} id="inputs">
       <input
+        aria-label="todo text"
         ref={node => {
           input = node;
         }}

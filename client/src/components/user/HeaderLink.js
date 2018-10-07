@@ -7,8 +7,8 @@ function Link({ history, to, text }) {
   return (
     <ButtonBase
       style={{
-        marginLeft: 'auto',
-        marginRight: 0,
+        marginLeft: '0',
+        marginRight: 'auto',
         padding: '0 1rem',
       }}
       onClick={e => {
