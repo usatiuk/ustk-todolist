@@ -38,16 +38,24 @@ router.patch(
   '/user',
   auth.required,
   asyncHelper(async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, google } = req.body;
     const patch = {};
-    if (username !== undefined) {
+    if (username !== undefined && username != '') {
       patch.username = username;
     }
-    const user = await User.findOneAndUpdate(
-      { _id: req.user.id },
-      { $set: patch },
-      { runValidators: true, context: 'query', new: true },
-    ).exec();
+    if (google === null) {
+      patch.googleId = null;
+    }
+    let user;
+    if (patch !== {}) {
+      user = await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $set: patch },
+        { runValidators: true, context: 'query', new: true },
+      ).exec();
+    } else {
+      user = await User.findById(req.user.id);
+    }
     if (!user) {
       throw new NotFoundError(
         `can't find user with username ${req.user.username}`,

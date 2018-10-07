@@ -7,6 +7,9 @@ import {
   SIGNUP_SUCCESS,
   VALIDATE_USER,
   RESET_USER,
+  EDIT_SUCCESS,
+  EDIT_FAIL,
+  RESET_EDIT,
 } from '../actions/defs';
 
 export default function user(
@@ -40,6 +43,12 @@ export default function user(
         loaded: true,
         fetching: false,
       };
+    case EDIT_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        editSuccess: true,
+      };
     case SIGNUP_FAIL:
     case LOGIN_FAIL:
       return {
@@ -49,6 +58,17 @@ export default function user(
         dirty: false,
         fetching: false,
         loaded: false,
+      };
+    case EDIT_FAIL:
+      return {
+        ...state,
+        errors: action.error,
+        editSuccess: false,
+      };
+    case RESET_EDIT:
+      return {
+        ...state,
+        editSuccess: null,
       };
     case RESET_USER:
       return {
