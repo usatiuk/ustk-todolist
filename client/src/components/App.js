@@ -10,19 +10,25 @@ import './App.css';
 const LoadableTodosView = Loadable({
   loader: () => import('./todolist/TodosView'),
   loading: () => <span>loading</span>,
-  delay: 200,
+  delay: 1000,
 });
 
 const LoadableLoginForm = Loadable({
   loader: () => import('./user/LoginForm'),
   loading: () => <span>loading</span>,
-  delay: 200,
+  delay: 1000,
 });
 
 const LoadableSignupForm = Loadable({
   loader: () => import('./user/SignupForm'),
   loading: () => <span>loading</span>,
-  delay: 200,
+  delay: 1000,
+});
+
+const LoadableEditView = Loadable({
+  loader: () => import('./user/EditForm'),
+  loading: () => <span>loading</span>,
+  delay: 1000,
 });
 
 export default class App extends React.PureComponent {
@@ -40,6 +46,7 @@ export default class App extends React.PureComponent {
             <Route exact path="/" component={LoadableTodosView} />
             <Route path="/login" component={LoadableLoginForm} />
             <Route path="/signup" component={LoadableSignupForm} />
+            <Route path="/edit" component={LoadableEditView} />
           </div>
         </Router>
       </React.Fragment>
