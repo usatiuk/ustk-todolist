@@ -31,7 +31,6 @@ function EditForm({
   if (!user.user) {
     history.push('/');
   }
-  console.log(user);
   if (user.user && user.editSuccess) {
     reset();
     history.push('/');
@@ -41,9 +40,9 @@ function EditForm({
       <div id="user-header">
         <ButtonBase
           style={{
-            marginRight: '1rem',
+            marginLeft: '0',
+            marginRight: 'auto',
             padding: '0 0.5rem',
-            borderRadius: '7px',
           }}
           onClick={() => {
             history.push('/');

@@ -125,8 +125,45 @@ li button {
   box-shadow: inset 3px 0 6px -3px rgba(0, 0, 0, 0.3);
 }
 
-/* make buttons bigger on smartphones */
+/* make it usable on smartphones */
 @media only screen and (max-width: 600px) {
+  #header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 5;
+    width: 100%;
+  }
+  #inputs {
+    position: fixed;
+    top: 8rem;
+    left: 0;
+    background-color: white;
+    z-index: 10;
+    width: 100%;
+    height: 65px;
+    max-height: 65px !important;
+  }
+  #container {
+    margin-top: 12rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-bottom: 3rem;
+  }
+  #filters {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 3rem !important;
+    opacity: 1 !important;
+    background-color: white;
+  }
+  #filters button {
+    height: 3rem !important;
+    padding: 0 1.5rem !important;
+  }
   li button {
     padding: 0 1.5rem !important;
   }
