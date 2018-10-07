@@ -31,3 +31,7 @@ form {
   display: flex;
   justify-content: space-around;
 }
+
+#buttons button {
+  margin: 0 0.5rem;
+}
