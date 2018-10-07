@@ -7,27 +7,37 @@ import Loadable from 'react-loadable';
 import './Container.css';
 import './App.css';
 
+function Loading(props) {
+  if (props.error) {
+    return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
+  } else if (props.pastDelay) {
+    return <div>Loading...</div>;
+  } else {
+    return null;
+  }
+}
+
 const LoadableTodosView = Loadable({
   loader: () => import('./todolist/TodosView'),
-  loading: () => <span>loading</span>,
+  loading: () => Loading,
   delay: 1000,
 });
 
 const LoadableLoginForm = Loadable({
   loader: () => import('./user/LoginForm'),
-  loading: () => <span>loading</span>,
+  loading: () => Loading,
   delay: 1000,
 });
 
 const LoadableSignupForm = Loadable({
   loader: () => import('./user/SignupForm'),
-  loading: () => <span>loading</span>,
+  loading: () => Loading,
   delay: 1000,
 });
 
 const LoadableEditView = Loadable({
   loader: () => import('./user/EditForm'),
-  loading: () => <span>loading</span>,
+  loading: () => Loading,
   delay: 1000,
 });
 
