@@ -28,9 +28,6 @@ function EditForm({
   history,
   reset,
 }) {
-  if (!user.user) {
-    history.push('/');
-  }
   if (user.user && user.editSuccess) {
     reset();
     history.push('/');

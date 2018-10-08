@@ -11,23 +11,6 @@ import Header from '../Header';
 import Filters from '../filters/Filters';
 
 class Todos extends React.PureComponent {
-  componentDidMount() {
-    this.checkLogin();
-  }
-  componentDidUpdate() {
-    this.checkLogin();
-  }
-
-  checkLogin() {
-    const { user, history } = this.props;
-    //If user isn't logged in
-    //and isn't in progress of logging in
-    //show login page
-    if (!user.user && !user.dirty) {
-      history.replace('/login');
-    }
-  }
-
   render() {
     const { list } = this.props;
     return (

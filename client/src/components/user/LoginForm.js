@@ -1,7 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ButtonBase, Button } from '@material-ui/core';
 
@@ -19,13 +18,6 @@ class LoginForm extends React.PureComponent {
     if (params.has('jwt')) {
       const jwt = params.get('jwt');
       setJWT(jwt);
-    }
-  }
-
-  componentDidUpdate() {
-    const { user, history } = this.props;
-    if (user.user) {
-      history.push('/');
     }
   }
 
@@ -123,10 +115,8 @@ export default reduxForm({
     password: '',
   },
 })(
-  withRouter(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps,
-    )(LoginForm),
-  ),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(LoginForm),
 );

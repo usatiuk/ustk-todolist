@@ -1,7 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ButtonBase, Button } from '@material-ui/core';
 
@@ -21,9 +20,6 @@ function validate(values) {
 }
 
 function SignupForm({ handleSubmit, onSignup, user, history, resetUser }) {
-  if (user.user) {
-    history.push('/');
-  }
   return (
     <React.Fragment>
       <div id="user-header">
@@ -112,10 +108,8 @@ export default reduxForm({
   },
   validate,
 })(
-  withRouter(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps,
-    )(SignupForm),
-  ),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(SignupForm),
 );

@@ -4,12 +4,18 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Loadable from 'react-loadable';
 
+import Protected from './Protected';
+import OnlyUnauth from './OnlyUnauth';
 import './Container.css';
 import './App.css';
 
 function Loading(props) {
   if (props.error) {
-    return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
+    return (
+      <div>
+        Error! <button onClick={props.retry}>Retry</button>
+      </div>
+    );
   } else if (props.pastDelay) {
     return <div>Loading...</div>;
   } else {
@@ -17,29 +23,37 @@ function Loading(props) {
   }
 }
 
-const LoadableTodosView = Loadable({
-  loader: () => import('./todolist/TodosView'),
-  loading: () => Loading,
-  delay: 1000,
-});
+const LoadableTodosView = Protected(
+  Loadable({
+    loader: () => import('./todolist/TodosView'),
+    loading: () => Loading,
+    delay: 1000,
+  }),
+);
 
-const LoadableLoginForm = Loadable({
-  loader: () => import('./user/LoginForm'),
-  loading: () => Loading,
-  delay: 1000,
-});
+const LoadableLoginForm = OnlyUnauth(
+  Loadable({
+    loader: () => import('./user/LoginForm'),
+    loading: () => Loading,
+    delay: 1000,
+  }),
+);
 
-const LoadableSignupForm = Loadable({
-  loader: () => import('./user/SignupForm'),
-  loading: () => Loading,
-  delay: 1000,
-});
+const LoadableSignupForm = OnlyUnauth(
+  Loadable({
+    loader: () => import('./user/SignupForm'),
+    loading: () => Loading,
+    delay: 1000,
+  }),
+);
 
-const LoadableEditView = Loadable({
-  loader: () => import('./user/EditForm'),
-  loading: () => Loading,
-  delay: 1000,
-});
+const LoadableEditView = Protected(
+  Loadable({
+    loader: () => import('./user/EditForm'),
+    loading: () => Loading,
+    delay: 1000,
+  }),
+);
 
 export default class App extends React.PureComponent {
   componentDidMount() {
