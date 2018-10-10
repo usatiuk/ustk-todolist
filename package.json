@@ -42,9 +42,8 @@
   "devDependencies": {
     "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
-    "eslint": "^5.6.1",
+    "eslint": "5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.24.1",
