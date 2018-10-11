@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ButtonBase, Button } from '@material-ui/core';
+import { withRouter } from 'react-router';
 
 import InputField from './InputField';
 import UserErrors from './UserErrors';
@@ -115,8 +116,10 @@ export default reduxForm({
     password: '',
   },
 })(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(LoginForm),
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(LoginForm)
+  ),
 );
