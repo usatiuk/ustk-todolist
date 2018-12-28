@@ -1,18 +1,18 @@
 image: node:10
 
 stages:
-  - test
+  - test-backend
 
 cache:
   paths:
   - node_modules/
   - client/node_modules
 
-test:
+test-backend:
   stage: test
   services:
     - mongo:4
   script:
     - npm i npm@latest -g
-    - npm i && cd client && npm i
+    - npm i
     - npm test
