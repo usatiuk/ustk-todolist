@@ -3,11 +3,16 @@ image: node:10
 stages:
   - test
 
+cache:
+  paths:
+  - node_modules/
+  - client/node_modules
+
 test:
   stage: test
   services:
     - mongo:4
   script:
     - npm i npm@latest -g
-    - npm i && cd client && npm i & cd ..
+    - npm i && cd client && npm i
     - npm test
