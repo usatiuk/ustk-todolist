@@ -1,14 +1,14 @@
 image: node:10
 
 stages:
-  - test-backend
+  - test_backend
 
 cache:
   paths:
   - node_modules/
   - client/node_modules
 
-test-backend:
+test_backend:
   stage: test
   services:
     - mongo:4
