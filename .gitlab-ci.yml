@@ -9,5 +9,5 @@ test:
     - mongo:4
   script:
     - npm i npm@latest -g
-    - npm i && cd client && npm i
+    - npm i && cd client && npm i & cd ..
     - npm test
