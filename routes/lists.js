@@ -15,7 +15,7 @@ router.get(
     const lists = await TodoList.find({ user: req.user.id })
       .populate('todos')
       .exec();
-    res.json({ success: true, data: lists.map(list => { list.todos.reverse(); list.toJson() }) });
+    res.json({ success: true, data: lists.map(list => { list.todos.reverse(); return list.toJson() }) });
   }),
 );
 
