@@ -16,7 +16,7 @@ router.get(
     const todos = listId
       ? await Todo.find({ list: listId, user: req.user.id }).exec()
       : await Todo.find({ user: req.user.id }).exec();
-    res.json({ success: true, data: todos.map(todo => todo.toJson()) });
+    res.json({ success: true, data: todos.reverse().map(todo => todo.toJson()) });
   }),
 );
 
