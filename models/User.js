@@ -17,6 +17,7 @@ const UserSchema = Schema({
     minLength: 3,
     maxLength: 50,
     trim: true,
+    sparse: true,
   },
   googleId: {
     type: String,
