@@ -82,9 +82,9 @@ describe('test todos', () => {
     expect(response.body.success).toBeTruthy();
     expect(await Todo.findOne({ text: 'Todo2', list: list._id })).toBeTruthy();
     const freshUser = await User.findById(user.id).exec();
-    expect(freshUser.todos).toContain(response.body.data.id);
+    expect(freshUser.todos.map(t => String(t))).toContain(response.body.data.id);
     const freshList = await TodoList.findById(list.id).exec();
-    expect(freshList.todos).toContain(response.body.data.id);
+    expect(freshList.todos.map(t => String(t))).toContain(response.body.data.id);
   });
   test('should create todo with custom id', async () => {
     const id = mongoose.Types.ObjectId();
@@ -104,9 +104,9 @@ describe('test todos', () => {
       await Todo.findOne({ text: 'Todo2', list: list._id, _id: id }),
     ).toBeTruthy();
     const freshUser = await User.findById(user.id).exec();
-    expect(freshUser.todos).toContain(response.body.data.id);
+    expect(freshUser.todos.map(t => String(t))).toContain(response.body.data.id);
     const freshList = await TodoList.findById(list.id).exec();
-    expect(freshList.todos).toContain(response.body.data.id);
+    expect(freshList.todos.map(t => String(t))).toContain(response.body.data.id);
   });
   test('should not create todo without authentication', async () => {
     await request(server)
