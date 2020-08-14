@@ -34,4 +34,4 @@ There is google OAuth support, which can be enabled by setting `GOOGLE_ENABLED` 
 The create-react-app's service worker works only in production environment.
 You can build the frontend with `cd react && npm run build`.
 
-Express is listening at http://localhost:4000 and serving the built frontend.
+In production mode, express is listening at http://localhost:4000 and serving the built frontend.
