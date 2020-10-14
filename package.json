@@ -9,7 +9,7 @@
     "dev": "npx concurrently npm:client npm:server -c 'blue,green'",
     "client": "cd client && npm start",
     "server": "npx cross-env NODE_ENV=development npx nodemon --inspect ./app.js",
-    "test": "npx cross-env NODE_ENV=test jest",
+    "test": "npx cross-env NODE_ENV=test jest --runInBand",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "cacheDirectories": [
@@ -30,7 +30,7 @@
     "express-jwt": "^6.0.0",
     "hsts": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.29",
+    "mongoose": "^5.10.9",
     "mongoose-findorcreate": "^3.0.0",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0",
@@ -44,17 +44,17 @@
     "cross-env": "^7.0.2",
     "eslint": "^6.0.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react": "^7.21.4",
     "jest": "^24.0.0",
-    "mongodb-memory-server": "^6.6.3",
-    "nodemon": "^2.0.4",
+    "mongodb-memory-server": "^6.9.2",
+    "nodemon": "^2.0.5",
     "prettier-eslint": "^11.0.0",
-    "supertest": "^4.0.2"
+    "supertest": "^5.0.0"
   },
   "jest": {
     "testEnvironment": "node",

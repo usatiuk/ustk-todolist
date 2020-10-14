@@ -22,7 +22,7 @@ let mongoServer;
 
 beforeAll(async () => {
   mongoServer = new MongoDBMemoryServer(mongodbMemoryServerConfig);
-  const mongoUri = await mongoServer.getConnectionString();
+  const mongoUri = await mongoServer.getUri();
   await mongoose.connect(mongoUri);
 });
 
