@@ -38,6 +38,9 @@ const mongodbMemoryServerConfig = {
   binary: {
     version: 'latest',
   },
+  instance: {
+    args: ['--enableMajorityReadConcern=false'],
+  },
 };
 
 module.exports = { seed, clean, mongodbMemoryServerConfig };
