@@ -5,7 +5,7 @@ import BackButton from "@material-ui/icons/ArrowBack";
 import { IconButton } from "@material-ui/core";
 import React from "react";
 import PropTypes from "prop-types";
-import { Transition, config } from "react-spring";
+import { Transition, config } from "react-spring/renderprops";
 
 const button = {
     width: 30,
