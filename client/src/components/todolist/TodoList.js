@@ -42,7 +42,7 @@ export default function TodosContainer({
                     pointerEvents: "none",
                 }}
             >
-                {todos.map((todo) => (styles) => (
+                {todo => (styles) => (
                     <Todo
                         key={todo.id}
                         todo={todo}
@@ -51,7 +51,7 @@ export default function TodosContainer({
                         removeTodo={() => removeTodo(todo.id)}
                         editTodo={(text) => editTodo(todo.id, text)}
                     />
-                ))}
+                )}
             </Transition>
         </ul>
     );

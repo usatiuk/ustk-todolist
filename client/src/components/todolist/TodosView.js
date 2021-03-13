@@ -20,16 +20,18 @@ class Todos extends React.PureComponent {
                     from={{ opacity: 0, maxHeight: 0 }}
                     enter={{ opacity: 1, maxHeight: 38 }}
                     leave={{ opacity: 0, maxHeight: 0 }}
+                    items={list}
                 >
-                    {list && ((styles) => <Input styles={styles} />)}
+                    {list => list && ((styles) => <Input styles={styles} />)}
                 </Transition>
                 <TodoListContainer />
                 <Transition
                     from={{ opacity: 0, maxHeight: 0 }}
                     enter={{ opacity: 1, maxHeight: 32 }}
                     leave={{ opacity: 0, maxHeight: 0 }}
+                    items={list}
                 >
-                    {list && Filters}
+                    {list => list && Filters}
                 </Transition>
             </div>
         );
