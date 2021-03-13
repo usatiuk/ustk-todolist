@@ -90,12 +90,13 @@ export default function ListActions({
                     restSpeedThreshold: 0.5,
                     restDisplacementThreshold: 0.5,
                 }}
+                items={actions}
                 keys={actions.map((action) => action({}).key)}
                 from={{ opacity: 0, height: 0, margin: 0, padding: 0 }}
                 enter={{ opacity: 1, height: 30, margin: 0, padding: 0 }}
                 leave={{ opacity: 0, height: 0, margin: 0, padding: 0 }}
             >
-                {actions}
+                {action => action}
             </Transition>
         </div>
     );
