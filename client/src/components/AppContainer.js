@@ -1,22 +1,19 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import App from './App';
+import App from "./App";
 
-import { loadUser } from '../actions/user';
+import { loadUser } from "../actions/user";
 
 function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
+    return {
+        user: state.user,
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    loadUser: () => dispatch(loadUser()),
-  };
+    return {
+        loadUser: () => dispatch(loadUser()),
+    };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

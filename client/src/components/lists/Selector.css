@@ -1,53 +1,53 @@
 #listselector {
-  display: flex;
-  margin-left: 1rem;
-  overflow: hidden;
-  align-self: center;
-  background-color: #fbfbfb;
-  flex-grow: 1;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+    display: flex;
+    margin-left: 1rem;
+    overflow: hidden;
+    align-self: center;
+    background-color: #fbfbfb;
+    flex-grow: 1;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 #listselector input {
-  padding: 0;
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 400;
-  outline: none;
-  border: none;
-  background-color: #fbfbfb;
-  border-bottom: 1px solid #888888;
-  width: 80%;
+    padding: 0;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    background-color: #fbfbfb;
+    border-bottom: 1px solid #888888;
+    width: 80%;
 }
 
 #listselector button {
-  align-self: center;
-  width: 20%;
-  font-size: 0.9rem;
-  color: #1b881b;
-  background: none;
-  border: none;
-  margin: 0.1rem 0.3rem;
-  padding: 0.3rem 0.7em;
+    align-self: center;
+    width: 20%;
+    font-size: 0.9rem;
+    color: #1b881b;
+    background: none;
+    border: none;
+    margin: 0.1rem 0.3rem;
+    padding: 0.3rem 0.7em;
 }
 
 #listselector select {
-  max-width: 100%;
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 400;
-  outline: none;
-  border: none;
-  background-color: #fbfbfb;
+    max-width: 100%;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    background-color: #fbfbfb;
 }
 
 #listselector select option {
-  max-width: 100%;
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 400;
-  outline: none;
-  border: none;
-  background-color: #fbfbfb;
+    max-width: 100%;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    background-color: #fbfbfb;
 }

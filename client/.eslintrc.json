@@ -1,25 +1,22 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:jest/recommended",
-    "plugin:react/recommended"
-  ],
-  "rules": {
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx"]
-      }
+    "root": true,
+    "extends": [
+        "eslint:recommended",
+        "plugin:jest/recommended",
+        "plugin:react/recommended"
     ],
-    "linebreak-style": "off",
-    "react/forbid-prop-types": "off",
-    "node/no-unsupported-features/es-syntax": ["off"],
-    "node/no-unsupported-features/es-builtins": ["off"],
-    "node/no-unsupported-features/node-builtins": ["off"],
-    "react/display-name": ["warn"],
-    "no-console": "warn"
-  },
-  "env": {
-    "browser": true
-  }
+    "rules": {
+        "react/display-name": "warn"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    }
 }

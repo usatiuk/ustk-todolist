@@ -1,0 +1,73 @@
+version: 2
+jobs:
+    test-backend:
+        docker:
+            - image: circleci/node:14
+
+        working_directory: ~/todolist
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                  keys:
+                      - backend-dependencies-{{ checksum "package.json" }}
+
+            - run:
+                  name: install backend deps
+                  command: npm i
+
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: backend-dependencies-{{ checksum "package.json" }}
+
+            - run:
+                  name: test backend
+                  command: npm test
+
+    test-frontend:
+        docker:
+            - image: circleci/node:14
+
+        working_directory: ~/todolist/client
+
+        steps:
+            - checkout:
+
+            - restore_cache:
+                  keys:
+                      - backend-dependencies-{{ checksum "package.json" }}
+
+            - run:
+                  name: install backend deps
+                  command: npm i
+
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: backend-dependencies-{{ checksum "package.json" }}
+
+            - restore_cache:
+                  keys:
+                      - frontend-dependencies-{{ checksum "package.json" }}
+
+            - run:
+                  name: install frontend deps
+                  command: cd client && npm i
+
+            - save_cache:
+                  paths:
+                      - client/node_modules
+                  key: frontend-dependencies-{{ checksum "package.json" }}
+
+            - run:
+                  name: test client
+                  command: cd client && npm test
+
+workflows:
+    version: 2
+    test:
+        jobs:
+            - test-backend
+            - test-frontend

@@ -1,6 +1,11 @@
 {
-  "editor.tabSize": 2,
-  "prettier.eslintIntegration": true,
+  "eslint.workingDirectories": [
+    ".",
+    "./client"
+  ],
+  "search.exclude": {
+    "**/package-lock.json": true
+  },
   "editor.insertSpaces": true,
-  "jest.pathToJest": "npm test --"
+  "editor.tabSize": 4
 }
