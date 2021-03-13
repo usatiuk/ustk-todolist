@@ -1,2 +1,5 @@
 client/build/*
 client/node_modules/*
+*.css
+*.scss
+**package-lock.json

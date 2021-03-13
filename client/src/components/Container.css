@@ -1,60 +1,60 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons');
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons");
 
 body {
-  background: white;
-  color: black;
-  font-family: 'Roboto';
-  user-select: none;
+    background: white;
+    color: black;
+    font-family: "Roboto";
+    user-select: none;
 }
 
 #root {
-  margin-top: 5rem;
+    margin-top: 5rem;
 }
 
 #container {
-  overflow: hidden;
-  margin: 0 auto;
-  padding: 0;
-  max-width: 25rem;
-  border: 1px solid #dddddd;
-  border-radius: 7px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 25rem;
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 @media only screen and (max-width: 600px) {
-  #root {
-    margin: 0;
-  }
-  #container {
-    max-width: 100%;
-  }
+    #root {
+        margin: 0;
+    }
+    #container {
+        max-width: 100%;
+    }
 }
 
 #user-header {
-  display: flex;
-  height: 2rem;
-  position: relative;
-  z-index: 20;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
-  justify-content: flex-end;
-  align-content: center;
+    display: flex;
+    height: 2rem;
+    position: relative;
+    z-index: 20;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
+    justify-content: flex-end;
+    align-content: center;
 }
 
 #user-header button {
-  box-sizing: border-box;
-  margin-right: 0.2rem;
-  height: 100%;
-  flex-grow: 0;
-  flex-shrink: 1;
-  color: #555555;
-  border: none;
-  background: none;
-  transition: 0.1s ease-in-out;
-  font-size: 0.8rem;
-  font-weight: 300;
-  font-family: Roboto;
+    box-sizing: border-box;
+    margin-right: 0.2rem;
+    height: 100%;
+    flex-grow: 0;
+    flex-shrink: 1;
+    color: #555555;
+    border: none;
+    background: none;
+    transition: 0.1s ease-in-out;
+    font-size: 0.8rem;
+    font-weight: 300;
+    font-family: Roboto;
 }
 
 #user-header button:hover {
-  color: #555555;
+    color: #555555;
 }

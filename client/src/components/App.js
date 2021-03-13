@@ -1,83 +1,48 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Loadable from 'react-loadable';
+import * as React from "react";
+import PropTypes from "prop-types";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-import Protected from './Protected';
-import OnlyUnauth from './OnlyUnauth';
-import './Container.css';
-import './App.css';
+import Protected from "./Protected";
+import OnlyUnauth from "./OnlyUnauth";
+import "./Container.css";
+import "./App.css";
+import TodosView from "./todolist/TodosView";
+import LoginForm from "./user/LoginForm";
+import SignupForm from "./user/SignupForm";
+import EditForm from "./user/EditForm";
 
-function Loading(props) {
-  if (props.error) {
-    return (
-      <div>
-        Error! <button onClick={props.retry}>Retry</button>
-      </div>
-    );
-  } else if (props.pastDelay) {
-    return <div>Loading...</div>;
-  } else {
-    return null;
-  }
-}
+const ProtectedTodosView = Protected(TodosView);
 
-const LoadableTodosView = Protected(
-  Loadable({
-    loader: () => import('./todolist/TodosView'),
-    loading: () => Loading,
-    delay: 1000,
-  }),
-);
+const ProtectedLoginForm = OnlyUnauth(LoginForm);
 
-const LoadableLoginForm = OnlyUnauth(
-  Loadable({
-    loader: () => import('./user/LoginForm'),
-    loading: () => Loading,
-    delay: 1000,
-  }),
-);
+const ProtectedSignupForm = OnlyUnauth(SignupForm);
 
-const LoadableSignupForm = OnlyUnauth(
-  Loadable({
-    loader: () => import('./user/SignupForm'),
-    loading: () => Loading,
-    delay: 1000,
-  }),
-);
-
-const LoadableEditView = Protected(
-  Loadable({
-    loader: () => import('./user/EditForm'),
-    loading: () => Loading,
-    delay: 1000,
-  }),
-);
+const ProtectedEditView = Protected(EditForm);
 
 export default class App extends React.PureComponent {
-  componentDidMount() {
-    const { loadUser } = this.props;
-    loadUser();
-  }
+    componentDidMount() {
+        const { loadUser } = this.props;
+        loadUser();
+    }
 
-  render() {
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Router>
-          <div id="container">
-            <Route exact path="/" component={LoadableTodosView} />
-            <Route path="/login" component={LoadableLoginForm} />
-            <Route path="/signup" component={LoadableSignupForm} />
-            <Route path="/edit" component={LoadableEditView} />
-          </div>
-        </Router>
-      </React.Fragment>
-    );
-  }
+    render() {
+        return (
+            <React.Fragment>
+                <CssBaseline />
+                <Router>
+                    <div id="container">
+                        <Route exact path="/" component={ProtectedTodosView} />
+                        <Route path="/login" component={ProtectedLoginForm} />
+                        <Route path="/signup" component={ProtectedSignupForm} />
+                        <Route path="/edit" component={ProtectedEditView} />
+                    </div>
+                </Router>
+            </React.Fragment>
+        );
+    }
 }
 
 App.propTypes = {
-  loadUser: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired,
 };
