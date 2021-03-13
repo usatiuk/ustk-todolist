@@ -9,6 +9,7 @@ Check it out at https://ustk-todolist.herokuapp.com/
 
 ## Getting started
 
+Install dependencies `npm i && cd client && npm i`
 Start with `npm run dev`
 
 create-react-app server will be listening at http://localhost:3000, with proxy to the backend at localhost:4000
