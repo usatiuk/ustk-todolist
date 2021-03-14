@@ -1,6 +1,6 @@
 import {
     REQUEST_TODOS,
-    RECIEVE_TODOS,
+    RECEIVE_TODOS,
     ADD_TODO,
     REMOVE_TODO,
     TOGGLE_TODO,
@@ -20,7 +20,7 @@ export function fetchTodos() {
         });
         const json = await response.json();
         const todos = json.data;
-        dispatch({ type: RECIEVE_TODOS, todos });
+        dispatch({ type: RECEIVE_TODOS, todos });
     };
 }
 

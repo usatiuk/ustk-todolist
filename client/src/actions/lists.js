@@ -1,6 +1,6 @@
 import {
     REQUEST_LISTS,
-    RECIEVE_LISTS,
+    RECEIVE_LISTS,
     CHANGE_LIST,
     START_CREATE_LIST,
     START_EDIT_LIST,
@@ -10,7 +10,7 @@ import {
     INVALIDATE_LISTS,
     REMOVE_LIST,
     EDIT_LIST_NAME,
-    RECIEVE_TODOS,
+    RECEIVE_TODOS,
 } from "./defs";
 
 import { API_ROOT, getToken, mongoObjectId } from "./util";
@@ -18,8 +18,8 @@ import { API_ROOT, getToken, mongoObjectId } from "./util";
 function requestLists() {
     return { type: REQUEST_LISTS };
 }
-function recieveLists(lists) {
-    return { type: RECIEVE_LISTS, lists };
+function receiveLists(lists) {
+    return { type: RECEIVE_LISTS, lists };
 }
 export function changeList(list) {
     return { type: CHANGE_LIST, list };
@@ -156,7 +156,7 @@ export function fetchLists() {
             return newObj;
         }, {});
 
-        dispatch({ type: RECIEVE_TODOS, todos: normalizeTodos(lists) });
-        dispatch(recieveLists(listsObj));
+        dispatch({ type: RECEIVE_TODOS, todos: normalizeTodos(lists) });
+        dispatch(receiveLists(listsObj));
     };
 }

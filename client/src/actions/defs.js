@@ -1,7 +1,7 @@
 export const ADD_LIST = "ADD_LIST";
 export const REMOVE_LIST = "REMOVE_LIST";
 export const EDIT_LIST_NAME = "EDIT_LIST_NAME";
-export const RECIEVE_LISTS = "RECIEVE_LISTS";
+export const RECEIVE_LISTS = "RECEIVE_LISTS";
 export const REQUEST_LISTS = "REQUEST_LISTS";
 export const INVALIDATE_LISTS = "INVALIDATE_LISTS";
 export const VALIDATE_LISTS = "VALIDATE_LISTS";
@@ -16,7 +16,7 @@ export const REMOVE_TODO = "REMOVE_TODO";
 export const TOGGLE_TODO = "TOGGLE_TODO";
 export const EDIT_TODO = "EDIT_TODO";
 export const SET_VISIBILITY_FILTER = "SET_VISIBILITY_FILTER";
-export const RECIEVE_TODOS = "RECIEVE_TODOS";
+export const RECEIVE_TODOS = "RECEIVE_TODOS";
 export const REQUEST_TODOS = "REQUEST_TODOS";
 export const INVALIDATE_TODOS = "INVALIDATE_TODOS";
 export const VALIDATE_TODOS = "VALIDATE_TODOS";

@@ -12,25 +12,22 @@ import todoApp from "./reducers";
 import { setToken } from "./actions/util";
 import keepSynced from "./middleware/keepSynced";
 
-let store;
-
-const persistCallback = () => {
-    const state = store.getState();
-    if (state.user.user) {
-        setToken(state.user.user.jwt);
-    }
-    ReactDOM.render(
-        <Provider store={store}>
-            <AppContainer />
-        </Provider>,
-        document.getElementById("root"),
-    );
-};
-
-store = createStore(
+const store = createStore(
     todoApp,
     compose(
-        offline({ ...offlineConfig, persistCallback }),
+        offline({ ...offlineConfig, persistCallback: () => {
+            const state = store.getState();
+            if (state.user.user) {
+                setToken(state.user.user.jwt);
+            }
+            ReactDOM.render(
+                <Provider store={store}>
+                    <AppContainer />
+                </Provider>,
+                document.getElementById("root"),
+            );
+        }
+        }),
         applyMiddleware(thunk, keepSynced),
     ),
 );

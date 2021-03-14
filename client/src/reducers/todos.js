@@ -2,7 +2,7 @@ import {
     ADD_TODO,
     REMOVE_TODO,
     TOGGLE_TODO,
-    RECIEVE_TODOS,
+    RECEIVE_TODOS,
     REQUEST_TODOS,
     INVALIDATE_TODOS,
     VALIDATE_TODOS,
@@ -26,7 +26,7 @@ export default function todos(
                 fetching: false,
                 todos: null,
             };
-        case RECIEVE_TODOS:
+        case RECEIVE_TODOS:
             return {
                 ...state,
                 dirty: false,

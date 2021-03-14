@@ -3,7 +3,7 @@ import {
     INVALIDATE_LISTS,
     VALIDATE_LISTS,
     REQUEST_LISTS,
-    RECIEVE_LISTS,
+    RECEIVE_LISTS,
     ADD_LIST,
     REMOVE_LIST,
     EDIT_LIST_NAME,
@@ -41,7 +41,7 @@ export default function lists(
             };
         case CHANGE_LIST:
             return { ...state, list: action.list };
-        case RECIEVE_LISTS: {
+        case RECEIVE_LISTS: {
             const newLists = Object.values(action.lists);
             let { list } = state;
             if (newLists.length !== 0) {
