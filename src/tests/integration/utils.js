@@ -36,10 +36,7 @@ async function clean() {
 
 const mongodbMemoryServerConfig = {
     binary: {
-        version: "4.0.14",
-    },
-    instance: {
-        args: ["--enableMajorityReadConcern=false"],
+        version: "5.0.3",
     },
 };
 
