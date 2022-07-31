@@ -5,8 +5,6 @@
 This is a simple todo list written in javascript using express for the backend and react+redux for the frontend.
 It also can work offline, thanks to redux-offline (without any conflict resolving, though). The code is of somewhat questionable quality, so you probably don't want to use it as a reference.
 
-Check it out at https://ustk-todolist.herokuapp.com/
-
 ## Getting started
 
 Install dependencies `npm i && cd client && npm i`
