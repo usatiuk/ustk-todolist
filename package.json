@@ -39,7 +39,7 @@
         "express-http-to-https": "^1.1.4",
         "express-jwt": "^6.1.0",
         "hsts": "^2.2.0",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "mongoose": "^6.0.13",
         "mongoose-findorcreate": "^3.0.0",
         "mongoose-unique-validator": "^2.0.3",
